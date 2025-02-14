@@ -1,1 +1,53 @@
-oops! my bad. Error {range:400|500}.
+{set:code|}
+{set:offset|0}
+{set:banlist|[]}
+{set:banned|{py:import json
+def check_item_in_json(json_data, item):
+  try:
+    if isinstance(json_data, str):
+      json_data = json.loads(json_data)
+ 
+    if item in json_data:
+      return True
+ 
+    if isinstance(json_data, dict):
+      for value in json_data.values():
+        if isinstance(value, (dict, list)):
+          if check_item_in_json(value, item):
+            return True
+    elif isinstance(json_data, list):
+      for value in json_data:
+        if isinstance(value, (dict, list)):
+          if check_item_in_json(value, item):
+            return True
+ 
+  except (json.JSONDecodeError, TypeError):
+    return False
+ 
+  return False
+ 
+json_string = "{get:banlist}"
+item_to_find = {id} 
+ 
+if check_item_in_json(json_data=json_string, item=item_to_find):
+  print(True)
+else:
+  print(False)}}
+{if:{get:banned}|=|True|then:{mention:{id}} you are banned from AMTVEVideo and all of its tag aliases.|else:
+{if:{argslen}|<|1|then:.t {tagname} <effect> <args...> <subcommand> <subcommand args>|else:-# Note: AMTVEVideo is in BETA!
+{if:{arg:1}|!=|list|then:{choose:hey i feel so sprunki|《SPRUNKI》|☆TAT☆ FOUND AFTER 10 YEARS NO WAY|{repeat:30|{mention:{user}}}|have a bowl mr squidward|https://media.discordapp.net/attachments/1124758334805909509/1334274228219940877/now.gif?ex=679bef35&is=679a9db5&hm=50d94b4217555d74e7059e03ab50d29972e827410a99d1117f471095181209ff&}
+}
+{if:{arg:0}|=|archive|then:{attachtext:{text:https://pastebin.com/raw/2MhYgLFw}}}
+{if:{arg:0}|=|ffmpeg effect|then:{set:code|-vf negate,hue=h=-45}}
+{if:{arg:0}|=|custom ffmpeg|then:{set:code|{arg:1}}{set:offset|{math:{get:offset}+1}}}
+{if:{arg:0}|=|custom major 528 ffmpeg|then:{set:code|-vf format=yuv444p,scale=iw:ih,"geq='p(X,floor(Y+sin(T*250/10+X*2.5/100)*4.5))'",huesaturation=90:0:0:-100:100,negate,vflip,scale=iw:ih,format=yuv420p -filter_complex "[0:a]rubberband=pitch=2^(5/12)[a1];[0:a]rubberband=pitch=2^(-2/12)[a2];[a1][a2]amix=2,volume=2[outa]" -map 0:v -map "[outa]" -pix_fmt yuv420p}}
+{if:{arg:0}|=|custom major 333 ffmpeg|then:{set:code|-vf negate,rotate=-0.03,unsharp -filter_complex "[0:a]rubberband=pitch=2^(0/12)[a1];[0:a]rubberband=pitch=2^(-0.2/12)[a2];[a1][a2]amix=2,volume=2[outa]" -map 0:v -map "[outa]"}}
+{if:{arg:0}|=|custom major 528 ffmpeg|then:{set:code|-vf format=yuv444p,scale=iw:ih,"geq='p(X,floor(Y+sin(T*250/10+X*2.5/100)*4.5))'",huesaturation=90:0:0:-100:100,negate,vflip,scale=iw:ih,format=yuv420p -filter_complex "[0:a]rubberband=pitch=2^(5/12)[a1];[0:a]rubberband=pitch=2^(-2/12)[a2];[a1][a2]amix=2,volume=2[outa]" -map 0:v -map "[outa]" -pix_fmt yuv420p}}
+{if:{indexof:ffmpeg|{arg:0}}|!=|-1|then:{sh:load {iv}
+ffmpeg -i $FILE_1 {get:code} ./output/amtvevideo.mp4}}
+{if:{indexof:veb|{arg:0}}|!=|-1|then:{sh:load {iv}
+ffmpeg -i $FILE_1 {get:code} ./output/amtvevideo.mp4}|else:{iscript:load {iv} 0
+{get:code}
+render 0}}
+}
+}
