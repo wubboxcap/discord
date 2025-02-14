@@ -56,7 +56,7 @@ cover # 0w 0h}}
 {set:snip|{if:{arg:{math:{get:offset}+3}}|!=|true|then:-t }{or:{if:{arg:{math:{get:offset}+3}}|!=|true|then:{arg:{math:{get:offset}+3}}}|0.5}}
 {set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
 {set:string|{get:code}}
-{set:code|
+{set:output|
 load {iv}
 
 ffmpeg -i $FILE_1 {get:string} {get:snip} 1.ts
@@ -65,7 +65,7 @@ console.log(`ffmpeg -i "${i+1}.ts" string -t arg ${i+2}.ts`)
 }}}}
 {set:#|0}
 ffmpeg -i "concat:{foreach:{math:{arg:0}-1}|{set:#|{math:{get:#}+1}}{get:#}.ts\u007c}{arg:0}.ts" ./output/amtvevideo.mp4}
-{sh:{js:console.log(`{get:code}`)}}
+{sh:{js:console.log(`{get:output}`)}}
 |else:{sh:load {iv}
 ffmpeg -i $FILE_1 {get:code} ./output/amtvevideo.mp4}}}|else:{if:{indexof:veb|{arg:0}}|!=|-1|then:{sh:load {iv}
 ffmpeg -i $FILE_1 {get:code} ./output/amtvevideo.mp4}|else:{if:{arg:{math:{get:offset}+1}}|=|raw|then:```{replace:#|{or:{arg:{math:{get:offset}+2}}|#}|{get:code}}```{attachtext:{replace:#|{or:{arg:{math:{get:offset}+2}}|#}|{get:code}}}|else:{iscript:load {iv} 0
