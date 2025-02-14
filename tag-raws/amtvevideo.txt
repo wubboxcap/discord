@@ -60,7 +60,7 @@ cover # 0w 0h}}
 load {iv}
 
 ffmpeg -i $FILE_1 {get:string} {get:snip} 1.ts
-{replace:string|{get:string}|{replace:arg|{substring:{get:snip}|{indexof:-t |{get:snip}}}|{js:for (let i = 0; i < {arg:0}-1; i++) {
+{replace:string|{get:string}|{replace:arg|{substring:{get:snip}|{indexof:-t |{get:snip}}}|{js:for (let i = 0; i < {get:powers}-1; i++) {
 console.log(`ffmpeg -i "${i+1}.ts" string -t arg ${i+2}.ts`)
 }}}}
 {set:#|0}
