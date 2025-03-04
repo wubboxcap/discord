@@ -39,6 +39,18 @@ else:
 }
 {if:{arg:0}|=|archive|then:{attachtext:{text:https://wubboxcap.github.io/discord/tag-raws/amtvevideo.txt}}}
 {if:{arg:0}|=|ffmpeg effect|then:{set:code|-vf negate,hue=h=-45}}
+{if:{arg:0}|=|custom major 528|then:{set:code|get # width w
+get # height h
+flip #
+hueshifthsv # 90
+invert #
+waves # 6.5 w/2.5 10
+cover # w h
+copy # #a
+audiopitch # 1.334
+audiopitch #a 0.89
+overlay # #a
+volume #}}
 {if:{arg:0}|=|g major 91|then:{set:code|swaprgba # bgr
 hueshifthsv # 180
 haah #
@@ -60,11 +72,31 @@ rotate # -90
 cover # w h
 audiopitch # 2
 audiopitch # 1.12}}
+{if:{arg:0}|=|simulator v19 ffmpeg|then:{set:code|-vf negate,huesaturation=-70:0.5:0:-100:100,format=yuv444p,scale=640:-1,"geq='p(X+sin(0/10+Y/28)*30,(Y+sin(0/10+X*1.9/100)*18))'","geq='p(X+sin(0/10+Y/28)*30,(Y+sin(0/10+X*1.9/100)*18))'",scale=iw:ih,format=yuv420p -filter_complex "[0:a]rubberband=formant=712923000:pitch=2^(-12/12)[a1];[0:a]rubberband=formant=712923000:pitch=2^(0/12)[a2];[0:a]rubberband=formant=712923000:pitch=2^(7/12)[a3];[a1][a2][a3]amix=3,volume=3,atrim=0.02[outa]" -map 0:v -map "[outa]"}}
+{if:{arg:0}|=|simulator v19|then:{set:code|get # width w
+get # height h
+hueshifthsv # 284.04
+invert #
+wave # w/30 w/2
+cover # w h
+rotate # 270
+flop #
+wave # w/30 h/2
+flop #
+rotate # -270
+cover # w h
+copy # #a
+copy # #b
+audiopitch # 0.5
+audiopitch #b 1.5
+overlay # #a
+volume #
+overlay # #b
+volume #}}
 {if:{arg:0}|=|custom ffmpeg|then:{set:code|{arg:1}}{set:offset|{math:{get:offset}+1}}}
 {if:{arg:0}|=|custom|then:{set:code|{arg:1}}{set:offset|{math:{get:offset}+1}}}
 {if:{arg:0}|=|custom major 528 ffmpeg|then:{set:code|-vf format=yuv444p,scale=iw:ih,"geq='p(X,floor(Y+sin(T*250/10+X*2.5/100)*4.5))'",huesaturation=90:0:0:-100:100,negate,vflip,scale=iw:ih,format=yuv420p -filter_complex "[0:a]rubberband=pitch=2^(5/12)[a1];[0:a]rubberband=pitch=2^(-2/12)[a2];[a1][a2]amix=2,volume=2[outa]" -map 0:v -map "[outa]" -pix_fmt yuv420p}}
 {if:{arg:0}|=|custom major 333 ffmpeg|then:{set:code|-vf negate,rotate=-0.03,unsharp -filter_complex "[0:a]rubberband=pitch=2^(0/12)[a1];[0:a]rubberband=pitch=2^(-0.2/12)[a2];[a1][a2]amix=2,volume=2[outa]" -map 0:v -map "[outa]"}}
-{if:{arg:0}|=|custom major 528 ffmpeg|then:{set:code|-vf format=yuv444p,scale=iw:ih,"geq='p(X,floor(Y+sin(T*250/10+X*2.5/100)*4.5))'",huesaturation=90:0:0:-100:100,negate,vflip,scale=iw:ih,format=yuv420p -filter_complex "[0:a]rubberband=pitch=2^(5/12)[a1];[0:a]rubberband=pitch=2^(-2/12)[a2];[a1][a2]amix=2,volume=2[outa]" -map 0:v -map "[outa]" -pix_fmt yuv420p}}
 {if:{indexof:ffmpeg|{arg:0}}|!=|-1|then:{if:{arg:{math:{get:offset}+1}}|=|raw|then:{py:import json as js
 icon = "{avatar}"
 auth = "{user}#{discrim}"
@@ -89,5 +121,4 @@ concatmultiple{foreach:{get:powers}|{set:#|{math:{get:#}+1}} {get:#}}
 render 1}|else:{iscript:load {iv} 0
 {replace:#|0|{get:code}}
 render 0}}}}}
-}
 }
