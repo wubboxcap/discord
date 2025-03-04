@@ -102,7 +102,7 @@ icon = "{avatar}"
 auth = "{user}#{discrim}"
 content = '''```{get:code}```'''
 json = {"embed":{"title":"Code","description":content,"color":0x00dc64,"author":{"name":auth,"icon_url":icon}}}
-print(js.dumps(json))}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtx|then:get the out.{set:powers|{or:{arg:{math:{get:offset}+2}}|2}}{set:vidlen|{sh:load {iv}
+print(js.dumps(json))}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtx|then:get the out.{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}{set:vidlen|{sh:load {iv}
 ffprobe -i $FILE_1 -show_entries format=duration -v quiet -of csv="p=0"}}{set:time|{or:{if:{arg:{math:{get:offset}+2}}|=|true|then:{get:vidlen}|else:{arg:{math:{get:offset}+2}}}|0.5}}{set:render|load {iv}
 ffmpeg -i $FILE_1 {get:code} 1.ts
 {replace:code|{get:code}|{replace:time|{get:time}|{js:for (let i = 0; i < {get:powers}-1; i++) {
