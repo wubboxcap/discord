@@ -97,6 +97,7 @@ volume #}}
 {if:{arg:0}|=|custom|then:{set:code|{arg:1}}{set:offset|{math:{get:offset}+1}}}
 {if:{arg:0}|=|custom major 528 ffmpeg|then:{set:code|-vf format=yuv444p,scale=iw:ih,"geq='p(X,floor(Y+sin(T*250/10+X*2.5/100)*4.5))'",huesaturation=90:0:0:-100:100,negate,vflip,scale=iw:ih,format=yuv420p -filter_complex "[0:a]rubberband=pitch=2^(5/12)[a1];[0:a]rubberband=pitch=2^(-2/12)[a2];[a1][a2]amix=2,volume=2[outa]" -map 0:v -map "[outa]" -pix_fmt yuv420p}}
 {if:{arg:0}|=|custom major 333 ffmpeg|then:{set:code|-vf negate,rotate=-0.03,unsharp -filter_complex "[0:a]rubberband=pitch=2^(0/12)[a1];[0:a]rubberband=pitch=2^(-0.2/12)[a2];[a1][a2]amix=2,volume=2[outa]" -map 0:v -map "[outa]"}}
+{if:{arg:0}|=|list|then:- test}
 {if:{indexof:ffmpeg|{arg:0}}|!=|-1|then:{if:{arg:{math:{get:offset}+1}}|=|raw|then:{py:import json as js
 icon = "{avatar}"
 auth = "{user}#{discrim}"
@@ -131,7 +132,11 @@ copy {get:#} {math:{get:#}+1}
 }
 {set:#|0}
 concatmultiple{foreach:{get:powers}|{set:#|{math:{get:#}+1}} {get:#}}
-render 1}|else:{iscript:load {iv} 0
+render 1}|else:{if:{py:args = {jsonify:{arg:0}}
+if args != list:
+    print("y")
+else:
+    print("n")}|=|y|then:{iscript:load {iv} 0
 {replace:#|0|{get:code}}
-render 0}}}}}
+render 0}}}}}}
 }
