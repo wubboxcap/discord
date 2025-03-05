@@ -133,7 +133,7 @@ copy {get:#} {math:{get:#}+1}
 {set:#|0}
 concatmultiple{foreach:{get:powers}|{set:#|{math:{get:#}+1}} {get:#}}
 render 1}|else:{set:result|{py:args = {jsonify:{arg:0}}
-if args === "list" or args === "archive":
+if args == "list" or args == "archive":
     print("y")
 else:
     print("n")}}{if:{get:result}|=|n|then:{iscript:load {iv} 0
