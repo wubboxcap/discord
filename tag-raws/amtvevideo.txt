@@ -132,11 +132,11 @@ copy {get:#} {math:{get:#}+1}
 }
 {set:#|0}
 concatmultiple{foreach:{get:powers}|{set:#|{math:{get:#}+1}} {get:#}}
-render 1}|else:{if:{py:args = {jsonify:{arg:0}}
-if args != list:
+render 1}|else:{set:result|{py:args = {jsonify:{arg:0}}
+if args === "list" or args === "archive":
     print("y")
 else:
-    print("n")}|=|y|then:{iscript:load {iv} 0
+    print("n")}}{if:{get:result}|=|n|then:{iscript:load {iv} 0
 {replace:#|0|{get:code}}
 render 0}}}}}}
 }
