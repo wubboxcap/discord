@@ -38,6 +38,13 @@ else:
 {if:{argslen}|<|1|then:.t {tagname} <effect> <args...> <subcommand> <subcommand args>|else:-# Note: AMTVEVideo is in BETA!
 {if:{arg:1}|!=|list|then:{choose:hey i feel so sprunki|《SPRUNKI》|☆TAT☆ FOUND AFTER 10 YEARS NO WAY|{repeat:30|{mention:{user}}}|have a bowl mr squidward|https://media.discordapp.net/attachments/1124758334805909509/1334274228219940877/now.gif?ex=679bef35&is=679a9db5&hm=50d94b4217555d74e7059e03ab50d29972e827410a99d1117f471095181209ff&}
 }
+{set:res|{py:args = {jsonify:{arg:0}}
+effects = {get:effects}
+if not args in effects:
+    print("y")
+else:
+    print("n")}}
+{if:{get:res}|=|y|then:{js:console.error("Effect Does not exist.")}}
 {if:{arg:0}|=|archive|then:{attachtext:{text:https://wubboxcap.github.io/discord/tag-raws/amtvevideo.txt}}}
 {if:{arg:0}|=|custom major 528|then:{set:code|get # width w
 get # height h
@@ -147,7 +154,8 @@ copy {get:#} {math:{get:#}+1}
 {set:#|0}
 concatmultiple{foreach:{get:powers}|{set:#|{math:{get:#}+1}} {get:#}}
 render 1}|else:{set:result|{py:args = {jsonify:{arg:0}}
-if args == "list" or args == "archive":
+effects = {get:effects}
+if args == "list" or args == "archive" or not args in effects:
     print("y")
 else:
     print("n")}}{if:{get:result}|=|n|then:{iscript:load {iv} 0
