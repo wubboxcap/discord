@@ -1,6 +1,7 @@
 {set:code|}
 {set:offset|0}
 {set:banlist|[]}
+{set:effects|["custom major 528","g major 91","t major","you wiggled x","split 2 pitches","custom ffmpeg","custom","custom major 528 ffmpeg","custom major 333 ffmpeg"]}
 {set:banned|{py:import json
 def check_item_in_json(json_data, item):
   try:
@@ -38,7 +39,6 @@ else:
 {if:{arg:1}|!=|list|then:{choose:hey i feel so sprunki|《SPRUNKI》|☆TAT☆ FOUND AFTER 10 YEARS NO WAY|{repeat:30|{mention:{user}}}|have a bowl mr squidward|https://media.discordapp.net/attachments/1124758334805909509/1334274228219940877/now.gif?ex=679bef35&is=679a9db5&hm=50d94b4217555d74e7059e03ab50d29972e827410a99d1117f471095181209ff&}
 }
 {if:{arg:0}|=|archive|then:{attachtext:{text:https://wubboxcap.github.io/discord/tag-raws/amtvevideo.txt}}}
-{if:{arg:0}|=|ffmpeg effect|then:{set:code|-vf negate,hue=h=-45}}
 {if:{arg:0}|=|custom major 528|then:{set:code|get # width w
 get # height h
 flip #
@@ -77,11 +77,12 @@ audiopitch # 1.12}}
 get # height h
 hueshifthsv # 284.04
 invert #
-wave # w/30 w/2
+flop #
+wave # w/20 w/2
 cover # w h
 rotate # 270
 flop #
-wave # w/30 h/2
+wave # w/20 h/2
 flop #
 rotate # -270
 cover # w h
@@ -92,7 +93,11 @@ audiopitch #b 1.5
 overlay # #a
 volume #
 overlay # #b
-volume #}}
+volume #
+flop #}}
+{if:{arg:0}|=|t major|then:{set:code|invert #
+audiopitch # 1.78
+hueshifthsv # 201.6}}
 {if:{arg:0}|=|split 2 pitches|then:{set:code|copy # #$
 convert #$ audio/wav
 copy #$ #$a
