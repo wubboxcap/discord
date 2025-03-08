@@ -128,7 +128,7 @@ audiopitch #a 0.75
 overlay # #a
 volume #}}
 {if:{arg:0}|=|x major 159 ffmpeg|then:{set:code|-vf negate,hue=s=0,colorchannelmixer=1:0:1:0:0:1:0:0:1:0:1:0:1:1:1:1,hue=s=3 -filter_complex "[0:a]rubberband=formant=712923000:pitch=2^(-5/12)[a1];[0:a]rubberband=formant=712923000:pitch=2^(7/12)[a2];[a1][a2]amix=2,volume=2,atrim=0.02[outa]" -map 0:v -map "[outa]"}}
-{if:{arg:0}|=|a major|{set:code|waaw #
+{if:{arg:0}|=|a major|then:{set:code|waaw #
 swirl # 130
 invert #
 hueshifthsv # 153
