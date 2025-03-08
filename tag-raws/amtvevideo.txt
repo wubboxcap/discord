@@ -1,7 +1,7 @@
 {set:code|}
 {set:offset|0}
 {set:banlist|[]}
-{set:effects|["custom major 528","g major 91","t major","you wiggled x","split 2 pitches","custom ffmpeg","custom","custom major 528 ffmpeg","custom major 333 ffmpeg"]}
+{set:effects|["custom major 528","g major 91","t major","you wiggled x","split 2 pitches","custom ffmpeg","custom","custom major 528 ffmpeg","custom major 333 ffmpeg","simulator v19","simulator v19 ffmpeg","a major","x major 159","x major 159 ffmpeg"]}
 {set:banned|{py:import json
 def check_item_in_json(json_data, item):
   try:
@@ -118,6 +118,25 @@ audioputreplace # #$}{set:offset|{math:{get:offset}+2}}}
 {if:{arg:0}|=|custom|then:{set:code|{arg:1}}{set:offset|{math:{get:offset}+1}}}
 {if:{arg:0}|=|custom major 528 ffmpeg|then:{set:code|-vf format=yuv444p,scale=iw:ih,"geq='p(X,floor(Y+sin(T*250/10+X*2.5/100)*4.5))'",huesaturation=90:0:0:-100:100,negate,vflip,scale=iw:ih,format=yuv420p -filter_complex "[0:a]rubberband=pitch=2^(5/12)[a1];[0:a]rubberband=pitch=2^(-2/12)[a2];[a1][a2]amix=2,volume=2[outa]" -map 0:v -map "[outa]" -pix_fmt yuv420p}}
 {if:{arg:0}|=|custom major 333 ffmpeg|then:{set:code|-vf negate,rotate=-0.03,unsharp -filter_complex "[0:a]rubberband=pitch=2^(0/12)[a1];[0:a]rubberband=pitch=2^(-0.2/12)[a2];[a1][a2]amix=2,volume=2[outa]" -map 0:v -map "[outa]"}}
+{if:{arg:0}|=|x major 159|then:{set:code|gray #
+huecurvergba # red 1 1 0
+huecurvergba # green 1 0 0
+huecurvergba # blue 1 1 0
+copy # #a
+audiopitch # 1.5
+audiopitch #a 0.75
+overlay # #a
+volume #}}
+{if:{arg:0}|=|x major 159 ffmpeg|then:{set:code|-vf negate,hue=s=0,colorchannelmixer=1:0:1:0:0:1:0:0:1:0:1:0:1:1:1:1,hue=s=3 -filter_complex "[0:a]rubberband=formant=712923000:pitch=2^(-5/12)[a1];[0:a]rubberband=formant=712923000:pitch=2^(7/12)[a2];[a1][a2]amix=2,volume=2,atrim=0.02[outa]" -map 0:v -map "[outa]"}}
+{if:{arg:0}|=|a major|{set:code|waaw #
+swirl # 130
+invert #
+hueshifthsv # 153
+copy # #a
+audiopitch # 1.392328852631493
+audiopitch #a 1.8340080864093424
+overlay # #a
+volume #}}
 {if:{arg:0}|=|list|then:- test}
 {if:{indexof:ffmpeg|{arg:0}}|!=|-1|then:{if:{arg:{math:{get:offset}+1}}|=|raw|then:{py:import json as js
 icon = "{avatar}"
