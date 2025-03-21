@@ -26,5 +26,5 @@ for i in range(num):
 rotate 0 180
 overlay 0 wtm 0 0 none 0.01 0 true 50
 rotate 0 180
-if is(video,tester) == 1 "convert 0 video/mp4\nrepeatduration 0 testerd\nausioputreplace 0 tester"
+if is(video,tester) == 1 "convert 0 video/mp4\nrepeatduration 0 testerd\naudioputreplace 0 tester"
 render 0}}}
