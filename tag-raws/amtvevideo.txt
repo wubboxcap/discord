@@ -166,7 +166,7 @@ content = '''```{replace:#|{or:{arg:{math:{get:offset}+2}}|#}|{get:code}}```'''
 json = {"embed":{"title":"Code","description":content,"color":0x00dc64,"author":{"name":auth,"icon_url":icon}}}
 print(js.dumps(json))}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtx|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}{set:#|0}
 {iscript:load {iv} 0
-{if:{arg:{math:{get:offset}+3}}|!=|true|then:snip 0 0 0.5}
+{if:{arg:{math:{get:offset}+3}}|!=|true|then:snip 0 0 {or:{arg:{math:{get:offset}+3}}|0.5}}
 copy 0 1
 {foreach:{get:powers}|{set:#|{math:{get:#}+1}}
 {replace:#|{get:#}|{get:code}}
