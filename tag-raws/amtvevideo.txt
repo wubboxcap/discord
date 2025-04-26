@@ -47,8 +47,7 @@ if not args in effects:
         print("y")
 else:
     print("n")}}
-{if:{get:res}|=|y|then:{js:console.error("Effect Does not exist.")}}
-{if:{arg:0}|=|archive|then:{attachtext:{text:https://wubboxcap.github.io/discord/tag-raws/amtvevideo.txt}}}
+{if:{get:res}|=|y|then:{js:console.error("Effect Does not exist.")}}{if:{arg:0}|=|archive|then:{attachtext:{text:https://wubboxcap.github.io/discord/tag-raws/amtvevideo.txt}}}{if:{arg:0}|=|list|then:- test}
 {if:{arg:0}|=|custom major 528|then:{set:code|get # width w
 get # height h
 flip #
@@ -140,26 +139,26 @@ audiopitch # 1.392328852631493
 audiopitch #a 1.8340080864093424
 overlay # #a
 volume #}}
-{if:{arg:0}|=|list|then:- test}
 {if:{indexof:ffmpeg|{arg:0}}|!=|-1|then:{if:{arg:{math:{get:offset}+1}}|=|raw|then:{py:import json as js
 icon = "{avatar}"
 auth = "{user}#{discrim}"
 content = '''```{get:code}```'''
 json = {"embed":{"title":"Code","description":content,"color":0x00dc64,"author":{"name":auth,"icon_url":icon}}}
-print(js.dumps(json))}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtx|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}{set:vidlen|{sh:load {iv}
-ffprobe -i $FILE_1 -show_entries format=duration -v quiet -of csv="p=0"}}{set:time|{or:{if:{arg:{math:{get:offset}+3}}|=|true|then:{get:vidlen}|else:{arg:{math:{get:offset}+3}}}|0.5}}{set:render|load {iv}
+print(js.dumps(json))}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtx|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}{set:time|{or:{if:{arg:{math:{get:offset}+3}}|=|true|then:$vidlen|else:{arg:{math:{get:offset}+3}}}|0.5}}{set:render|load {media}
+vidlen=$(ffprobe -i $FILE_1 -show_entries format=duration -v quiet -of csv="p=0")
 ffmpeg -i $FILE_1 {get:code} -t {get:time} 1.ts
 {replace:code|{get:code}|{replace:time|{get:time}|{js:for (let i = 0; i < {get:powers}-1; i++) {
 console.log(`ffmpeg -i "${i+1}.ts" code -t time ${i+2}.ts`);
 }}}}
 {set:#|0}
-ffmpeg -i "concat:{foreach:{math:{get:powers}-1}|{set:#|{math:{get:#}+1}}{get:#}.ts\u007c}{get:powers}.ts" ./output/ihtx.mp4}{sh:{js:console.log(`{get:render}`);}}|else:{if:{arg:{math:{get:offset}+1}}|=|multiplier|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|2}}{set:render|load {iv}
-ffmpeg -i $FILE_1 {get:code} 1.ts
+ffmpeg -i "concat:{foreach:{math:{get:powers}-1}|{set:#|{math:{get:#}+1}}{get:#}.ts\u007c}{get:powers}.ts" ./output/ihtx.mp4}{sh:{js:console.log(`{get:render}`);}}|else:{if:{arg:{math:{get:offset}+1}}|=|multiplier|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|2}}{set:render|load {media}
+vidlen=$(ffprobe -i $FILE_1 -show_entries format=duration -v quiet -of csv="p=0")
+ffmpeg -i $FILE_1 {get:code} -t $vidlen 1.ts
 {replace:code|{get:code}|{js:for (let i = 0; i < {get:powers}-1; i++) {
-console.log(`ffmpeg -i "${i+1}.ts" code ${i+2}.ts`);
+console.log(`ffmpeg -i "${i+1}.ts" code -t $vidlen ${i+2}.ts`);
 }}}
 {set:#|0}
-ffmpeg -i "{get:powers}.ts" ./output/multiplier.mp4}{sh:{js:console.log(`{get:render}`);}}|else:{sh:load {iv}
+ffmpeg -i "{get:powers}.ts" ./output/multiplier.mp4}{sh:{js:console.log(`{get:render}`);}}|else:{sh:load {media}
 ffmpeg -i $FILE_1 {get:code} ./output/amtvevideo.mp4}}}}|else:{if:{arg:{math:{get:offset}+1}}|=|raw|then:{py:import json as js
 icon = "{avatar}"
 auth = "{user}#{discrim}"
@@ -180,7 +179,7 @@ effects = {get:effects}
 if args == "list" or args == "archive" or not args in effects:
     print("y")
 else:
-    print("n")}}{if:{get:result}|=|n|then:{iscript:load {iv} 0
+    print("n")}}{if:{get:result}|=|n|then:{iscript:load {media} 0
 {replace:#|0|{get:code}}
-render 0}}}}}}
+render 0 default amtvevideo}}}}}}
 }
