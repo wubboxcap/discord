@@ -41,12 +41,12 @@ else:
 {set:res|{py:args = {jsonify:{arg:0}}
 effects = {get:effects}
 if not args in effects:
-    print("y")
-else:
     if args == "list" or args == "archive":
-        print("y")
+        print("n")
     else:
-        print("n")}}
+        print("y")
+else:
+    print("n")}}
 {if:{get:res}|=|y|then:{js:console.error("Effect Does not exist.")}}
 {if:{arg:0}|=|archive|then:{attachtext:{text:https://wubboxcap.github.io/discord/tag-raws/amtvevideo.txt}}}
 {if:{arg:0}|=|custom major 528|then:{set:code|get # width w
