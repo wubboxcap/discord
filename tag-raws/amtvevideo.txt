@@ -180,6 +180,7 @@ if args == "list" or args == "archive" or not args in effects:
     print("y")
 else:
     print("n")}}{if:{get:result}|=|n|then:{iscript:load {media} 0
-{replace:#|0|{get:code}}
-render 0 default amtvevideo}}}}}}
+copy 0 1
+{replace:#|1|{get:code}}
+render 1 default amtvevideo}}}}}}
 }
