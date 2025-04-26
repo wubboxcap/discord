@@ -53,13 +53,17 @@ get # height h
 flip #
 hueshifthsv # 90
 invert #
-waves # 6.5 w/2.5 10
-cover # w h
+waves # 6.5 0w/2.5 10
+cover # 0w 0h
 copy # #a
-audiopitch # 1.334
-audiopitch #a 0.89
-overlay # #a
-volume #}}
+convert #a audio/wav
+copy #a #b
+audiopitch #a 2**(5/12)
+audiopitch #b 2**(-2/12)
+audioputmix # #a
+volume #a
+repeatduration #a #d
+audioputreplace # #a}}
 {if:{arg:0}|=|g major 91|then:{set:code|swaprgba # bgr
 hueshifthsv # 180
 haah #
@@ -114,7 +118,7 @@ audiopitch #$ 2**({arg:1}/12)
 audiopitch #$a 2**({arg:2}/12)
 audioputmix #$ #$a
 volume #$
-repeatduration # #$d
+repeatduration #$ #d
 audioputreplace # #$}{set:offset|{math:{get:offset}+2}}}
 {if:{arg:0}|=|custom ffmpeg|then:{set:code|{arg:1}}{set:offset|{math:{get:offset}+1}}}
 {if:{arg:0}|=|custom|then:{set:code|{arg:1}}{set:offset|{math:{get:offset}+1}}}
@@ -135,10 +139,14 @@ swirl # 130
 invert #
 hueshifthsv # 153
 copy # #a
-audiopitch # 1.392328852631493
-audiopitch #a 1.8340080864093424
-overlay # #a
-volume #}}
+convert #a audio/wav
+copy #a #b
+audiopitch #a 2**(5.73/12)
+audiopitch #b 2**(10.5/12)
+audioputmix #a #b
+volume #a
+repeatduration #a #d
+audioputreplace # #a}}
 {if:{indexof:ffmpeg|{arg:0}}|!=|-1|then:{if:{arg:{math:{get:offset}+1}}|=|raw|then:{py:import json as js
 icon = "{avatar}"
 auth = "{user}#{discrim}"
