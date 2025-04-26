@@ -48,9 +48,7 @@ if not args in effects:
 else:
     print("n")}}
 {if:{get:res}|=|y|then:{js:console.error("Effect Does not exist.")}}{if:{arg:0}|=|archive|then:{attachtext:{text:https://wubboxcap.github.io/discord/tag-raws/amtvevideo.txt}}}{if:{arg:0}|=|list|then:- test}
-{if:{arg:0}|=|custom major 528|then:{set:code|get # width w
-get # height h
-flip #
+{if:{arg:0}|=|custom major 528|then:{set:code|flip #
 hueshifthsv # 90
 invert #
 waves # 6.5 0w/2.5 10
@@ -67,15 +65,21 @@ audioputreplace # #a}}
 {if:{arg:0}|=|g major 91|then:{set:code|swaprgba # bgr
 hueshifthsv # 180
 haah #
-skew # 10
-copy # #a
-audiopitch #a 1.059
-overlay # #a
-volume #
-cover # 0w 0h}}
-{if:{arg:0}|=|you wiggled x|then:{set:code|get # width w
-get # height h
-hueshifthsv # 60
+distort # resize 512 512
+rotate # -90
+distort # arc 30 90
+contain # 640 512
+distort # bilinear_forward 88 70 -116 -74 60 303 -48 395 550 30 642 -24 553 382 642 368
+distort # resize 0w 0h
+copy # #$
+convert #$ audio/wav
+copy #$ #$p
+audiopitch #$p 2**(1/12)
+audioputmix #$ #$p
+volume #$
+repeatduration #$ #d
+audioputreplace # #$}}
+{if:{arg:0}|=|you wiggled x|then:{set:code|hueshifthsv # 60
 haah #
 wave # 10 w/8
 cover # w h
@@ -83,31 +87,33 @@ rotate # 90
 wave # 10 w/8
 rotate # -90
 cover # w h
-audiopitch # 2
-audiopitch # 1.12}}
-{if:{arg:0}|=|simulator v19 ffmpeg|then:{set:code|-vf negate,huesaturation=-70:0.5:0:-100:100,format=yuv444p,scale=640:-1,"geq='p(X+sin(0/10+Y/28)*30,(Y+sin(0/10+X*1.9/100)*18))'","geq='p(X+sin(0/10+Y/28)*30,(Y+sin(0/10+X*1.9/100)*18))'",scale=iw:ih,format=yuv420p -filter_complex "[0:a]rubberband=formant=712923000:pitch=2^(-12/12)[a1];[0:a]rubberband=formant=712923000:pitch=2^(0/12)[a2];[0:a]rubberband=formant=712923000:pitch=2^(7/12)[a3];[a1][a2][a3]amix=3,volume=3,atrim=0.02[outa]" -map 0:v -map "[outa]"}}
-{if:{arg:0}|=|simulator v19|then:{set:code|get # width w
-get # height h
-hueshifthsv # 284.04
-invert #
-flop #
-wave # w/20 w/2
-cover # w h
-rotate # 270
-flop #
-wave # w/20 h/2
-flop #
-rotate # -270
-cover # w h
 copy # #a
-copy # #b
-audiopitch # 0.5
-audiopitch #b 1.5
-overlay # #a
-volume #
-overlay # #b
-volume #
-flop #}}
+convert #a audio/wav
+audiopitch #a 2**(12/12)
+audiopitch #a 2**(2/12)
+repeatduration #a #d
+audioputreplace # #a}}
+{if:{arg:0}|=|simulator v19 ffmpeg|then:{set:code|-vf negate,huesaturation=-70:0.5:0:-100:100,format=yuv444p,scale=640:-1,"geq='p(X+sin(0/10+Y/28)*30,(Y+sin(0/10+X*1.9/100)*18))'","geq='p(X+sin(0/10+Y/28)*30,(Y+sin(0/10+X*1.9/100)*18))'",scale=iw:ih,format=yuv420p -filter_complex "[0:a]rubberband=formant=712923000:pitch=2^(-12/12)[a1];[0:a]rubberband=formant=712923000:pitch=2^(0/12)[a2];[0:a]rubberband=formant=712923000:pitch=2^(7/12)[a3];[a1][a2][a3]amix=3,volume=3,atrim=0.02[outa]" -map 0:v -map "[outa]"}}
+{if:{arg:0}|=|simulator v19|then:{set:code|invert #
+hueshifthsv # 284
+rotate # 90
+wave # 0h*0.05 0w/(5.4/1.667)
+cover # 0h 0w
+rotate # -90
+wave # -0h*0.05 0w/(5.4/2.666)
+cover # 0w 0h
+copy # #a
+convert #a audio/wav
+copy #a #b
+copy #a #c
+audiopitch #b 2**(7/12)
+audiopitch #c 2**(-12/12)
+audioputmix #a #b
+volume #a
+audioputmix #a #c
+volume #a
+repeatduration #a #d
+audioputreplace # #a}}
 {if:{arg:0}|=|t major|then:{set:code|invert #
 audiopitch # 1.78
 hueshifthsv # 201.6}}
