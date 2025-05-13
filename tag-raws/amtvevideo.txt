@@ -1,7 +1,7 @@
 {set:code|}
 {set:offset|0}
 {set:banlist|[]}
-{set:effects|["custom major 528","g major 91","t major","you wiggled x","split 2 pitches","custom ffmpeg","custom","custom major 528 ffmpeg","custom major 333 ffmpeg","simulator v19","simulator v19 ffmpeg","a major","x major 159","x major 159 ffmpeg","deaf x","blind x","g major 1","g major"]}
+{set:effects|["custom major 528","g major 91","t major","you wiggled x","split 2 pitches","custom ffmpeg","custom","custom major 528 ffmpeg","custom major 333 ffmpeg","simulator v19","simulator v19 ffmpeg","a major","x major 159","x major 159 ffmpeg","deaf x","blind x","g major","g major 0","g major 1","g major 2"]}
 {set:banned|{py:import json
 def check_item_in_json(json_data, item):
   try:
@@ -172,11 +172,39 @@ audioputmix #$ #$e
 volume #$
 repeatduration #$ #d
 audioputreplace # #$}}
+{if:{arg:0}|=|g major 0|then:{set:code|hueshifthsv # 180
+invert #
+huecurvergba # all 0 1 0
+copy # #a
+convert #a audio/wav
+copy #a #b
+copy #a #c
+audiopitch #a 2**(-10/12)
+audiopitch #c 2**(10/12)
+audioputmix #a #b
+volume #a
+audioputmix #a #c
+volume #a
+repeatduration #a #d
+audioputreplace # #a}}
 {if:{arg:0}|=|g major 1|then:{set:code|hueshifthsv # 180
 invert #
 copy # #a
 convert #a audio/wav
 audiopitch #a 2**(8/12)
+repeatduration #a #d
+audioputreplace # #a}}
+{if:{arg:0}|=|g major 2|then:{set:code|invertrgba # 1 1 0
+copy # #a
+convert #a audio/wav
+copy #a #b
+copy #a #c
+audiopitch #b 2**(4/12)
+audiopitch #c 2**(-5/12)
+audioputmix #a #b
+volume #a
+audioputmix #a #c
+volume #a
 repeatduration #a #d
 audioputreplace # #a}}
 {if:{arg:0}|=|t major|then:{set:code|invert #
