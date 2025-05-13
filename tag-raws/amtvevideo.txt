@@ -47,7 +47,8 @@ if not args in effects:
         print("y")
 else:
     print("n")}}
-{if:{get:res}|=|y|then:{js:console.error("Effect Does not exist.")}}{if:{arg:0}|=|archive|then:{attachtext:{text:https://wubboxcap.github.io/discord/tag-raws/amtvevideo.txt}}}{if:{arg:0}|=|list|then:- test}
+{if:{get:res}|=|y|then:{js:console.error("Effect Does not exist.")}}{if:{arg:0}|=|archive|then:{attachtext:{text:https://wubboxcap.github.io/discord/tag-raws/amtvevideo.txt}}}{if:{arg:0}|=|list|then:-# {py:arr = {get:effects}
+print(len(arr))} effects.}
 {if:{arg:0}|=|custom major 528|then:{set:code|flip #
 hueshifthsv # 90
 invert #
