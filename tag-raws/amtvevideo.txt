@@ -326,7 +326,7 @@ icon = "{avatar}"
 auth = "{user}#{discrim}"
 content = '''```{replace:#|{or:{arg:{math:{get:offset}+2}}|#}|{get:code}}```'''
 json = {"embed":{"title":"Code","description":content,"color":0x00dc64,"author":{"name":auth,"icon_url":icon}}}
-print(js.dumps(json))}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtx|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}{set:#|0}
+print(js.dumps(json))}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtx|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
 {iscript:load {video} 0
 {if:{arg:{math:{get:offset}+3}}|!=|true|then:snip 0 0 {or:{arg:{math:{get:offset}+3}}|0.5}}
 {js:let ihtx = 10;
@@ -344,7 +344,20 @@ concatmultiple {replace:\n| |{js:let ihtx = 10;
 for (let i = 1; i <= ihtx; i++) {
   console.log(i)
 }}}
-render 1 default amtvevideo}|else:{set:result|{py:args = {jsonify:{arg:0}}
+render 1 default amtvevideo}|else:{if:{arg:{math:{get:offset}+1}}|=|multiplier|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
+{iscript:load {video} 0
+{js:let ihtx = 10;
+let loop = {or:{arg:{math:{get:offset}+4}}|true}
+const action = {jsonify:{get:code}}
+console.log("copy 0 1")
+for (let i = 1; i <= ihtx; i++) {
+  console.log(action.replaceAll("#",i));
+  if (loop == true) {
+    console.log(`repeatduration ${i} 0d`)
+  }
+  console.log(`copy ${i} ${i+1}`);
+}}
+render {get:powers} default amtvevideo}|else:{set:result|{py:args = {jsonify:{arg:0}}
 effects = {get:effects}
 if args == "list" or args == "archive" or not args in effects:
     print("y")
@@ -353,4 +366,5 @@ else:
 copy 0 1
 {replace:#|1|{get:code}}
 render 1 default amtvevideo}}}}}}
+}
 }
