@@ -345,7 +345,7 @@ for (let i = 1; i <= ihtx; i++) {
   console.log(i)
 }}}
 render 1 default amtvevideo}|else:{if:{arg:{math:{get:offset}+1}}|=|multiplier|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
-{iscript:load {video} 0
+iscript:load {video} 0
 {js:let ihtx = 10;
 let loop = {or:{arg:{math:{get:offset}+4}}|true}
 const action = {jsonify:{get:code}}
@@ -357,7 +357,7 @@ for (let i = 1; i <= ihtx; i++) {
   }
   console.log(`copy ${i} ${i+1}`);
 }}
-render {get:powers} default amtvevideo}|else:{set:result|{py:args = {jsonify:{arg:0}}
+render {get:powers} default amtvevideo|else:{set:result|{py:args = {jsonify:{arg:0}}
 effects = {get:effects}
 if args == "list" or args == "archive" or not args in effects:
     print("y")
