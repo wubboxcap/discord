@@ -1,7 +1,7 @@
 {set:code|}
 {set:offset|0}
 {set:banlist|[]}
-{set:effects|["custom major 528","t major","you wiggled x","split 2 pitches","custom ffmpeg","custom","custom major 528 ffmpeg","custom major 333 ffmpeg","simulator v19","simulator v19 ffmpeg","a major","x major 159","x major 159 ffmpeg","deaf x","blind x","g major","g major 0","g major 1","g major 2","g major 4","real g major 4","g major 25","g major 74","g major 74 hsv","g major 91","g major 100","l major"]}
+{set:effects|["custom major 528","t major","you wiggled x","split 2 pitches","custom ffmpeg","custom","custom major 528 ffmpeg","custom major 333 ffmpeg","simulator v19","simulator v19 ffmpeg","a major","x major 159","x major 159 ffmpeg","deaf x","blind x","g major","g major 0","g major 1","g major 2","g major 4","real g major 4","g major 5","g major 7","g major 16","g major 23","g major 25","g major 74","g major 74 hsv","g major 91","g major 100","l major"]}
 {set:banned|{py:import json
 def check_item_in_json(json_data, item):
   try:
@@ -205,6 +205,47 @@ copy # #a
 convert #a audio/wav
 copy #a #b
 audiopitch #b 2**(5/12)
+audioputmix #a #b
+volume #a
+repeatduration #a #d
+audioputreplace # #a}}
+{if:{arg:0}|=|g major 5|then:{set:code|invertrgba # 0 1
+copy # #a
+convert #a audio/wav
+copy #a #b
+audiopitch #b 2**(4/12)
+audioputmix #a #b
+volume #a
+repeatduration #a #d
+audioputreplace # #a}}
+{if:{arg:0}|=|g major 7|then:{set:code|
+invert #
+copy # #a
+convert #a audio/wav
+copy #a #b
+audiopitch #b 2**(3/12)
+audioputmix #a #b
+volume #a
+repeatduration #a #d
+audioputreplace # #a}}
+{if:{arg:0}|=|g major 16|then:{set:code|hueshifthsv # -140
+invert #
+flop #
+copy # #a
+convert #a audio/wav
+copy #a #b
+audiopitch #b 2**(-3/12)
+audioputmix #a #b
+volume #a
+repeatduration #a #d
+audioputreplace # #a}}
+{if:{arg:0}|=|g major 23|then:{set:code|hueshifthsv # -140
+flop #
+copy # #a
+convert #a audio/wav
+copy #a #b
+audiopitch #a 2**(-3/12)
+audiopitch #b 2**(3/12)
 audioputmix #a #b
 volume #a
 repeatduration #a #d
