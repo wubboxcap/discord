@@ -383,7 +383,7 @@ for (let i = 1; i <= ihtx; i++) {
   }
   console.log(`copy ${i} ${i+1}`);
 }}
-concatmultiple {replace:\n| |{js:let ihtx = 10;
+concatmultiple {replace:\n| |{js:let ihtx = {get:powers};
 for (let i = 1; i <= ihtx; i++) {
   console.log(i)
 }}}
