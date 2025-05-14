@@ -1,7 +1,7 @@
 {set:code|}
 {set:offset|0}
 {set:banlist|[]}
-{set:effects|["custom major 528","t major","you wiggled x","split 2 pitches","custom ffmpeg","custom","custom major 528 ffmpeg","custom major 333 ffmpeg","simulator v19","simulator v19 ffmpeg","a major","x major 159","x major 159 ffmpeg","deaf x","blind x","g major","g major 0","g major 1","g major 2","g major 4","real g major 4","g major 5","g major 7","g major 16","g major 23","g major 25","g major 74","g major 74 hsv","g major 91","g major 100","l major"]}
+{set:effects|["reverse audio","confusion","confusion hsv","confusion reversed","confusion hsv reversed","large wave","custom major 528","t major","you wiggled x","split 2 pitches","custom ffmpeg","custom","custom major 528 ffmpeg","custom major 333 ffmpeg","simulator v19","simulator v19 ffmpeg","a major","x major 159","x major 159 ffmpeg","deaf x","blind x","g major","g major 0","g major 1","g major 2","g major 4","real g major 4","g major 5","g major 7","g major 16","g major 23","g major 25","g major 74","g major 74 hsv","g major 91","g major 100","l major"]}
 {set:banned|{py:import json
 def check_item_in_json(json_data, item):
   try:
@@ -49,6 +49,38 @@ else:
     print("n")}}
 {if:{get:res}|=|y|then:{js:console.error("Effect Does not exist.")}}{if:{arg:0}|=|archive|then:{attachtext:{text:https://wubboxcap.github.io/discord/tag-raws/amtvevideo.txt}}}{if:{arg:0}|=|list|then:-# {py:arr = {get:effects}
 print(len(arr))} effects.}
+{if:{arg:0}|=|reverse audio|then:{set:code|copy # #a
+reverse #a
+audioputreplace # #a}}
+{if:{arg:0}|=|reverse audio ffmpeg|then:{set:code|-af areverse,atrim=0.02}}
+{if:{arg:0}|=|confusion|then:{set:code|contrast # -1
+haah #
+copy # #a
+reverse #a
+audioputreplace # #a}}
+{if:{arg:0}|=|confusion hsv|then:{set:code|hueshifthsv # 180
+invert #
+haah #
+copy # #a
+reverse #a
+audioputreplace # #a}}
+{if:{arg:0}|=|confusion reversed|then:{set:code|copy # #a
+contrast # -1
+haah #
+reverse #
+audioputreplace # #a}}
+{if:{arg:0}|=|confusion hsv reversed|then:{set:code|copy # #a
+hueshifthsv # 180
+invert #
+haah #
+reverse #
+audioputreplace # #a}}
+{if:{arg:0}|=|large wave|then:{set:code|rotate # 90
+wave # -0h*0.05 0w/(7/1.667)
+cover # 0h 0w
+rotate # -90
+wave # -0h*0.045 0w/(7/2.667)
+cover # 0w 0h}}
 {if:{arg:0}|=|custom major 528|then:{set:code|flip #
 hueshifthsv # 90
 invert #
