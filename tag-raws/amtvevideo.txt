@@ -62,11 +62,12 @@ for i, v in enumerate(effects):
 modulocount.pop(0)
 modulocount.append(True)
 mcount = len(modulocount)
-pageidx = 1
+pageidx = 0
 
 for i, v in enumerate(effects):
     if i % 20 == 0:
         pages.append({"embed":{"color":0x808080,"title":"test","description":content,"footer":{"text":f"Page {pageidx} of {mcount} ({effnum} Total Effects)"}, "author": {"name":auth, "icon_url":icon}}})
+        pageidx += 1
         content = ""
         content += f"- {v} \n"
     else:
