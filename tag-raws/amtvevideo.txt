@@ -543,8 +543,8 @@ audioputreplace # #a}}
 load {arg:1} source
 repeatduration source 0d
 snip source 0 0d
-resize source w/{arg:2} h/{arg:2}
-overlay # source (w/{arg:2})*{arg:3} (h/{arg:2})*{arg:4}
+resize source 0w/{arg:2} 0h/{arg:2}
+overlay # source (0w/{arg:2})*{arg:3} (0h/{arg:2})*{arg:4}
 volume #}{set:offset|{math:{get:offset}+4}}}
 {if:{indexof:ffmpeg|{arg:0}}|!=|-1|then:{if:{arg:{math:{get:offset}+1}}|=|raw|then:{py:import json as js
 icon = "{avatar}"
