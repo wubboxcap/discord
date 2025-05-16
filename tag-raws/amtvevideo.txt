@@ -61,7 +61,7 @@ for i, v in enumerate(effects):
     else:
         content += f"- {v} \n"
 
-print(js.dumps({"pages": pages}))} }
+print(js.dumps({"pages": pages}))} } }
 {if:{arg:0}|=|audio reverse|then:{set:code|copy # #a
 reverse #a
 audioputreplace # #a}}
