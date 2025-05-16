@@ -56,7 +56,7 @@ effnum = len(effects)
 content = ""
 for i, v in enumerate(effects):
     if i % 20 == 0:
-        pages.append({"embed":{"color":0x808080,"title":"test","description":content,"footer":{"text":f"{effnum} Total Effects"}, "author": {"name":auth, "icon_url":icon}})
+        pages.append({"embed":{"color":0x808080,"title":"test","description":content,"footer":{"text":f"{effnum} Total Effects"}, "author": {"name":auth, "icon_url":icon}}})
         content = ""
     else:
         content += f"- {v} \n"
