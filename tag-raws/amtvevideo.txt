@@ -61,6 +61,8 @@ for i, v in enumerate(effects):
     else:
         content += f"- {v} \n"
 
+pages.append({"embed":{"color":0x808080,"title":"test","description":content,"footer":{"text":f"{effnum} Total Effects"}, "author": {"name":auth, "icon_url":icon}}})
+pages.pop(0)
 print(js.dumps({"pages": pages}))} } }
 {if:{arg:0}|=|audio reverse|then:{set:code|copy # #a
 reverse #a
