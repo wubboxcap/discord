@@ -51,7 +51,8 @@ else:
 pages = []
 effects = {get:effects}
 icon = "{avatar}"
-auth = "{user}#{discrim}"
+auth = "{usertag}"
+icon2 = "https://cdn.discordapp.com/attachments/1124758334805909509/1373031118659391689/Untitled321_20250516144254.png?ex=6828ee60&is=68279ce0&hm=060abd6b5d8132e0d875179e33bbdc7ee3a2921e1f72a0f725d543291509d456&"
 effnum = len(effects)
 content = ""
 modulocount = []
@@ -66,14 +67,14 @@ pageidx = 0
 
 for i, v in enumerate(effects):
     if i % 20 == 0:
-        pages.append({"embed":{"color":0x808080,"title":"test","description":content,"footer":{"text":f"Page {pageidx} of {mcount} ({effnum} Total Effects)"}, "author": {"name":auth, "icon_url":icon}}})
+        pages.append({"embed":{"color":0x00dc64,"title":"**AmtveVideo Effects**","description":content,"footer":{"text":f"Page {pageidx} of {mcount} ({effnum} Total Effects)","icon_url":icon2}, "author": {"name":auth, "icon_url":icon}}})
         pageidx += 1
         content = ""
         content += f"- {v} \n"
     else:
         content += f"- {v} \n"
 
-pages.append({"embed":{"color":0x808080,"title":"test","description":content,"footer":{"text":f"Page {pageidx} of {mcount} ({effnum} Total Effects)"}, "author": {"name":auth, "icon_url":icon}}})
+pages.append({"embed":{"color":0x00dc64,"title":"**AmtveVideo Effects**","description":content,"footer":{"text":f"Page {pageidx} of {mcount} ({effnum} Total Effects)","icon_url":icon2}, "author": {"name":auth, "icon_url":icon}}})
 pages.pop(0)
 print(js.dumps({"pages": pages}))} }
 {if:{arg:0}|=|audio reverse|then:{set:code|copy # #a
@@ -320,7 +321,7 @@ invert #
 copy # #a
 convert #a audio/wav
 copy #a #b
-audiopitch #b 2**(-6/12)
+audiopitch #b 2**(-7/12)
 audioputmix #a #b
 volume #a
 repeatduration #a #d
