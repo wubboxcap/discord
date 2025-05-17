@@ -1,7 +1,7 @@
 {set:code|}
 {set:offset|0}
 {set:banlist|[]}
-{set:effects|["audio reverse","audio reverse ffmpeg","confusion","confusion hsv","confusion reversed","confusion hsv reversed","large wave","custom major 528","t major","you wiggled x","split 2 pitches","custom ffmpeg","custom","custom major 528 ffmpeg","custom major 333 ffmpeg","simulator v19","simulator v19 ffmpeg","a major","x major 159","x major 159 ffmpeg","deaf x","blind x","g major","g major 0","g major 1","g major 2","g major 3","g major 4","real g major 4","g major 5","g major 7","g major 8","g major 16","g major 23","g major 25","g major 50","g major 51","g major 74","g major 74 hsv","g major 91","91 dxi","91 dxi ffmpeg","g major 100","old g major 100","l major","add source"]}
+{set:effects|["audio reverse","audio reverse ffmpeg","confusion","confusion hsv","confusion reversed","confusion hsv reversed","large wave","custom major 528","t major","you wiggled x","split 2 pitches","custom ffmpeg","custom","custom major 528 ffmpeg","custom major 333 ffmpeg","simulator v19","simulator v19 ffmpeg","a major","x major 159","x major 159 ffmpeg","deaf x","blind x","g major","g major 0","g major 1","g major 2","g major 3","g major 4","real g major 4","g major 5","g major 6","g major 7","g major 8","g major 9","g major 10","g major 16","g major 23","g major 25","g major 50","g major 51","g major 74","g major 74 hsv","g major 91","91 dxi","91 dxi ffmpeg","g major 100","old g major 100","l major","add source"]}
 {set:banned|{py:import json
 def check_item_in_json(json_data, item):
   try:
@@ -323,6 +323,56 @@ convert #a audio/wav
 copy #a #b
 audiopitch #b 2**(-7/12)
 audioputmix #a #b
+volume #a
+repeatduration #a #d
+audioputreplace # #a}}
+{if:{arg:0}|=|g major 9|then:{set:code|gray #
+huecurvergba # red 0.5 0 0.9
+huecurvergba # green 1 0.2 0.95
+huecurvergba # blue 0 0.4 0.95
+copy # #a
+convert #a audio/wav
+copy #a #b
+copy #a #c
+copy #a #e
+audiopitch #a 2**(-12/12)
+audiopitch #c 2**(5/12)
+audiopitch #e 2**(7/12)
+audioputmix #a #b
+volume #a
+audioputmix #a #c
+volume #a
+audioputmix #a #e
+volume #a
+repeatduration #a #d
+audioputreplace # #$}}
+{if:{arg:0}|=|g major 10|then:{set:code|swaprgba # bgr
+invert #
+hueshifthsv # 180
+copy # #a
+copy #a #b
+copy #a #c
+copy #a #e
+copy #a #f
+copy #a #g
+audiopitch #a 2**(-12/12)
+audiopitch #b 2**(-5/12)
+audiopitch #e 2**(4/12)
+audiopitch #f 2**(7/12)
+audiopitch #g
+audioputmix #a #b
+volume #a
+audioputmix #a #c
+volume #a
+audioputmix #a #e
+volume #a
+audioputmix #a #f
+volume #a
+audioputmix #a #g
+volume #a
+copy #a #h
+audiopitch #h 2**(-1/12)
+audioputmix #a #h
 volume #a
 repeatduration #a #d
 audioputreplace # #a}}
