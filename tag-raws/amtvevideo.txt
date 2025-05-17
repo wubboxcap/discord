@@ -349,6 +349,7 @@ audioputreplace # #$}}
 {if:{arg:0}|=|g major 10|then:{set:code|swaprgba # bgr
 invert #
 hueshifthsv # 180
+haah #
 copy # #a
 copy #a #b
 copy #a #c
