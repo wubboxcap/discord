@@ -1,7 +1,7 @@
 {set:code|}
 {set:offset|0}
 {set:banlist|[]}
-{set:effects|["audio reverse","audio reverse ffmpeg","confusion","confusion hsv","confusion reversed","confusion hsv reversed","large wave","custom major 528","t major","you wiggled x","split 2 pitches","custom ffmpeg","custom","custom major 528 ffmpeg","custom major 333 ffmpeg","simulator v19","simulator v19 ffmpeg","a major","x major 159","x major 159 ffmpeg","deaf x","blind x","g major","g major 0","g major 1","g major 2","g major 3","g major 4","real g major 4","g major 5","g major 6","g major 7","g major 8","g major 9","g major 10","g major 16","g major 23","g major 25","g major 50","g major 51","g major 74","g major 74 hsv","g major 91","91 dxi","91 dxi ffmpeg","g major 100","old g major 100","l major","add source"]}
+{set:effects|["audio reverse","audio reverse ffmpeg","confusion","confusion hsv","confusion reversed","confusion hsv reversed","large wave","custom major 528","t major","you wiggled x","split 2 pitches","custom ffmpeg","custom","custom major 528 ffmpeg","custom major 333 ffmpeg","simulator v19","simulator v19 ffmpeg","a major","x major 159","x major 159 ffmpeg","deaf x","blind x","g major","g major 0","g major 1","g major 2","g major 3","g major 4","real g major 4","g major 5","g major 6","g major 7","g major 8","g major 9","g major 10","g major 11","g major 12","g major 15","g major 16","g major 23","g major 25","g major 50","g major 51","g major 74","g major 74 hsv","g major 91","91 dxi","91 dxi ffmpeg","g major 100","old g major 100","l major","add source"]}
 {set:banned|{py:import json
 def check_item_in_json(json_data, item):
   try:
@@ -375,6 +375,54 @@ copy #a #h
 audiopitch #h 2**(-1/12)
 audioputmix #a #h
 volume #a
+repeatduration #a #d
+audioputreplace # #a}}
+{if:{arg:0}|=|g major 11|then:{set:code|gray #
+invert #
+waaw #
+copy # #a
+convert #a audio/wav
+audiopitch #a
+audiopitch #a 2**(2/12)
+repeatduration #a #d
+audioputreplace # #a}}
+{if:{arg:0}|=|g major 12|then:{set:code|copy # #a
+convert #a audio/wav
+copy #a #b
+copy #a #c
+copy #a #e
+copy #a #f
+copy #a #g
+audiopitch #a 2**(-9/12)
+audiopitch #b 2**(-2/12)
+audiopitch #c 2**(3/12)
+audiopitch #e 2**(7/12)
+audiopitch #f 2**(10/12)
+audiopitch #g
+audiopitch #g 2**(3/12)
+audioputmix #a #b
+volume #a
+audioputmix #a #c
+volume #a
+audioputmix #a #e
+volume #a
+audioputmix #a #f
+volume #a
+audioputmix #a #g
+volume #a
+hueshifthsv # -60 50
+chromakey # white 0.1 0.5
+repeatduration #a #d
+audioputreplace # #a}}
+{if:{arg:0}|=|g major 15|then:{set:code|wave # 0h/18 0w/4
+cover # 0w 0h
+copy # #a
+convert #a audio/wav
+copy #a #b
+audiopitch #b 2**(5/12)
+audioputmix #a #b
+volume #a
+audiodestroy #a
 repeatduration #a #d
 audioputreplace # #a}}
 {if:{arg:0}|=|g major 16|then:{set:code|hueshifthsv # -140
