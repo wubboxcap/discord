@@ -10,6 +10,17 @@ for arg in arg_string.split(','):
     else:
         tempdict.append(arg)
     parsearr.append(tempdict)
+def constrain(val, min_val, max_val):
+    if val == None:
+        return None
+    if type(val)     == str:
+        val     = float(val    )
+    if type(min_val) == str:
+        min_val = float(min_val)
+    if type(max_val) == str:
+        max_val = float(max_val)
+    return min(max_val, max(min_val, val))
+
 def parse(val):
     if val[0] == "bgr":
         print("-vf colorchannelmixer=0:0:1:0:0:1:0:0:1:0:0:0:0:0:0:1 ",end="")
@@ -20,7 +31,8 @@ def parse(val):
     elif val[0] == "vflip":
         print("-vf vflip ",end="")
     elif val[0] == "pitch":
-        print(f"-af 'rubberband=pitch=2^({val[1]}/12):formant=712923000',atrim=0.015 ",end="")
+        val[1] = constrain(val[1],0.01,100)
+        print(f"-af 'rubberband=pitch=2^({val[1]}/12):formant=712923000',atrim=0.025 ",end="")
     elif val[0] == "earrape":
         print(f"-af acontrast=100,acontrast=100,aconstrast=100,acontrast=100 ",end="")
     elif val[0] == "huehsv":
@@ -28,7 +40,14 @@ def parse(val):
     elif val[0] == "hue":
         print(f"-vf hue={val[1]} ",end="")
     elif val[0] == "deepfry":
+        val[1] = constrain(val[1],0,100)
         print("-vf hue=s="+str(val[1]/10),end=" ")
+    elif val[0] == "contrast":
+        val[1] = constrain(val[1],-1,100)
+        print(f"-vf eq=contrast={val[1]} ",end="")
+    elif val[0] == "transpose":
+        val[1] = constrain(val[1],1,4)
+        print(f"-vf transpose={val[1]} ",end="")
     elif val[0] == "rotate":
         print(f"-vf rotate='{val[1]}*(PI/180)' ",end="")
     else:
