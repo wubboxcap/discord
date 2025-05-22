@@ -1,0 +1,52 @@
+{choose:i woke up in a new buggati|🚡|https://cdn.discordapp.com/attachments/1124758334805909509/1375196703824543887/resized.gif?ex=6830cf3c&is=682f7dbc&hm=a1f92b91fa51597a2f6053c5fb1b3bcdcccd9c26303c56d5ba2468eca96521dd&|sprunki sprunki sprunki get funky funky funky|cuphead and his pal mugman|featuring posy|i would die for this video ngl|chicken. 💥|# ALL OUR FOOD KEEPS BLOWING U- 💥💥💥💥}{set:output|{py:arg_string = {jsonify:{args}}
+parsearr = []
+
+for arg in arg_string.split(','):
+    tempdict = []
+    if '=' in arg:
+        key, value = arg.split('=', 1)
+        tempdict.append(key)
+        tempdict.append(value)
+    else:
+        tempdict.append(arg)
+    parsearr.append(tempdict)
+def parse(val):
+    if val[0] == "bgr":
+        print("-vf colorchannelmixer=0:0:1:0:0:1:0:0:1:0:0:0:0:0:0:1 ",end="")
+    elif val[0] == "invert":
+        print("-vf negate ",end="")
+    elif val[0] == "hflip":
+        print("-vf hflip ",end="")
+    elif val[0] == "vflip":
+        print("-vf vflip ",end="")
+    elif val[0] == "pitch":
+        print(f"-af 'rubberband=pitch=2^({val[1]}/12):formant=712923000',atrim=0.015 ",end="")
+    elif val[0] == "earrape":
+        print(f"-af acontrast=100,acontrast=100,aconstrast=100,acontrast=100 ",end="")
+    elif val[0] == "huehsv":
+        print(f"-vf huesaturation={val[1]}:0.05:0.02:-100:100 ",end="")
+     elif val[0] == "hue":
+        print(f"-vf hue={val[1]} ",end="")
+    elif val[0] == "deepfry":
+        print("-vf hue=s="+str(val[1]/10),end=" ")
+    elif val[0] == "rotate":
+        print(f"-vf rotate='{val[1]}*(PI/180)' ",end="")
+    elif val[0] == "":
+        print(f"-vf rotate='{val[1]}*(PI/180)' ",end="")
+    else:
+        print("Effect does not exist. ",end="")
+
+last = 0
+for i, v in enumerate(parsearr):
+    if i == 0:
+        print("ffmpeg -loglevel error -i $FILE_1 ",end="")
+        parse(v)
+        print(f"{i}.ts",end="\n")
+        last = i
+    else:
+        print("ffmpeg -loglevel error -i "+str(i-1)+".ts ",end="")
+        parse(v)
+        print(f"{i}.ts",end="\n")
+        last = i
+print(f"ffmpeg -i {last}.ts ./output/{unix}.mp4")}}{if:{indexof:Effect does not exist.|{get:output}}|!=|-1|then:{js:console.error("Effect does not exist.")}|else:{sh:load {video}
+{js:console.log(`{get:output}`);}}}
