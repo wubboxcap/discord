@@ -1,4 +1,7 @@
-{choose:i woke up in a new buggati|🚡|https://cdn.discordapp.com/attachments/1124758334805909509/1375196703824543887/resized.gif?ex=6830cf3c&is=682f7dbc&hm=a1f92b91fa51597a2f6053c5fb1b3bcdcccd9c26303c56d5ba2468eca96521dd&|sprunki sprunki sprunki get funky funky funky|cuphead and his pal mugman|featuring posy|i would die for this video ngl|chicken. 💥|# ALL OUR FOOD KEEPS BLOWING U- 💥💥💥💥}{set:output|{py:arg_string = {jsonify:{args}}
+{choose:i woke up in a new buggati|🚡|https://cdn.discordapp.com/attachments/1124758334805909509/1375196703824543887/resized.gif?ex=6830cf3c&is=682f7dbc&hm=a1f92b91fa51597a2f6053c5fb1b3bcdcccd9c26303c56d5ba2468eca96521dd&|sprunki sprunki sprunki get funky funky funky|cuphead and his pal mugman|featuring posy|i would die for this video ngl|chicken. 💥|# ALL OUR FOOD KEEPS BLOWING U- 💥💥💥💥}{set:output|{py:import random
+import string
+
+arg_string = {jsonify:{args}}
 parsearr = []
 
 for arg in arg_string.split(','):
@@ -21,6 +24,11 @@ def constrain(val, min_val, max_val):
         max_val = float(max_val)
     return min(max_val, max(min_val, val))
 
+def keygen(length):
+    characters = string.ascii_letters + string.digits + string.punctuation
+    random_string = ''.join(random.choice(characters) for i in range(length))
+    return random_string
+
 def parse(val):
     if val[0] == "bgr":
         print("-vf colorchannelmixer=0:0:1:0:0:1:0:0:1:0:0:0:0:0:0:1 ",end="")
@@ -34,7 +42,11 @@ def parse(val):
         val[1] = constrain(val[1],0.01,100)
         print(f"-af 'rubberband=pitch=2^({val[1]}/12):formant=712923000',atrim=0.025 ",end="")
     elif val[0] == "earrape":
-        print(f"-af acontrast=100,acontrast=100,aconstrast=100,acontrast=100 ",end="")
+        name = keygen(5)
+        val[1] = constrain(val[1],0,100)*10
+        print("\n")
+        print(f"sox a.wav {name}.wav gain {val[1]}")
+        print("ffmpeg -i {i}.ts -i {name}.wav -map 0:v -map 0:a ",end="")
     elif val[0] == "huehsv":
         print(f"-vf huesaturation={val[1]}:0.05:0.02:-100:100 ",end="")
     elif val[0] == "hue":
@@ -54,14 +66,18 @@ def parse(val):
         print("Effect does not exist. ",end="")
 
 last = 0
+print("ffmpeg -i $FILE_1 a.wav")
+
 for i, v in enumerate(parsearr):
     if i == 0:
-        print("ffmpeg -loglevel error -i $FILE_1 ",end="")
+        if v[0] != "earrape":
+            print("ffmpeg -loglevel error -i $FILE_1 ",end="")
         parse(v)
         print(f"{i}.ts",end="\n")
         last = i
     else:
-        print("ffmpeg -loglevel error -i "+str(i-1)+".ts ",end="")
+        if v[0] != "earrape":
+            print("ffmpeg -loglevel error -i "+str(i-1)+".ts ",end="")
         parse(v)
         print(f"{i}.ts",end="\n")
         last = i
