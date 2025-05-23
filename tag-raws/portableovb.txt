@@ -35,6 +35,9 @@ def keygen(length):
     random_string = ''.join(random.choice(characters) for i in range(length))
     return random_string
 
+def str_int(n):
+    return int(float(n))
+
 def parse(val):
     if val[0] == "bgr":
         print("-vf colorchannelmixer=0:0:1:0:0:1:0:0:1:0:0:0:0:0:0:1 ",end="")
@@ -54,13 +57,13 @@ def parse(val):
         print(f"-vf huesaturation={val[1]}:0.05:0.02:-100:100 ",end="")
     elif val[0] == "hue":
         print(f"-vf hue={val[1]} ",end="")
-    elif val[0] == "huecycle":
+    elif val[0] == "huecycle" or val[0] == "huec":
         val[1] = constrain(val[1],5,50)
         print(f"-vf 'hue=(t*360)*{val[1]}' ",end="")
-    elif val[0] == "deepfry":
+    elif val[0] == "deepfry" or val[0] == "df":
         val[1] = constrain(val[1],0,100)
         print("-vf hue=s="+str(val[1]/10),end=" ")
-    elif val[0] == "contrast":
+    elif val[0] == "contrast" or val[0] == "ct":
         val[1] = constrain(val[1],-1,100)
         print(f"-vf eq=contrast={val[1]} ",end="")
     elif val[0] == "transpose":
@@ -68,6 +71,18 @@ def parse(val):
         print(f"-vf transpose={val[1]} ",end="")
     elif val[0] == "rotate":
         print(f"-vf rotate='{val[1]}*(PI/180)' ",end="")
+    elif val[0] == "reverse" or val[0] == "rev":
+        print(f"-vf reverse -af areverse ",end="")
+    elif val[0] == "vreverse" or val[0] == "vrev":
+        print(f"-vf reverse ",end="")
+    elif val[0] == "areverse" or val[0] == "arev":
+        print(f"-af areverse ",end="")
+    elif val[0] == "hmirror" or val[0] == "hm":
+
+        if str_int(val[0]) >= 2:
+            print(f"-vf hflip,'crop=iw/2:ih:0:0,split[left][tmp];[tmp]hflip[right];[left][right]hstack' ",end="")
+        else:
+            print("-vf 'crop=iw/2:ih:0:0,split[left][tmp];[tmp]hflip[right];[left][right]hstack' ")
     else:
         print("Effect does not exist. ",end="")
 
