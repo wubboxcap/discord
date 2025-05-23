@@ -79,7 +79,7 @@ def parse(val):
         print(f"-af areverse ",end="")
     elif val[0] == "hmirror" or val[0] == "hm":
 
-        if str_int(val[0]) >= 2:
+        if str_int(val[1]) >= 2:
             print(f"-vf hflip,'crop=iw/2:ih:0:0,split[left][tmp];[tmp]hflip[right];[left][right]hstack' ",end="")
         else:
             print("-vf 'crop=iw/2:ih:0:0,split[left][tmp];[tmp]hflip[right];[left][right]hstack' ")
