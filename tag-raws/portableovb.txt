@@ -42,11 +42,8 @@ def parse(val):
         val[1] = constrain(val[1],0.01,100)
         print(f"-af 'rubberband=pitch=2^({val[1]}/12):formant=712923000',atrim=0.025 ",end="")
     elif val[0] == "earrape":
-        name = keygen(5)
-        val[1] = constrain(val[1],0,100)*10
-        print("\n")
-        print(f"sox a.wav {name}.wav gain {val[1]}")
-        print("ffmpeg -i {i}.ts -i {name}.wav -map 0:v -map 0:a ",end="")
+        val[1] = constrain(val[1],0,100)
+        print(f"-af volume={val[1]} ",end="")
     elif val[0] == "huehsv":
         print(f"-vf huesaturation={val[1]}:0.05:0.02:-100:100 ",end="")
     elif val[0] == "hue":
@@ -66,18 +63,15 @@ def parse(val):
         print("Effect does not exist. ",end="")
 
 last = 0
-print("ffmpeg -i $FILE_1 a.wav")
 
 for i, v in enumerate(parsearr):
     if i == 0:
-        if v[0] != "earrape":
-            print("ffmpeg -loglevel error -i $FILE_1 ",end="")
+        print("ffmpeg -loglevel error -i $FILE_1 ",end="")
         parse(v)
         print(f"{i}.ts",end="\n")
         last = i
     else:
-        if v[0] != "earrape":
-            print("ffmpeg -loglevel error -i "+str(i-1)+".ts ",end="")
+        print("ffmpeg -loglevel error -i "+str(i-1)+".ts ",end="")
         parse(v)
         print(f"{i}.ts",end="\n")
         last = i
