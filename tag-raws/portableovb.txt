@@ -42,12 +42,15 @@ def parse(val):
         val[1] = constrain(val[1],0.01,100)
         print(f"-af 'rubberband=pitch=2^({val[1]}/12):formant=712923000',atrim=0.025 ",end="")
     elif val[0] == "earrape":
-        val[1] = constrain(val[1],0,100)
+        val[1] = constrain(val[1],0,100) * 20
         print(f"-af volume={val[1]} ",end="")
     elif val[0] == "huehsv":
         print(f"-vf huesaturation={val[1]}:0.05:0.02:-100:100 ",end="")
     elif val[0] == "hue":
         print(f"-vf hue={val[1]} ",end="")
+    elif val[0] == "huecycle":
+        val[1] = constrain(val[1],5,50)
+        print(f"-vf 'hue=(t*360)*{val[1]}' ",end="")
     elif val[0] == "deepfry":
         val[1] = constrain(val[1],0,100)
         print("-vf hue=s="+str(val[1]/10),end=" ")
