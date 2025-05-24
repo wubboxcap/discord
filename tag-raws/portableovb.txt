@@ -66,9 +66,15 @@ def parse(val):
     elif val[0] == "contrast" or val[0] == "ct":
         val[1] = constrain(val[1],-1,100)
         print(f"-vf eq=contrast={val[1]} ",end="")
+    elif val[0] == "vbr" or val[0] == "vbr":
+        val[1] = constrain(val[1],0,100)*72.5
+        print("-b:v "+str(7500-val[1])+" ",end="")
     elif val[0] == "transpose":
         val[1] = constrain(val[1],1,4)
         print(f"-vf transpose={val[1]} ",end="")
+    elif val[0] == "fps":
+        val[1] = constrain(val[1],1,30)
+        print(f"-vf fps={val[1]} ",end="")
     elif val[0] == "rotate":
         print(f"-vf rotate='{val[1]}*(PI/180)' ",end="")
     elif val[0] == "reverse" or val[0] == "rev":
@@ -99,5 +105,5 @@ for i, v in enumerate(parsearr):
         parse(v)
         print(f"{i}.ts",end="\n")
         last = i
-print(f"ffmpeg -i {last}.ts ./output/{unix}.mp4")}}{if:{indexof:Effect does not exist.|{get:output}}|!=|-1|then:{js:console.error("Effect does not exist.")}|else:{sh:load {video}
+print(f"ffmpeg -i {last}.ts -vf fps=30 ./output/{unix}.mp4")}}{if:{indexof:Effect does not exist.|{get:output}}|!=|-1|then:{js:console.error("Effect does not exist.")}|else:{sh:load {video}
 {js:console.log(`{get:output}`);}}}
