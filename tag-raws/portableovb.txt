@@ -38,6 +38,17 @@ def keygen(length):
 def str_int(n):
     return int(float(n))
 
+def sap_gen(pitches):
+    put = "-filter_complex '"
+    pitchlist = pitches.split("|")
+    plen = str(len(pitchlist))
+    for i, v in enumerate(pitchlist):
+        put += f"[0:a]rubberband=formant=712923000:pitch=2^({v}/12)[a{i}];"
+    for i, v in enumerate(pitchlist):
+        put += f"[a{i}]"
+    put += f"amix={plen},volume={plen},atrim=0.025[outa]' -map 0:v -map '[outa]'"
+    return put
+
 def parse(val):
     if val[0] == "bgr":
         print("-vf colorchannelmixer=0:0:1:0:0:1:0:0:1:0:0:0:0:0:0:1 ",end="")
@@ -47,9 +58,12 @@ def parse(val):
         print("-vf hflip ",end="")
     elif val[0] == "vflip":
         print("-vf vflip ",end="")
-    elif val[0] == "pitch":
+    elif val[0] == "pitch" or val[0] == "pch":
         val[1] = constrain(val[1],-79.726,79.726)
         print(f"-af 'rubberband=pitch=2^({val[1]}/12):formant=712923000',atrim=0.025 ",end="")
+    elif val[0] == "sap":
+        valu = sap_gen(val[1])
+        print(f"{valu}",end=" ")
     elif val[0] == "rlag":
         val[1] = constrain(val[1],2,120)
         print(f"-vf random={val[1]} ",end="")
@@ -110,7 +124,8 @@ for i, v in enumerate(parsearr):
         parse(v)
         print(f"{i}.ts",end="\n")
         last = i
-print(f"ffmpeg -i {last}.ts -vf fps=30 ./output/{unix}.mp4")}}{if:{indexof:Effect does not exist.|{get:output}}|!=|-1|then:{js:console.error("Effect does not exist.")}|else:{sh:load {video}
+name = keygen(5)
+print(f"ffmpeg -i {last}.ts -vf fps=30 ./output/{name}.mp4")}}{if:{indexof:Effect does not exist.|{get:output}}|!=|-1|then:{js:console.error("Effect does not exist.")}|else:{sh:load {video}
 d=$(ffprobe -i $FILE_1 -show_entries format=duration -v quiet -of csv="p=0")
 w=$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of default=nw=1:nk=1 $FILE_1)
 h=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of default=nw=1:nk=1 $FILE_1)
