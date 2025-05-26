@@ -109,9 +109,9 @@ def parse(val):
         else:
             print("-vf 'crop=iw/2:ih:0:0,split[left][tmp];[tmp]hflip[right];[left][right]hstack' ",end="")
     elif val[0] == "start":
-        print("-ss {val[1]} ",end="")
+        print(f"-ss {val[1]} ",end="")
     elif val[0] == "end":
-        print("-to {val[1]} ",end="")
+        print(f"-to {val[1]} ",end="")
     else:
         print("Effect does not exist. ",end="")
 
