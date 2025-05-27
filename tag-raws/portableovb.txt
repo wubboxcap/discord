@@ -1,6 +1,6 @@
 {setserver:uses|{js:let uses = {getserver:uses|0};
 console.log(uses+1);}}{setserver:milestone|{js:let uses = {getserver:uses};
-console.log((Math.floor(uses/1000)+1)*1000);}}{choose:i woke up in a new buggati|🚡|https://cdn.discordapp.com/attachments/1124758334805909509/1375196703824543887/resized.gif?ex=6830cf3c&is=682f7dbc&hm=a1f92b91fa51597a2f6053c5fb1b3bcdcccd9c26303c56d5ba2468eca96521dd&|sprunki sprunki sprunki get funky funky funky|cuphead and his pal mugman|featuring posy|i would die for this video ngl|chicken. 💥|# ALL OUR FOOD KEEPS BLOWING U- 💥💥💥💥|⬇️ ts is so boring 🥱|goze|goose|🪿|🍳🍳🍳|im going to hit you with a frying pan|copyright infringement}
+console.log((Math.floor(uses/1000)+1)*1000);}}{choose:i woke up in a new buggati|🚡|https://cdn.discordapp.com/attachments/1124758334805909509/1375196703824543887/resized.gif?ex=6830cf3c&is=682f7dbc&hm=a1f92b91fa51597a2f6053c5fb1b3bcdcccd9c26303c56d5ba2468eca96521dd&|sprunki sprunki sprunki get funky funky funky|cuphead and his pal mugman|featuring posy|i would die for this video ngl|chicken. 💥|# ALL OUR FOOD KEEPS BLOWING U- 💥💥💥💥|⬇️ ts is so boring 🥱|goze|goose|🪿|🍳🍳🍳|erm this video is actually copyrighted 🤓☝️|copyright infringement}
 -# **#{getserver:uses}**
 -# {js:let uses = {getserver:uses};
 let milestone = {getserver:milestone};
