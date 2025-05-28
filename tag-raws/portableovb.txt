@@ -4,7 +4,9 @@ console.log((Math.floor(uses/1000)+1)*1000);}}{choose:i woke up in a new buggati
 -# **#{getserver:uses}**
 -# {js:let uses = {getserver:uses};
 let milestone = {getserver:milestone};
-console.log(milestone-uses);} left until {getserver:milestone}{if:{arg:0}|=|download|then:{attach:{search.youtube:{args:1}}}|else:{if:{arg:0}|=|help|then:wip|else:{set:output|{py:import random
+console.log(milestone-uses);} left until {getserver:milestone}{if:{arg:0}|=|download|then:{iscript:load {search.youtube|{args:1}} m
+scale m 0.5
+render m}|else:{if:{arg:0}|=|help|then:wip|else:{set:output|{py:import random
 import string
 
 arg_string = {jsonify:{args}}
