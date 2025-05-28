@@ -1,7 +1,7 @@
 {set:code|}
 {set:offset|0}
 {set:banlist|[]}
-{set:effects|["audio reverse","audio reverse ffmpeg","confusion","confusion hsv","confusion reversed","confusion hsv reversed","large wave","custom major 528","t major","you wiggled x","split 2 pitches","custom ffmpeg","custom","custom major 528 ffmpeg","custom major 333 ffmpeg","simulator v19","simulator v19 ffmpeg","a major","x major 159","x major 159 ffmpeg","deaf x","blind x","g major","g major 0","g major 1","g major 2","g major 3","g major 4","real g major 4","g major 5","g major 6","g major 7","g major 8","g major 9","g major 10","g major 11","g major 12","g major 13","g major 14","g major 15","g major 16","g major 23","g major 25","g major 30","g major 50","g major 51","g major 74","g major 74 hsv","g major 91","91 dxi","91 dxi ffmpeg","g major 100","old g major 100","l major","add source"]}
+{set:effects|["audio reverse","audio reverse ffmpeg","confusion","confusion hsv","confusion reversed","confusion hsv reversed","large wave","custom major 528","t major","you wiggled x","split 2 pitches","custom ffmpeg","custom","custom major 528 ffmpeg","custom major 333 ffmpeg","simulator v19","simulator v19 ffmpeg","a major","x major 159","x major 159 ffmpeg","deaf x","blind x","g major","g major 0","g major 1","g major 2","g major 3","g major 4","real g major 4","g major 5","g major 6","g major 7","g major 8","g major 9","g major 10","g major 11","g major 12","g major 13","g major 14","g major 15","g major 16","g major 20","g major 21","g major 22","g major 23","g major 25","g major 30","g major 50","g major 51","g major 74","g major 74 hsv","g major 91","91 dxi","91 dxi ffmpeg","g major 100","old g major 100","l major","add source"]}
 {set:banned|{py:import json
 def check_item_in_json(json_data, item):
   try:
@@ -474,6 +474,50 @@ copy #a #b
 audiopitch #b 2**(-3/12)
 audioputmix #a #b
 volume #a
+repeatduration #a #d
+audioputreplace # #a}}
+{if:{arg:0}|=|g major 20|then:{set:code|copy # #o
+crop # 0w/2 0h
+crop #o 0w/2 0h 0w
+hueshifthsv #o -60
+join # #o
+copy # #a
+convert #a audio/wav
+copy #a #b
+audiopitch #b 2**(-1/12)
+audioputmix #a #b
+volume #a
+repeatduration #a #d
+audioputreplace # #a}}
+{if:{arg:0}|=|g major 21|then:{set:code|hueshifthsv # 18 100
+invert #
+copy # #a
+convert #a audio/wav
+copy #a #b
+copy #a #c
+copy #a #e
+audiopitch #b 2**(-3/12)
+audiopitch #c 2**(2/12)
+audiopitch #e 2**(4/12)
+audioputmix #a #b
+volume #a
+audioputmix #a #c
+volume #a
+audioputmix #a #e
+volume #a
+repeatduration #a #d
+audioputreplace # #a}}
+{if:{arg:0}|=|g major 22|then:{set:code|shake # 10 10 true
+foreachframe # 0 #fc rotate #x rand(-5,5) none true
+zoom # 1.25
+hueshifthsv # 180
+invert #
+copy # #a
+convert #a audio/wav
+copy #a #b
+audiopitch #b 2**(-2/12)
+audioputmix #a #b
+audiodestroy #a
 repeatduration #a #d
 audioputreplace # #a}}
 {if:{arg:0}|=|g major 23|then:{set:code|hueshifthsv # -140
