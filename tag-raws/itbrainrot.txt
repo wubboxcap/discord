@@ -1,0 +1,23 @@
+{if:{args}|=||then:# ***.t {tagname}***
+This tag uses all _italian_ brainrot memes that are available. Currently this tag is in wip.
+
+The tag will show what it's saying and details about it. It may have a translated version on English if possible.
+
+
+List of brainrots you can choose:
+-# note: tralalero tralala and bombardillo crocodillo are not going to be here due to religion mocking.
+{code:* tung tung tung sahur
+* brr brr patapim
+* garam (Garamararamararaman dan Madudungdung tak tuntung perkuntung)}|else:{if:{args}|=|tung tung tung sahur|then:# Tung Tung Tung Sahur
+* Country of origin: Indonesia 🇮🇩
+————————————
+{code:Lyrics: Tung, tung, tung, tung, tung, tung, tung, tung, tung Sahur. Anomali mengerikan yang hanya keluar pada sahur. Konon katanya kalau ada orang yang dipanggil sahur tiga kali dan tidak nyaut, maka makhluk ini datang di rumah kalian. Hiiii, seramnya! Tung tung ini biasanya bersuara layaknya pukulan kentungan sepereti ini. Tung, tung, tung, tung, tung, tung, tung! Share ke teman kalian yang susah sahur.}
+{code:Translated: Tung, tung, tung, tung, tung, tung, tung, tung, tung Sahur. A terrifying anomaly that appears during Sahur. It is said that if someone is called for sahur three times and does not answer, then this creature will come to your house. Ahhh, how scary! This Tung tung usually makes a sound like a gong like this. Tung, tung, tung, tung, tung, tung, tung, tung! Tung tung is a very tung tung and is very personally gorgeous Share it with your friends who have trouble eating sahur.}{attach:https://media.discordapp.net/attachments/1124758334805909509/1378169571202043974/youtube-nYx-2PbomEY.mp4?ex=683b9fee&is=683a4e6e&hm=b9f6172ad73416fed4dcf866b9675babfda86da520036086432bcf5a233a29fe&}|else:{if:{args}|=|garam|then:# Garamararamararaman dan Madudungdung tak tuntung perkuntung
+* Country of origin: Indonesia 🇮🇩
+————————————
+{code:Lyrics: Garamaraman dan Madudungdung tak tuntung perkuntung, anomali yang mengerkan ucul pada bulan puasa. dia hanya seorang biasa dulunya namun, karena sakingnya cintanya dengan lagu garam dan madu, dia dikutuk seperti ini dan, kalau ada orang yang memutar lagu garam dan madu jam 12 malam, dia akan ditangi oleh dia.
+
+"malam terus terasa sepi, tak mau sendiri"}
+{code:Translated: Garamaraman and Madudungdung, who normally do not cause trouble, experienced a terrible anomaly during Ramadan. They were just ordinary people before, but because of their intense love for the song "Garam dan Madu," they were cursed in this way. Now, if someone plays the song "Garam dan Madu" at midnight, they will be haunted by them.
+
+"The night always feels lonely, I don't want to be alone."}{attach:https://media.discordapp.net/attachments/1377013190965203035/1378171950513520850/snip.mp4?ex=683ba226&is=683a50a6&hm=c006792baed553b10632d8d37dad8a1c3a8a953b0d19d8cbd0a7aec0df2496bb&}|else:{if:{args}|=|brr brr patapim|then:{attach:https://cdn.discordapp.com/attachments/1124758334805909509/1377030510936723588/50a50353b313d704bc654bb30de58399.mp4?ex=683c1859&is=683ac6d9&hm=e1a755af3c35c922a6884cbe76ab4d257887ccca6336acf2e0ba8290a98cf042&}w.i.p}}}}}
