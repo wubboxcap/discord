@@ -70,7 +70,7 @@ def parse(val):
         val[1] = constrain(val[1],2,120)
         print(f"-vf random={val[1]} ",end="")
     elif val[0] == "fisheye" or val[0] == "fish":
-        print("-vf v360=input=e:output=ball,scale=$w:$h ",end="")
+        print("-vf v360=input=e:output=ball,scale=$w:$h,setsar=1:1 ",end="")
     elif val[0] == "earrape" or val[0] == "er":
         val[1] = constrain(val[1],0,100) * 10
         print(f"-af volume={val[1]} ",end="")
