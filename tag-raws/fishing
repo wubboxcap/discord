@@ -27,5 +27,5 @@ fishTemp["type"] = goods[0];
 fishTemp["price"] = goods[2];
 fishTemp["weight"] = goods[1];
 stats["fishes"].push(fishTemp);
-console.log(stats);}}|else:{if:{arg:1}|=|check|then:{getuser:stats|nothing here : (}|else:Not a command in .t fishing. say `.t fishing` to see all available commands.}}
+console.log(stats);}}|else:{if:{arg:0}|=|check|then:{getuser:stats|nothing here : (}|else:Not a command in .t fishing. say `.t fishing` to see all available commands.}}
 }
