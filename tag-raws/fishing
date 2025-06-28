@@ -19,7 +19,7 @@ iso_8601_local = dt_object_local.isoformat()
 
 embed = []
 embed.append({"author":{"name":auth,"icon_url":icon},"title":"You got a catch!","color":0x0c3ff,"description":"amtve caught a "+arr[0]+" ("+str(arr[1])+" kg) for "+str(arr[2])+" 💵","footer":{"text":"Fishing!","icon_url":icon2},"timestamp":iso_8601_local})
-print(js.dumps({"embeds": embed}))}{set:json|{js:let stats = {"money":0,"fishes":[]};
+print(js.dumps({"embeds": embed}))}{setuser:stats|{js:let stats = {getuser:stats};
 let goods = {get:arr};
 stats["money"] = stats["money"]+goods[2];
 let fishTemp = {"type":null,"price":null,"weight":null}
