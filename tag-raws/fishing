@@ -1,0 +1,30 @@
+{if:{argslen}|=|0|then:{attach:https://cdn.discordapp.com/attachments/1124758334805909509/1386484163900604466/Untitled361_20250622191258.png?ex=68611fc0&is=685fce40&hm=ba47281af07ada726f892fffdf1c3ab6140ce31f25a934050077023f64ec7858&}{embedjson:{"title":"Welcome to Fishing!","image":{"url":"attachment://Untitled361_20250622191258.png"},"description":"## Commands\n`.t fishing fish` - fish a fish.\n-# more commands documented soon.","color":"50175"}}|else:{if:{arg:0}|=|fish|then:{if:{getuser:stats|}|=||then:{setuser:stats|{"money":0,"fishes":[]}}{set:arr|{py:fishdict = {'salmon':{'emoji':'🐟','min_kg':2.5,'max_kg':9.1,'price':7.99},'bass':{'emoji':':fish:','min_kg':0.5,'max_kg':13.5,'price':10.99}}
+import random as r
+altdict = list(fishdict.items())
+chosen = r.choice(altdict)
+kg = round(r.uniform(chosen[1]["min_kg"],chosen[1]["max_kg"]),2)
+price = round(chosen[1]["price"]*kg,2)
+a = [chosen[0],kg,price]
+print(a)
+}}{py:import json as js
+from datetime import datetime
+arr = {get:arr}
+icon = "{avatar}"
+auth = "{usertag}"
+icon2 = "https://cdn.discordapp.com/attachments/1124758334805909509/1386704926901796925/Untitled362_20250623095004.png?ex=685aad1a&is=68595b9a&hm=205fba6402d2fea39aea7360ae71ae85933f2b933b1dc60a970aaae07de07fe4&"
+unix_time = {unixs}
+
+dt_object_local = datetime.fromtimestamp(unix_time)
+iso_8601_local = dt_object_local.isoformat()
+
+embed = []
+embed.append({"author":{"name":auth,"icon_url":icon},"title":"You got a catch!","color":0x0c3ff,"description":"amtve caught a "+arr[0]+" ("+str(arr[1])+" kg) for "+str(arr[2])+" 💵","footer":{"text":"Fishing!","icon_url":icon2},"timestamp":iso_8601_local})
+print(js.dumps({"embeds": embed}))}{set:json|{js:let stats = {"money":0,"fishes":[]};
+let goods = {get:arr};
+stats["money"] = stats["money"]+goods[2];
+let fishTemp = {"type":null,"price":null,"weight":null}
+fishTemp["type"] = goods[0];
+fishTemp["price"] = goods[2];
+fishTemp["weight"] = goods[1];
+stats["fishes"].push(fishTemp);
+console.log(stats);}}|else:Not a command in .t fishing. say `.t fishing` to see all available commands.}}
