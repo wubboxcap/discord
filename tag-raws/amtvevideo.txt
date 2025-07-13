@@ -53,7 +53,7 @@ for i, v in enumerate(effects):
 
 pages.append({"embed":{"color":0x00dc64,"title":f"{if:{arg:1}|=||then:**AmtveVideo Effects**|else:**Showing effects matching '{arg:1}'**}","description":content,"footer":{"text":f"Page {pageidx} of {mcount} ({effnum} Total Effects)","icon_url":icon2}, "author": {"name":auth, "icon_url":icon}}})
 pages.pop(0)
-print(js.dumps({"pages": pages}))} }
+print(js.dumps({"pages": pages}))} }} }
 {if:{arg:0}|=|audio reverse|then:{set:code|copy # #a
 reverse #a
 audioputreplace # #a}}
