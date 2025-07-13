@@ -1,7 +1,7 @@
 {set:code|}
 {set:offset|0}
 {set:banlist|[]}
-{set:effects|["audio reverse","audio reverse ffmpeg","confusion","confusion hsv","confusion reversed","confusion hsv reversed","large wave","custom major 528","t major","you wiggled x","split 2 pitches","custom ffmpeg","custom","custom major 528 ffmpeg","custom major 333 ffmpeg","simulator v19","simulator v19 ffmpeg","a major","x major 159","x major 159 ffmpeg","deaf x","blind x","g major","g major 0","g major 1","g major 2","g major 3","g major 4","real g major 4","g major 5","g major 6","g major 7","g major 8","g major 9","g major 10","g major 11","g major 12","g major 13","g major 14","g major 15","g major 16","g major 17","g major 18","g major 19","g major 20","g major 21","g major 22","g major 23","g major 24","g major 25","g major 30","g major 41","g major 50","g major 51","g major 74","g major 74 hsv","g major 91","91 dxi","91 dxi ffmpeg","g major 100","old g major 100","l major","add source"]}
+{set:effects|["audio reverse","audio reverse ffmpeg","confusion","confusion hsv","confusion reversed","confusion hsv reversed","large wave","custom major 528","t major","you wiggled x","split 2 pitches","custom ffmpeg","custom","custom major 528 ffmpeg","custom major 333 ffmpeg","simulator v19","simulator v19 ffmpeg","a major","x major 159","x major 159 ffmpeg","deaf x","blind x","g major","g major 0","g major 1","g major 2","g major 3","g major 4","real g major 4","g major 5","g major 6","g major 7","g major 8","g major 9","g major 10","g major 11","g major 12","g major 13","g major 14","g major 15","g major 16","g major 17","g major 18","g major 19","g major 20","g major 21","g major 22","g major 23","g major 24","g major 25","g major 27","g major 28","g major 30","g major 41","g major 50","g major 51","g major 74","g major 74 hsv","g major 91","91 dxi","91 dxi ffmpeg","g major 100","old g major 100","l major","add source","u major"]}
 {set:banned|{py:victims = {get:banlist}
 user = "{user}"
 if user in victims:
@@ -569,6 +569,74 @@ audioputmix #a #b
 volume #a
 repeatduration #a #d
 audioputreplace # #a}}
+{if:{arg:0}|=|g major 27|then:{set:code|rotate # 90
+waves # 0w/50 0w/10 3
+waves # 0w/30 0w/4 10
+waves # 0w/70 0w/8 4
+waves # 0w/100 0w/5 6
+cover # 0h 0w
+rotate # -90
+contrast # 100
+gray #
+huecurvergba # green 0.847 0.847 0.847 0.847 0.847 0.847 0.847 0.847 0.847 0.847 1 1 1 1 1 1 1 1 1
+huecurvergba # red 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1
+huecurvergba # blue 0
+copy # #$
+convert #$ audio/wav
+copy #$ #$0
+copy #$ #$1
+copy #$ #$2
+copy #$ #$3
+copy #$ #$4
+copy #$ #$5
+audiopitch #$ 2**(-8/12)
+audiopitch #$0 2**(-6/12)
+audiopitch #$1 2**(-5/12)
+audiopitch #$2 2**(0/12)
+audiopitch #$3 2**(3/12)
+audiopitch #$4 2**(4/12)
+audiopitch #$5 2**(5/12)
+audioputmix #$ #$0
+volume #$
+audioputmix #$ #$1
+volume #$
+audioputmix #$ #$2
+volume #$
+audioputmix #$ #$3
+volume #$
+audioputmix #$ #$4
+volume #$
+audioputmix #$ #$5
+volume #$
+repeatduration #$ #d
+audioputreplace # #$}}
+{if:{arg:0}|=|g major 28|then:{set:code|load https://cdn.discordapp.com/attachments/1124758334805909509/1394066185850720366/Untitled386_20250713171844.png?ex=687574cf&is=6874234f&hm=f8d241d47f0a4aaece17142c85198571ded69fef78b4edf54a7ed06d998e0fe3& #o
+resize #o 0w 0h
+flop #
+swaprgba # bgr
+invert #
+rotate # 90
+waves # -0w/80 0w/10 8
+waves # 0w/90 0w/7 3
+waves # -0w/100 0w/4 6
+waves # 0w/120 0w/6 4
+waves # 0w/140 0w/8 7
+cover # 0h 0w
+rotate # -90
+overlay # #o
+copy # #a
+convert #a audio/wav
+copy #a #b
+copy #a #c
+audiopitch #a 2**(4/12)
+audiopitch #b 2**(5/12)
+audiopitch #c 2**(6/12)
+audioputmix #a #b
+volume #a
+audioputmix #a #c
+volume #a
+repeatduration #a #d
+audioputreplace # #a}}
 {if:{arg:0}|=|g major 30|then:{set:code|swirl # -100
 rotate # 90
 waves # 0w/40 0w/4.5 5
@@ -746,6 +814,30 @@ audioputreplace # #a}}
 {if:{arg:0}|=|t major|then:{set:code|invert #
 audiopitch # 1.78
 hueshifthsv # 201.6}}
+{if:{arg:0}|=|u major|then:{set:code|flop #
+swaprgba # bgr
+invert #
+rotate # 90
+waves # -0w/80 0w/10 8
+waves # 0w/90 0w/7 3
+waves # -0w/100 0w/4 6
+waves # 0w/120 0w/6 4
+waves # 0w/140 0w/8 7
+cover # 0h 0w
+rotate # -90
+copy # #a
+convert #a audio/wav
+copy #a #b
+copy #a #c
+audiopitch #a 2**(4/12)
+audiopitch #b 2**(5/12)
+audiopitch #c 2**(6/12)
+audioputmix #a #b
+volume #a
+audioputmix #a #c
+volume #a
+repeatduration #a #d
+audioputreplace # #a}}
 {if:{arg:0}|=|split 2 pitches|then:{set:code|copy # #$
 convert #$ audio/wav
 copy #$ #$a
