@@ -451,7 +451,8 @@ audioputmix #a #b
 volume #a
 repeatduration #a #d
 audioputreplace # #a}}
-{if:{arg:0}|=|g major 17|then:{set:code|hueshifthsv # -140
+{if:{arg:0}|=|g major 17|then:{set:code|haah #
+hueshifthsv # -140
 explode #
 copy # #a
 convert #a audio/wav
