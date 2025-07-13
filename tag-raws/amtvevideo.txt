@@ -1,7 +1,7 @@
 {set:code|}
 {set:offset|0}
 {set:banlist|[]}
-{set:effects|["audio reverse","audio reverse ffmpeg","confusion","confusion hsv","confusion reversed","confusion hsv reversed","large wave","custom major 528","t major","you wiggled x","split 2 pitches","custom ffmpeg","custom","custom major 528 ffmpeg","custom major 333 ffmpeg","simulator v19","simulator v19 ffmpeg","a major","x major 159","x major 159 ffmpeg","deaf x","blind x","g major","g major 0","g major 1","g major 2","g major 3","g major 4","real g major 4","g major 5","g major 6","g major 7","g major 8","g major 9","g major 10","g major 11","g major 12","g major 13","g major 14","g major 15","g major 16","g major 17","g major 18","g major 19","g major 20","g major 21","g major 22","g major 23","g major 25","g major 30","g major 50","g major 51","g major 74","g major 74 hsv","g major 91","91 dxi","91 dxi ffmpeg","g major 100","old g major 100","l major","add source"]}
+{set:effects|["audio reverse","audio reverse ffmpeg","confusion","confusion hsv","confusion reversed","confusion hsv reversed","large wave","custom major 528","t major","you wiggled x","split 2 pitches","custom ffmpeg","custom","custom major 528 ffmpeg","custom major 333 ffmpeg","simulator v19","simulator v19 ffmpeg","a major","x major 159","x major 159 ffmpeg","deaf x","blind x","g major","g major 0","g major 1","g major 2","g major 3","g major 4","real g major 4","g major 5","g major 6","g major 7","g major 8","g major 9","g major 10","g major 11","g major 12","g major 13","g major 14","g major 15","g major 16","g major 17","g major 18","g major 19","g major 20","g major 21","g major 22","g major 23","g major 24","g major 25","g major 30","g major 50","g major 51","g major 74","g major 74 hsv","g major 91","91 dxi","91 dxi ffmpeg","g major 100","old g major 100","l major","add source"]}
 {set:banned|{py:victims = {get:banlist}
 user = "{user}"
 if user in victims:
@@ -452,7 +452,7 @@ volume #a
 repeatduration #a #d
 audioputreplace # #a}}
 {if:{arg:0}|=|g major 17|then:{set:code|haah #
-hueshifthsv # -140
+hueshifthsv # 252
 explode #
 copy # #a
 convert #a audio/wav
@@ -535,6 +535,25 @@ copy #a #b
 audiopitch #a 2**(-3/12)
 audiopitch #b 2**(3/12)
 audioputmix #a #b
+volume #a
+repeatduration #a #d
+audioputreplace # #a}}
+{if:{arg:0}|=|g major 24|then:{set:code|
+wave # 0w/40 0w/4.3
+cover # 0w 0h
+waaw #
+huecurvergba # red 1 0.5 0
+huecurvergba # green 0.5 0 0.5
+copy # #a
+convert #a audio/wav
+copy #a #b
+copy #a #c
+audiopitch #a 2**(-2/12)
+audiopitch #b 2**(3/12)
+audiopitch #c 2**(5/12)
+audioputmix #a #b
+volume #a
+audioputmix #a #c
 volume #a
 repeatduration #a #d
 audioputreplace # #a}}
