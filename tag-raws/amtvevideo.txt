@@ -9,7 +9,7 @@ if user in victims:
 else:
   print(False)
 }}
-{if:{get:banned}|=|True|then:{mention:{id}} you are banned from AMTVEVideo and all of its tag aliases.|else:
+{if:{get:banned}|=|True|then:{js:console.log("You are banned from AMTVEVideo and all of its tag aliases.");}|else:
 {if:{argslen}|<|1|then:.t {tagname} <effect> <args...> <subcommand> <subcommand args>|else:-# Note: AMTVEVideo is in BETA!
 {if:{arg:1}|!=|list|then:{choose:hey i feel so sprunki|《SPRUNKI》|☆TAT☆ FOUND AFTER 10 YEARS NO WAY|{repeat:30|{mention:{user}}}|have a bowl mr squidward|https://media.discordapp.net/attachments/1124758334805909509/1334274228219940877/now.gif?ex=679bef35&is=679a9db5&hm=50d94b4217555d74e7059e03ab50d29972e827410a99d1117f471095181209ff&}
 }
@@ -22,7 +22,7 @@ if not args in effects:
         print("y")
 else:
     print("n")}}
-{if:{get:res}|=|y|then:{js:console.error("Effect Does not exist.")}}{if:{arg:0}|=|archive|then:{attachtext:{text:https://wubboxcap.github.io/discord/tag-raws/amtvevideo.txt}}}{if:{arg:0}|=|list|then:{py:import json as js
+{if:{get:res}|=|y|then:{js:console.error("Effect Does not exist.\nContact <@1056191069206876161> to add an effect.")}}{if:{arg:0}|=|archive|then:{attachtext:{text:https://wubboxcap.github.io/discord/tag-raws/amtvevideo.txt}}}{if:{arg:0}|=|list|then:{py:import json as js
 pages = []
 effects = {get:effects}
 icon = "{avatar}"
