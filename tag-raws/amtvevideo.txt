@@ -662,7 +662,24 @@ audioputmix #a #b
 volume #a
 repeatduration #a #d
 audioputreplace # #a}}
-
+{if:{arg:0}|=|g major 36 v2|then:{set:code|hueshifthsv # 180
+contrast # -1
+offset # #w/8 #h/12
+implode # 0.35
+offset # -#w/8 -#h/12
+haah #
+copy # #a
+convert #a audio/wav
+copy #a #b
+copy #a #c
+audiopitch #a 2**(-10/12)
+audiopitch #c 2**(10/12)
+audioputmix #a #b
+volume #a
+audioputmix #a #c
+volume #a 16
+repeatduration #a #d
+audioputreplace # #a}}
 {if:{arg:0}|=|g major 41|then:{set:code|invert #
 hueshifthsv # -60
 hooh #
