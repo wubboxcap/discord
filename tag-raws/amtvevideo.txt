@@ -923,7 +923,7 @@ rotate # -90
 copy # #a
 convert #a audio/wav
 copy #a #b
-audiopitch #a 2**(-4/12)
+audiopitch #a 2**(4/12)
 audiopitch #b 2**(-6/12)
 audioputmix #a #b
 volume #a
