@@ -1,4 +1,4 @@
-load {video}
+{sh:load {video}
 
     ffmpeg -stream_loop -1 -i $FILE_1 -vf scale=640:360,setsar=1:1,fps=30,fade=in:d=0.3:st=2.2800000000000002 -af volume=4,afade=in:d=0.3:st=2.2800000000000002 -ss 2.18 -t 2 -c:v ffv1 -c:a pcm_s16le a.avi
     ffmpeg -stream_loop -1 -i $FILE_1 -vf scale=640:360,setsar=1:1,fps=30 -af volume=4 -ss 4.18 -t 2 -c:v ffv1 -c:a pcm_s16le b.avi
