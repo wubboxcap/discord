@@ -1,0 +1,29 @@
+{sh:load {video}
+
+    ffmpeg -stream_loop -1 -i $FILE_1 -vf scale=640:360,setsar=1:1,fps=30,fade=in:d=0.3:st=2.1 -af volume=4,afade=in:d=0.3:st=2.1 -ss 2 -t 2 -c:v ffv1 -c:a pcm_s16le a.avi
+    ffmpeg -stream_loop -1 -i $FILE_1 -vf scale=640:360,setsar=1:1,fps=30 -af volume=4 -ss 4 -t 2 -c:v ffv1 -c:a pcm_s16le b.avi
+    ffmpeg -i b.avi -c:v ffv1 -c:a pcm_s16le -t 0.4 c.avi
+    ffmpeg -i c.avi -af "rubberband=formant=712923000:pitch=2^(-2/12)" -c:v ffv1 -c:a pcm_s16le -t 0.2 1.avi
+ffmpeg -i c.avi -af "rubberband=formant=712923000:pitch=2^(-2/12)" -c:v ffv1 -c:a pcm_s16le -t 0.2 2.avi
+ffmpeg -i c.avi -af "rubberband=formant=712923000:pitch=2^(-7/12)" -c:v ffv1 -c:a pcm_s16le -t 0.2 3.avi
+ffmpeg -i c.avi -af "rubberband=formant=712923000:pitch=2^(-2/12)" -c:v ffv1 -c:a pcm_s16le -t 0.2 4.avi
+ffmpeg -i c.avi -af "rubberband=formant=712923000:pitch=2^(0/12)" -c:v ffv1 -c:a pcm_s16le -t 0.2 5.avi
+ffmpeg -i c.avi -af "rubberband=formant=712923000:pitch=2^(0/12)" -c:v ffv1 -c:a pcm_s16le -t 0.2 6.avi
+ffmpeg -i c.avi -af "rubberband=formant=712923000:pitch=2^(-4/12)" -c:v ffv1 -c:a pcm_s16le -t 0.2 7.avi
+ffmpeg -i c.avi -af "rubberband=formant=712923000:pitch=2^(-9/12)" -c:v ffv1 -c:a pcm_s16le -t 0.2 8.avi
+ffmpeg -i c.avi -af "rubberband=formant=712923000:pitch=2^(-5/12)" -c:v ffv1 -c:a pcm_s16le -t 0.2 9.avi
+ffmpeg -i c.avi -af "rubberband=formant=712923000:pitch=2^(-2/12)" -c:v ffv1 -c:a pcm_s16le -t 0.2 10.avi
+ffmpeg -i c.avi -af "rubberband=formant=712923000:pitch=2^(-5/12)" -c:v ffv1 -c:a pcm_s16le -t 0.2 11.avi
+ffmpeg -i c.avi -af "rubberband=formant=712923000:pitch=2^(-7/12)" -c:v ffv1 -c:a pcm_s16le -t 0.2 12.avi
+ffmpeg -i c.avi -af "rubberband=formant=712923000:pitch=2^(-2/12)" -c:v ffv1 -c:a pcm_s16le -t 0.2 13.avi
+ffmpeg -i c.avi -af "rubberband=formant=712923000:pitch=2^(2/12)" -c:v ffv1 -c:a pcm_s16le -t 0.2 14.avi
+ffmpeg -i c.avi -af "rubberband=formant=712923000:pitch=2^(-2/12)" -c:v ffv1 -c:a pcm_s16le -t 0.2 15.avi
+ffmpeg -i c.avi -af "volume=0" -c:v ffv1 -c:a pcm_s16le -t 0.2 16.avi
+    ffmpeg -i "concat:1.avi|2.avi|3.avi|4.avi|5.avi|6.avi|7.avi|8.avi|9.avi|10.avi|11.avi|12.avi|13.avi|14.avi|15.avi|16.avi" -c:v ffv1 -c:a pcm_s16le d.avi
+    ffmpeg -i d.avi -vf scale=640:360,setsar=1:1,fps=30,fade=in:d=0.2:st=0.3 -af atrim=end=3.0000000000000004,"adelay='300|300'" -c:v ffv1 -c:a pcm_s16le e.avi
+    ffmpeg -i d.avi -vf scale=640:360,setsar=1:1,fps=30 -c:v ffv1 -c:a pcm_s16le f.avi
+    ffmpeg -i e.avi -i f.avi -filter_complex "[0:v]lutrgb=val/2:val/2:val/2,hflip,format=gbrp[base];[1:v]pad=iw*2:ih*2:(iw-ow)/2:(ih-oh)/2,scale=iw/2:-1,format=gbrp[overlay];[1:v]scale=iw/2:ih/2,lutrgb=r=0:g=0:b=0,pad=iw*2:ih*2:(iw-ow)/2:(ih-oh)/2:color=0x00FF00,gblur=12,format=rgba,negate,colorchannelmixer=0:0:0:0:0:0:0:0:0:0:0:0:0:1:0:0[shadow];[base][shadow]overlay=(W-w)/2+10:(H-h)/2+10,format=gbrp[tmp];[tmp][overlay]blend=all_mode=addition,zoompan=z='min(2,2-(on*0.18))':x=iw/2-(iw/zoom/2):y=ih/2-(ih/zoom/2):s=640x360:d=0:fps=30[v];[0:a][1:a]amix=2,volume=2[a]" -map "[v]" -map "[a]" -pix_fmt yuv420p -c:v ffv1 -c:a pcm_s16le g.avi
+    ffmpeg -i g.avi before.wav
+    sox before.wav after.wav reverb 36
+    ffmpeg -i g.avi -i after.wav -map 0:v -map 1:a -shortest -c:v ffv1 -c:a pcm_s16le h.avi
+    ffmpeg -i "concat:a.avi|h.avi" -c:a flac ./output/ytpmv_scan_d_minor.mp4}
