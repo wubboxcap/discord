@@ -928,7 +928,7 @@ convert #a audio/wav
 copy #a #b
 audiopitch #b 2**(-3/12)
 audioputmix #a #b
-audiodestroy #a
+volume #a
 repeatduration #a #d
 audioputreplace # #a}}
 {if:{arg:0}|=|p major|then:{set:code|invert #
