@@ -947,6 +947,22 @@ audioputmix #a #b
 volume #a
 repeatduration #a #d
 audioputreplace # #a}}
+{if:{arg:0}|=|g minor 1|then:{set:code|hueshifthsv # 180
+invert #
+convert #a audio/wav
+audiopitch #b 2**(-8/12)
+repeatduration #a #d
+audioputreplace # #a}}
+{if:{arg:0}|=|g minor 2|then:{set:code|
+invertrgba # 0 0 1
+convert #a audio/wav
+copy #a #b
+audiopitch #a 2**(-4/12)
+audiopitch #b 2**(5/12)
+audioputmix #a #b
+volume #a
+repeatduration #a #d
+audioputreplace # #a}}
 {if:{arg:0}|=|g minor 17|then:{set:code|copy # #c
 zoom #c 1.5
 resize # 0w*1.5 0h*1.5
