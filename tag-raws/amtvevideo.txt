@@ -1113,7 +1113,7 @@ auth = "{user}#{discrim}"
 content = '''```{replace:#|{or:{arg:{math:{get:offset}+2}}|#}|{get:code}}```'''
 json = {"embed":{"title":"Code","description":content,"color":0x00dc64,"author":{"name":auth,"icon_url":icon}}}
 print(js.dumps(json))}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtx|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
-{iscript:load {video} 0
+iscript:load {video} 0
 {if:{arg:{math:{get:offset}+3}}|!=|true|then:snip 0 0 {or:{arg:{math:{get:offset}+3}}|0.5}}
 {js:let ihtx = {get:powers};
 let loop = {or:{arg:{math:{get:offset}+4}}|true}
@@ -1130,8 +1130,8 @@ concatmultiple {replace:\n| |{js:let ihtx = {get:powers};
 for (let i = 1; i >= ihtx; i++) {
   console.log(i);
 }}}
-render 1 default amtvevideo}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtxreverse|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
-{iscript:load {video} 0
+render 1 default amtvevideo|else:{if:{arg:{math:{get:offset}+1}}|=|ihtxreverse|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
+iscript:load {video} 0
 {if:{arg:{math:{get:offset}+3}}|!=|true|then:snip 0 0 {or:{arg:{math:{get:offset}+3}}|0.5}}
 {js:let ihtx = {get:powers};
 let loop = {or:{arg:{math:{get:offset}+4}}|true}
@@ -1148,7 +1148,7 @@ concatmultiple {replace:\n| |{js:let ihtx = {get:powers};
 for (let i = ihtx; i <= 1; i--) {
   console.log(i)
 }}}
-render 1 default amtvevideo}|else:{if:{arg:{math:{get:offset}+1}}|=|multiplier|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
+render 1 default amtvevideo|else:{if:{arg:{math:{get:offset}+1}}|=|multiplier|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
 {iscript:load {video} 0
 {js:let ihtx = {get:powers};
 let loop = {or:{arg:{math:{get:offset}+4}}|true}
