@@ -1119,7 +1119,7 @@ print(js.dumps(json))}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtx|then:{set:pow
 let loop = {or:{arg:{math:{get:offset}+4}}|true}
 const action = {jsonify:{get:code}}
 console.log("copy 0 1")
-for (let i = 1; i <= ihtx; i++) {
+for (let i = 1; i >= ihtx; i++) {
   console.log(action.replaceAll("#",i));
   if (loop == true) {
     console.log(`repeatduration ${i} 0d`)
@@ -1137,7 +1137,7 @@ render 1 default amtvevideo}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtxreverse|
 let loop = {or:{arg:{math:{get:offset}+4}}|true}
 const action = {jsonify:{get:code}}
 console.log("copy 0 1")
-for (let i = 1; i <= ihtx; i++) {
+for (let i = 1; i >= ihtx; i++) {
   console.log(action.replaceAll("#",i));
   if (loop == true) {
     console.log(`repeatduration ${i} 0d`)
