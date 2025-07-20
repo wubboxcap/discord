@@ -1145,7 +1145,7 @@ for (let i = 1; i <= ihtx; i++) {
   console.log(`copy ${i} ${i+1}`);
 }}
 concatmultiple {replace:\n| |{js:let ihtx = {get:powers};
-for (let i = ihtx; i >= 1; i--) {
+for (let i = ihtx; i <= 1; i--) {
   console.log(i)
 }}}
 render 1 default amtvevideo}|else:{if:{arg:{math:{get:offset}+1}}|=|multiplier|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
