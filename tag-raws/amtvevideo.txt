@@ -1175,7 +1175,29 @@ concatmultiple {replace:\n| |{js:let ihtx = {get:powers};
 for (let i = ihtx; i >= 1; i--) {
   console.log(i)
 }}}
-render {get:powers} default amtvevideo}|else:{if:{arg:{math:{get:offset}+1}}|=|multiplier|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
+render {get:powers} default amtvevideo}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtxkine|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
+{iscript:load {video} 0
+{if:{arg:{math:{get:offset}+3}}|!=|true|then:snip 0 0 {or:{arg:{math:{get:offset}+3}}|0.5}}
+{js:let ihtx = {get:powers};
+let loop = {or:{arg:{math:{get:offset}+4}}|true}
+const action = {jsonify:{get:code}}
+console.log("copy 0 1")
+for (let i = 1; i <= ihtx; i++) {
+  console.log(action.replaceAll("#",i));
+  if (loop == true) {
+    console.log(`repeatduration ${i} 0d`)
+  }
+  console.log(`copy ${i} !a`);
+  console.log(`fadein !a 0.2`);
+  console.log(`fadeout !a 0.2`);
+  console.log(`audioputreplace ${i} !a`);
+  console.log(`copy ${i} ${i+1}`);
+}}
+concatmultiple {replace:\n| |{js:let ihtx = {get:powers};
+for (let i = 1; i <= ihtx; i++) {
+  console.log(i);
+}}}
+render 1 default amtvevideo}|else:{if:{arg:{math:{get:offset}+1}}|=|multiplier|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
 {iscript:load {video} 0
 {js:let ihtx = {get:powers};
 let loop = {or:{arg:{math:{get:offset}+4}}|true}
@@ -1197,6 +1219,7 @@ else:
 copy 0 1
 {replace:#|1|{get:code}}
 render 1 default amtvevideo}
+}
 }
 }
 }
