@@ -1188,8 +1188,8 @@ for (let i = 1; i <= ihtx; i++) {
     console.log(`repeatduration ${i} 0d`)
   }
   console.log(`copy ${i} !a`);
-  console.log(`fadein !a 0.2`);
-  console.log(`fadeout !a 0.2`);
+  console.log(`fadein !a 0.125`);
+  console.log(`fadeout !a 0.125`);
   console.log(`audioputreplace ${i} !a`);
   console.log(`copy ${i} ${i+1}`);
 }}
@@ -1213,7 +1213,7 @@ for (let i = 1; i <= ihtx; i++) {
 }}
 concatmultiple {replace:\n| |{js:let ihtx = {get:powers};
 for (let i = 1; i <= ihtx; i++) {
-  console.log(Math.floor(Math.random()*ihtx));
+  console.log(Math.floor(Math.random()*(ihtx-1))+1););
 }}}
 render 1 default amtvevideo}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtxbuggy|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
 {iscript:load {video} 0
