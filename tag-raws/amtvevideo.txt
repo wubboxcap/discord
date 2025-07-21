@@ -1215,7 +1215,7 @@ concatmultiple {replace:\n| |{js:let ihtx = {get:powers};
 for (let i = 1; i <= ihtx; i++) {
   console.log(i);
 }}}
-shuffle 1 {if:{arg:{math:{get:offset}+3}}|!=|true|then:snip 0 0 {or:{arg:{math:{get:offset}+3}}|0.5}|else:0d}
+shuffle 1 {if:{arg:{math:{get:offset}+3}}|!=|true|then:{or:{arg:{math:{get:offset}+3}}|0.5}|else:0d}
 render 1 default amtvevideo}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtxbuggy|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
 {iscript:load {video} 0
 {if:{arg:{math:{get:offset}+3}}|!=|true|then:snip 0 0 {or:{arg:{math:{get:offset}+3}}|0.5}}
