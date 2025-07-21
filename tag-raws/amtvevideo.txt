@@ -1,7 +1,7 @@
 {set:code|}
 {set:offset|0}
 {set:banlist|[]}
-{set:effects|["audio reverse","audio reverse ffmpeg","confusion","confusion hsv","confusion reversed","confusion hsv reversed","large wave","custom major 528","t major","you wiggled x","split 2 pitches","custom ffmpeg","custom","custom major 528 ffmpeg","custom major 333 ffmpeg","simulator v19","simulator v19 ffmpeg","x is a fathead","mclaren major","a major","blood voice","sad voice","x major 159","x major 159 ffmpeg","deaf x","blind x","conga busher","getting faster","getting slower","$ormulator","sad x","sad major","angry x","g major","g major 0","g major 1","g major 2","g major 3","g major 4","real g major 4","g major 5","g major 6","g major 7","g major 8","g major 9","g major 10","g major 11","g major 12","g major 13","g major 14","g major 15","g major 16","g major 17","g major 18","g major 19","g major 20","g major 21","g major 22","g major 23","g major 24","g major 25","g major 27","g major 28","g major 30","g major 36 v2","g major 41","g major 50","g major 51","g major 58","g major 74","g major 74 hsv","g major 91","91 dxi","91 dxi ffmpeg","g major 100","old g major 100","g minor","g minor 1","g minor 2","g minor 17","p major","l major","add source","u major","first export","last export"]}
+{set:effects|["audio reverse","audio reverse ffmpeg","confusion","confusion hsv","confusion reversed","confusion hsv reversed","large wave","custom major 528","t major","you wiggled x","split 2 pitches","custom ffmpeg","custom","custom major 528 ffmpeg","custom major 333 ffmpeg","simulator v19","simulator v19 ffmpeg","x is a fathead","mclaren major","a major","blood voice","sad voice","x major 159","x major 159 ffmpeg","deaf x","blind x","conga busher","getting faster","getting slower","$ormulator","sad x","sad major","angry x","g major","g major 0","g major 1","g major 2","g major 3","g major 4","real g major 4","g major 5","g major 6","g major 7","g major 8","g major 9","g major 10","g major 11","g major 12","g major 13","g major 14","g major 15","g major 16","g major 17","g major 18","g major 19","g major 20","g major 21","g major 22","g major 23","g major 24","g major 25","g major 27","g major 28","g major 30","g major 36 v2","g major 41","g major 50","g major 51","g major 58","g major 74","g major 74 hsv","g major 91","91 dxi","91 dxi ffmpeg","g major 100","old g major 100","g major 136","g minor","g minor 1","g minor 2","g minor 17","m major","m major 5","p major","l major","add source","u major","first export","last export"]}
 {set:banned|{py:victims = {get:banlist}
 user = "{user}"
 if user in victims:
@@ -948,6 +948,19 @@ audioputmix #a #b
 volume #a
 repeatduration #a #d
 audioputreplace # #a}}
+{if:{arg:0}|=|g major 136|then:{set:code|invert #
+hueshifthsv # -140
+swaprgba # bgr
+wave # -#h/12 #w/2.5
+cover # 0w 0h
+copy # #$
+convert #$ audio/wav
+copy #$ #$p
+audiopitch #$p 2**(-7/12)
+audioputmix #$ #$p
+volume #$
+repeatduration #$ #d
+audioputreplace # #$}}
 {if:{arg:0}|=|g minor|then:{set:code|hueshifthsv # 180
 contrast # -1
 copy # #$
@@ -1009,6 +1022,46 @@ audioputmix #a #b
 volume #a
 repeatduration #a #d
 audioputreplace # #a}}
+{if:{arg:0}|=|m major|then:{set:code|invert #
+copy # #c
+zoom #c 1.5
+resize # 0w*1.5 0h*1.5
+explode #c 3
+overlay # #c 0w/4 0h/4
+implode # 0.7
+contain # 0w 0h
+copy # #g
+zoomblur # 1.1
+overlay # #g 0 0 none 0.01 0 true 50
+copy # #$
+convert #$ audio/wav
+copy #$ #$p
+audiopitch #$ 2**(-12/12)
+audiopitch #$p 2**(-7/12)
+audioputmix #$ #$p
+volume #$
+repeatduration #$ #d
+audioputreplace # #$}}
+{if:{arg:0}|=|m major 5|then:{set:code|hueshifthsv # 324
+waaw #
+explode # 2
+huecurvergba # all 0,0 0.5,0 0.505,1 1,1
+copy # #$
+convert #$ audio/wav
+copy #$ #$p
+copy #$ #$q
+copy #$ #$o
+reverse #$p
+audiopitch #$q 2**(-4/12)
+audiopitch #$o 2**(-8/12)
+audioputmix #$ #$p
+volume #$
+audioputmix #$ #$q
+volume #$
+audioputmix #$ #$o
+volume #$
+repeatduration #$ #d
+audioputreplace # #$}}
 {if:{arg:0}|=|p major|then:{set:code|invert #
 hueshifthsv # 180
 rotate # 90
