@@ -1213,8 +1213,9 @@ for (let i = 1; i <= ihtx; i++) {
 }}
 concatmultiple {replace:\n| |{js:let ihtx = {get:powers};
 for (let i = 1; i <= ihtx; i++) {
-  console.log(Math.floor(Math.random()*(ihtx-1))+1);
+  console.log(i);
 }}}
+shuffle 1 {or:{arg:{math:{get:offset}+3}}|0.5}}
 render 1 default amtvevideo}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtxbuggy|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
 {iscript:load {video} 0
 {if:{arg:{math:{get:offset}+3}}|!=|true|then:snip 0 0 {or:{arg:{math:{get:offset}+3}}|0.5}}
