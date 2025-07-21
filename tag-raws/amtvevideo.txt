@@ -1042,10 +1042,10 @@ audioputmix #$ #$p
 volume #$
 repeatduration #$ #d
 audioputreplace # #$}}
-{if:{arg:0}|=|m major 5|then:{set:code|hueshifthsv # 324
+{if:{arg:0}|=|m major 5|then:{set:code|huecurvergba # all 0,0 0.5,0 0.505,1 1,1
+hueshifthsv # 324
 waaw #
-explode # 2
-huecurvergba # all 0,0 0.5,0 0.505,1 1,1
+fish #
 copy # #$
 convert #$ audio/wav
 copy #$ #$p
