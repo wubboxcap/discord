@@ -5,7 +5,7 @@ console.log((Math.floor(uses/1000)+1)*1000);}}{choose:i woke up in a new buggati
 -# {js:let uses = {getserver:uses};
 let milestone = {getserver:milestone};
 console.log(milestone-uses);} left until {getserver:milestone}{if:{arg:0}|=|autotune|then:{sh:load {av:0}
-load {arg:0}
+load {arg:1}
 load https://github.com/GanerCodes/AutotuneBot/raw/refs/heads/main/autotune.exe
 
 vidlen=$(ffprobe -i $FILE_1 -show_entries format=duration -v quiet -of csv="p=0")
