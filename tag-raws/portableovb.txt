@@ -1,10 +1,18 @@
 {setserver:uses|{js:let uses = {getserver:uses|0};
 console.log(uses+1);}}{setserver:milestone|{js:let uses = {getserver:uses};
-console.log((Math.floor(uses/1000)+1)*1000);}}{choose:i woke up in a new buggati|🚡|https://cdn.discordapp.com/attachments/1124758334805909509/1375196703824543887/resized.gif?ex=6830cf3c&is=682f7dbc&hm=a1f92b91fa51597a2f6053c5fb1b3bcdcccd9c26303c56d5ba2468eca96521dd&|sprunki sprunki sprunki get funky funky funky|cuphead and his pal mugman|featuring posy|i would die for this video ngl|chicken. 💥|# ALL OUR FOOD KEEPS BLOWING U- 💥💥💥💥|⬇️ ts is so boring 🥱|goze|goose|🪿|🍳🍳🍳|erm this video is actually copyrighted 🤓☝️|copyright infringement}
+console.log((Math.floor(uses/1000)+1)*1000);}}{choose:i woke up in a new buggati|🚡|https://cdn.discordapp.com/attachments/1124758334805909509/1375196703824543887/resized.gif?ex=6830cf3c&is=682f7dbc&hm=a1f92b91fa51597a2f6053c5fb1b3bcdcccd9c26303c56d5ba2468eca96521dd&|sprunki sprunki sprunki get funky funky funky|cuphead and his pal mugman|featuring posy|i would die for this video ngl|chicken. 💥|# ALL OUR FOOD KEEPS BLOWING U- 💥💥💥💥|⬇️ ts is so boring 🥱|goze|goose|🪿|🍳🍳🍳|erm this video is actually copyrighted 🤓☝️|copyright infringement|bingle bongle|imagine if you had a low taper fade|you know what else is big}
 -# **#{getserver:uses}**
 -# {js:let uses = {getserver:uses};
 let milestone = {getserver:milestone};
-console.log(milestone-uses);} left until {getserver:milestone}{if:{arg:0}|=|download|then:{iscript:load {search.youtube:{args:1}} m
+console.log(milestone-uses);} left until {getserver:milestone}{if:{arg:0}|=|autotune|then:{sh:load {av:0}
+load {arg:0}
+load https://github.com/GanerCodes/AutotuneBot/raw/refs/heads/main/autotune.exe
+
+vidlen=$(ffprobe -i $FILE_1 -show_entries format=duration -v quiet -of csv="p=0")
+ffmpeg -i $FILE_1 -ac 1 -ar 48000 mod.wav
+ffmpeg -stream_loop -1 -i $FILE_2 -ac 1 -ar 48000 -t $vidlen car.wav
+wine cmd &>/dev/null && wine ./input/autotune.exe -q -b 75 mod.wav car.wav autotune.wav
+ffmpeg -i $FILE_1 -i autotune.wav -map 0:v -map 1:a -shortest  ./output/autotuned.mp4}|else:{if:{arg:0}|=|download|then:{iscript:load {search.youtube:{args:1}} m
 scale m 0.5
 render m}|else:{if:{arg:0}|=|help|then:wip|else:{set:output|{py:import random
 import string
@@ -138,3 +146,4 @@ h=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of default
 
 {js:console.log(`{get:output}`);}}}
 }}
+}
