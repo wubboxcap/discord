@@ -1137,7 +1137,7 @@ copy #$ #$a
 copy #$ #$b
 audiopitch #$ 2**({arg:1}/12)
 audiopitch #$a 2**({arg:2}/12)
-audiopitch #$b 2**({arg:2}/12)
+audiopitch #$b 2**({arg:3}/12)
 audioputmix #$ #$a
 volume #$
 audioputmix #$ #$b
