@@ -1,0 +1,29 @@
+{set:string|{substring:{args}|{indexof:{arg:2}|{args}}}}
+{set:time|{if:{arg:1}|=|vidlen|then:$vidlen|else:{arg:1}}}
+{set:code|load {iv}
+load https://cdn.discordapp.com/attachments/1124758334805909509/1412200820711096370/scfr.ppm?ex=68b76e01&is=68b61c81&hm=234a207140c0385eb06bcd941fe2c204c5521866f0266521a48914cad577fd7f&
+load https://cdn.discordapp.com/attachments/1124758334805909509/1412203492260581387/pg.ppm?ex=68b7707e&is=68b61efe&hm=131d47130ebd8d366fae102e1b6d9c8fd3a8d6dbabc90ef4db280973c4c6cb2a&
+load https://cdn.discordapp.com/attachments/1410797587061014700/1415797681493639278/splaat.cube?ex=68c483d7&is=68c33257&hm=1300a5728ba0166390748a72bada423c736dc7d9e97cc2c5399e62affe8a270d&
+load https://cdn.discordapp.com/attachments/1124758334805909509/1403962309411471431/InvertLuminosity.cube?ex=6899754a&is=689823ca&hm=56584c91ba8a01c76794961d8061244fab4c4f06193192cd2706e4036090cbd2&
+load https://cdn.discordapp.com/attachments/1124758334805909509/1403968024314249377/WMMHue.cube?ex=68997a9d&is=6898291d&hm=6254555facdd08b3adb41189351a7fda2eefd271df812400017270f11774e5e4&
+vidlen=$(ffprobe -i $FILE_1 -show_entries format=duration -v quiet -of csv="p=0")
+d=$vidlen
+ffmpeg -f lavfi -i "haldclutsrc=8" c.ppm
+for i in \u0060seq -179 1 180\u0060; do
+  magick c.ppm -modulate 100,100,%[fx:$i/1.8+100] hslhue_$i.ppm
+  done
+sr=$(ffprobe -v error -select_streams a:0 -show_entries stream=sample_rate -of default=nokey=1:noprint_wrappers=1 $FILE_1)
+fr=$(ffprobe -v error -select_streams v:0 -show_entries stream=r_frame_rate -of default=nokey=1:noprint_wrappers=1 $FILE_1)
+w=$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of default=nw=1:nk=1 $FILE_1)
+h=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of default=nw=1:nk=1 $FILE_1)
+fc=$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of default=nokey=1:noprint_wrappers=1 $FILE_1)
+
+ffmpeg -i $FILE_1 {get:string} -t {get:time} 1.ts
+{replace:string|{get:string}|{replace:arg|{get:time}|{js:for (let i = 0; i < {arg:0}-1; i++) {
+console.log(`ffmpeg -i "${i+1}.ts" string -t arg ${i+2}.ts`)
+}}}}
+{set:#|0}
+ffmpeg -i "concat:{foreach:{math:{arg:0}-1}|{set:#|{math:{get:#}+1}}{get:#}.ts\u007c}{arg:0}.ts" ./output/ihtx_custom.mp4}
+## If you want to suggest more luts message request me at (@<1056191069206876161>) and provide links to these luts.
+> ⚠️ Warning: Make sure you use `.t sync+` afterwards to make sure the video is synced to the audio{set:s|{unix}}{sh:{js:console.log(`{get:code}`)}}
+-# Took {math:({unix}-{get:s})/1000} seconds.
