@@ -6,6 +6,7 @@ load https://cdn.discordapp.com/attachments/1124758334805909509/1412203492260581
 load https://cdn.discordapp.com/attachments/1124758334805909509/1412524355187118090/gm6.cube?ex=68b89b51&is=68b749d1&hm=0df6c2a3a52f957a41848bc2646af03cc86c868d92aef83bbb027634770373ba&
 load https://cdn.discordapp.com/attachments/1124758334805909509/1403962309411471431/InvertLuminosity.cube?ex=6899754a&is=689823ca&hm=56584c91ba8a01c76794961d8061244fab4c4f06193192cd2706e4036090cbd2&
 load https://cdn.discordapp.com/attachments/1124758334805909509/1403968024314249377/WMMHue.cube?ex=68997a9d&is=6898291d&hm=6254555facdd08b3adb41189351a7fda2eefd271df812400017270f11774e5e4&
+load https://cdn.discordapp.com/attachments/1410797587061014700/1415812925884727347/571sgmajor.cube?ex=68c4920a&is=68c3408a&hm=b6929c404f1f2dec0c505fd7874034772541c37fdb71d6add6e05708094cb3cf&
 vidlen=$(ffprobe -i $FILE_1 -show_entries format=duration -v quiet -of csv="p=0")
 d=$vidlen
 ffmpeg -f lavfi -i "haldclutsrc=8" c.ppm
