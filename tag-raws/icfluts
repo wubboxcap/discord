@@ -3,7 +3,7 @@
 {set:code|load {iv}
 load https://cdn.discordapp.com/attachments/1124758334805909509/1412200820711096370/scfr.ppm?ex=68b76e01&is=68b61c81&hm=234a207140c0385eb06bcd941fe2c204c5521866f0266521a48914cad577fd7f&
 load https://cdn.discordapp.com/attachments/1124758334805909509/1412203492260581387/pg.ppm?ex=68b7707e&is=68b61efe&hm=131d47130ebd8d366fae102e1b6d9c8fd3a8d6dbabc90ef4db280973c4c6cb2a&
-load https://cdn.discordapp.com/attachments/1410797587061014700/1415797681493639278/splaat.cube?ex=68c483d7&is=68c33257&hm=1300a5728ba0166390748a72bada423c736dc7d9e97cc2c5399e62affe8a270d&
+load https://cdn.discordapp.com/attachments/1124758334805909509/1412524355187118090/gm6.cube?ex=68b89b51&is=68b749d1&hm=0df6c2a3a52f957a41848bc2646af03cc86c868d92aef83bbb027634770373ba&
 load https://cdn.discordapp.com/attachments/1124758334805909509/1403962309411471431/InvertLuminosity.cube?ex=6899754a&is=689823ca&hm=56584c91ba8a01c76794961d8061244fab4c4f06193192cd2706e4036090cbd2&
 load https://cdn.discordapp.com/attachments/1124758334805909509/1403968024314249377/WMMHue.cube?ex=68997a9d&is=6898291d&hm=6254555facdd08b3adb41189351a7fda2eefd271df812400017270f11774e5e4&
 vidlen=$(ffprobe -i $FILE_1 -show_entries format=duration -v quiet -of csv="p=0")
@@ -24,6 +24,6 @@ console.log(`ffmpeg -i "${i+1}.ts" string -t arg ${i+2}.ts`)
 }}}}
 {set:#|0}
 ffmpeg -i "concat:{foreach:{math:{arg:0}-1}|{set:#|{math:{get:#}+1}}{get:#}.ts\u007c}{arg:0}.ts" ./output/ihtx_custom.mp4}
-## If you want to suggest more luts message request me at (@<1056191069206876161>) and provide links to these luts.
+## If you want to suggest more luts message request me at (<@1056191069206876161>) and provide links to these luts.
 > ⚠️ Warning: Make sure you use `.t sync+` afterwards to make sure the video is synced to the audio{set:s|{unix}}{sh:{js:console.log(`{get:code}`)}}
 -# Took {math:({unix}-{get:s})/1000} seconds.
