@@ -1,0 +1,46 @@
+{if:{argslen}|<=|3|then:{code:.t {tagname} <powers> <duration> <file_format> <...code>}|else:{set:s|{unix}}
+{set:string|{substring:{args}|{indexof:{arg:3}|{args}}}}
+
+{set:vidlen|{sh:load {iv}
+ffprobe -i $FILE_1 -show_entries format=duration -v quiet -of csv="p=0"}}
+{set:time|{if:{arg:1}|=|vidlen|then:{get:vidlen}|else:{arg:1}}}
+{set:code|
+load {iv}
+load https://cdn.discordapp.com/attachments/1124758334805909509/1381053326644482099/resized.mp4?ex=68631ea3&is=6861cd23&hm=ecb1b0ffacc4d52faea41649358b9e96b72149e515adfadac3055925e33a3f52&
+load https://cdn.discordapp.com/attachments/1124758334805909509/1403962309411471431/InvertLuminosity.cube?ex=6899754a&is=689823ca&hm=56584c91ba8a01c76794961d8061244fab4c4f06193192cd2706e4036090cbd2&
+load https://cdn.discordapp.com/attachments/1124758334805909509/1403968024314249377/WMMHue.cube?ex=68997a9d&is=6898291d&hm=6254555facdd08b3adb41189351a7fda2eefd271df812400017270f11774e5e4&
+load https://cdn.discordapp.com/attachments/1124758334805909509/1412200820711096370/scfr.ppm?ex=68b76e01&is=68b61c81&hm=234a207140c0385eb06bcd941fe2c204c5521866f0266521a48914cad577fd7f&
+load https://cdn.discordapp.com/attachments/1124758334805909509/1412203492260581387/pg.ppm?ex=68b7707e&is=68b61efe&hm=131d47130ebd8d366fae102e1b6d9c8fd3a8d6dbabc90ef4db280973c4c6cb2a&
+load https://cdn.discordapp.com/attachments/1124758334805909509/1412524355187118090/gm6.cube?ex=68b89b51&is=68b749d1&hm=0df6c2a3a52f957a41848bc2646af03cc86c868d92aef83bbb027634770373ba&
+load https://cdn.discordapp.com/attachments/1410797587061014700/1415813690963525702/571sgmajorv3.cube?ex=68c492c0&is=68c34140&hm=14ae5a4e87f983e3418041351d1c95d75831ac4862d20a97d94e75fd68982d56& 
+ffmpeg -i $FILE_2 -vf scale=368:208,setsar=1:1,"geq=r=128:g=128:b=128" -pix_fmt yuv420p -an a.mp4
+ffmpeg -f lavfi -i "nullsrc=s=640x360,geq=r=128:g=128:b=128" b.png
+ffmpeg -f lavfi -i "haldclutsrc=8" whar.ppm
+for i in \u0060seq -179 1 180\u0060; do
+    magick whar.ppm -modulate 100,100,%[fx:$i/1.8+100] hslhue_$i.ppm
+  done
+ffmpeg -stream_loop 1 -i $FILE_1 -c:a flac -t {get:time} 0.mp4
+extension={if:{arg:2}|=|default|then:$(basename $\u007bFILE_1##*.\u007d)|else:'{arg:2}'}
+sr=$(ffprobe -v error -select_streams a:0 -show_entries stream=sample_rate -of default=nokey=1:noprint_wrappers=1 0.mp4)
+fr=$(ffprobe -v error -select_streams v:0 -show_entries stream=r_frame_rate -of default=nokey=1:noprint_wrappers=1 0.mp4)
+d=$(ffprobe -i 0.mp4 -show_entries format=duration -v quiet -of csv="p=0")
+w=$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of default=nw=1:nk=1 0.mp4)
+h=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of default=nw=1:nk=1 0.mp4)
+fc=$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of default=nokey=1:noprint_wrappers=1 0.mp4)
+a="awk '{printf $d/2}'"
+halfd=$(eval $a)
+ffmpeg -stream_loop 1 -i "0.mp4" {get:string} -t {get:time} -movflags +faststart 1.ts
+{replace:string|{get:string}|{replace:arg|{get:time}|{js:for (let i = 0; i < {arg:0}-1; i++) {
+console.log(`ffmpeg -stream_loop 1 -i "${i+1}.ts" string -t arg ${i+2}.ts -movflags +faststart`)
+}}}}
+for((i=1;i<={arg:0};i++));
+do
+   echo 'file' $i'.ts'
+done >> concat.txt
+ffmpeg -f concat -safe 0 -i "concat.txt" {if:{arg:2}|=|mov|then:-b:v 1M -b:a 2M|else:{if:{arg:2}|=|mp4|then:-c:a flac -c:v hevc}} -pix_fmt yuv420p -movflags +faststart ./output/ihtx_custom.$extension}
+⚠️ Warning: Make sure you use `.t sync+` afterwards to make sure the video is synced to the audio
+{sh:{js:console.log(`{get:code}`)}}
+{js:let unix = {unix}
+let start = discord.variables.s
+let diff = (unix-start)/1000
+console.log(`-# Took ${diff.toFixed(3)} seconds.`)}}
