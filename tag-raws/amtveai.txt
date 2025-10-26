@@ -34,7 +34,8 @@ copy 0 a
 snip 1 -4
 convert 1 image/png
 editvideo 1 {or:{args:1}|something unexpected happens}
-snip 0 0 1d-4
+resize 1 0h 0h
+snip 0 0 0d-4
 concat 0 1
 audioputreplace 0 a
 rotate 0 180
