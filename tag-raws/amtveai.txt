@@ -29,8 +29,14 @@ rotate 0 180
 if is(video,tester) == 1 "convert 0 video/mp4\nrepeatduration 0 testerd\naudioputreplace 0 tester"
 render 0}}{if:{arg:0}|=|editvideo|then:{iscript:load {iv} 0
 load https://media.discordapp.net/attachments/1124758334805909509/1352374788026531870/resized.png?ex=67ddc8ab&is=67dc772b&hm=b104b2fe3be9aae2c93d2d969fa78a09f4082f6c0374d39d7ac042a1acb42f90& wtm
-if is(video,0) == 1 "copy 0 1\ncopy 0 a\nsnip 1 -4\nconvert 1 image/png\neditvideo 1 {or:{args:1}|something unexpected happens}\nsnip 0 0 1d-4\nconcat 0 1\naudioputreplace 0 a"
-if is(image,0) == 1 "editvideo 0 {or:{args:1}|something unexpected happens}"
+copy 0 1
+copy 0 a
+snip 1 -4
+convert 1 image/png
+editvideo 1 {or:{args:1}|something unexpected happens}
+snip 0 0 1d-4
+concat 0 1
+audioputreplace 0 a
 rotate 0 180
 overlay 0 wtm 0 0 none 0.01 0 true 50
 rotate 0 180}}}
