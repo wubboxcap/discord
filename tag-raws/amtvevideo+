@@ -66,15 +66,10 @@ effects = {get:effects}
 if args == "list" or args == "archive" or not args in effects:
     print("y")
 else:
-    print("n")}}{if:{get:result}|=|n|then:{sh:echo 'Hi'}
-}
-}
-}
-}
-}
-}
-}
-}
+    print("n")}}{if:{get:result}|=|n|then:{sh:load {media}
+path=$(basename $FILE_1)
+extension="${path##*.}"
+ffmpeg -i $FILE_1 {get:code} ./output/amtvevideo.$extension}
 }
 }
 }
