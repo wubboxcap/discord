@@ -22,7 +22,7 @@ if not args in effects:
         print("y")
 else:
     print("n")}}
-{if:{get:res}|=|y|then:{js:console.error("Effect Does not exist.\nContact <@1056191069206876161> to add an effect.")}}{if:{arg:0}|=|archive|then:{attachtext:{text:https://wubboxcap.github.io/discord/tag-raws/amtvevideo.txt}}}{if:{arg:0}|=|list|then:{eval:{iferror:{py:import json as js
+{if:{get:res}|=|y|then:{js:console.error("Effect Does not exist.\nContact <@1056191069206876161> to add an effect.")}}{if:{arg:0}|=|archive|then:{attachtext:{text:https://wubboxcap.github.io/discord/tag-raws/amtvevideo+}}}{if:{arg:0}|=|list|then:{eval:{iferror:{py:import json as js
 import fnmatch
 searcher = {jsonify:*{arg:1}*}
 pages = []
