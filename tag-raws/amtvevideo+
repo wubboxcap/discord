@@ -81,12 +81,12 @@ console.log(`ffmpeg -i "${i+1}.ts" code -t $vidlen ${i+2}.ts`);
 }}}
 {set:#|0}
 ffmpeg -i "{get:powers}.ts" ./output/multiplier.mp4}{sh:{js:console.log(`{get:render}`);}}|else:{sh:load {media}
-ffmpeg -i $FILE_1 {get:code} ./output/amtvevideo.mp4}}}}|else:{set:result|{py:args = {jsonify:{arg:0}}
+ffmpeg -i $FILE_1 {get:code} ./output/amtvevideo.mp4}}}}}|else:{set:result|{py:args = {jsonify:{arg:0}}
 effects = {get:effects}
 if args == "list" or args == "archive" or not args in effects:
     print("y")
 else:
-    print("n")}}{if:{get:result}|=|n|then:Placeholder I guess
+    print("n")}}{if:{get:result}|=|n|then:{sh:echo 'Hi'}
 }
 }
 }
