@@ -1,4 +1,13 @@
--# :warning: Warning: Use shorter or lower resolution sources so the code does not timeout. {sh:load {video}
+-# :warning: Warning: Use shorter or lower resolution sources so the code does not timeout.
+{sh:load {video}
+mkdir ./displacemaps
+curl -s "https://files.catbox.moe/wu54df.mp4" -o "./displacemaps/tvsimulator.mp4"
+sr=$(ffprobe -v error -select_streams a:0 -show_entries stream=sample_rate -of default=nokey=1:noprint_wrappers=1 $FILE_1)
+fr=$(ffprobe -v error -select_streams v:0 -show_entries stream=r_frame_rate -of default=nokey=1:noprint_wrappers=1 $FILE_1)
+d=$(ffprobe -i $FILE_1 -show_entries format=duration -v quiet -of csv="p=0")
+w=$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of default=nw=1:nk=1 $FILE_1)
+h=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of default=nw=1:nk=1 $FILE_1)
+fc=$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of default=nokey=1:noprint_wrappers=1 $FILE_1)
 ffmpeg -i $FILE_1 1.ts
 ffmpeg -i $FILE_1 -vf "curves=all=0/0 0.5/1 1/0" -filter_complex "[0:a]rubberband=formant=712923000:pitch=2^(0/12)[a1];[0:a]rubberband=formant=712923000:pitch=2^(5/12)[a2];[a1][a2]amix=2,volume=2,atrim=0.02[outa]" -map 0:v -map "[outa]" 2.ts
 ffmpeg -i $FILE_1 -vf "crop=iw/2:ih:0:0,split[left][tmp];[tmp]hflip[right];[left][right]hstack",eq=contrast=-1 -af areverse 3.ts
