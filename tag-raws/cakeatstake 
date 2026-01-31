@@ -47,19 +47,20 @@ tts line13 {choose:Well I had a good run|goodbye viewers}
 copy 0a 1
 copy 0a 2
 copy 0b 3
-copy 0a 4
-copy 0b 5
-copy 0d 6
-overlay 6 u1 270 50
-copy 0b 7
-copy 0d 8
-overlay 8 u2 270 50
-copy 0b 9
-copy 0d 10
-overlay 10 u3 270 50
-copy 0b 11
-copy 0c 12
-overlay 12 u4 270 50
+copy 0e 4
+copy 0a 5
+copy 0b 6
+copy 0d 7
+overlay 7 u1 270 50
+copy 0b 8
+copy 0d 9
+overlay 9 u2 270 50
+copy 0b 10
+copy 0d 11
+overlay 11 u3 270 50
+copy 0b 12
+copy 0c 13
+overlay 13 u4 270 50
 audioputreplace 1 line1
 audioputreplace 2 line2
 audioputreplace 3 line3
@@ -72,7 +73,6 @@ audioputreplace 9 line9
 audioputreplace 10 line10
 audioputreplace 11 line11
 audioputreplace 12 line12
-concatmultiple intro 1 2 3 4 5 6 7 8 9 10 11 12
+audioputreplace 13 line13
+concatmultiple intro 1 2 3 4 5 6 7 8 9 10 11 12 13
 render intro default cakeatstake}
-tts tts SAPI_ATT_EN_MALE_MOONMAN {args}
-audioequalizer tts -30 -15 3 0 15 12.5 7.5
