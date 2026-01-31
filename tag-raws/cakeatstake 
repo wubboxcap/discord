@@ -1,0 +1,78 @@
+{set:user1|{or:{arg:0}|{randuserid}}}
+{set:user2|{or:{arg:1}|{randuserid}}}
+{set:user3|{or:{arg:2}|{randuserid}}}
+{set:user4|{or:{arg:3}|{randuserid}}}
+{set:vote1|{range:0|250}}}
+{set:vote2|{range:250|500}}}
+{set:vote3|{range:0|750}}}
+{set:vote4|{range:750|1000}}}
+{set:votes|{math:{get:vote1}+{get:vote2}+{get:vote3}+{get:vote4}}}
+{iscript:load https://media.discordapp.net/attachments/1124758334805909509/1321577348327538718/Untitled257_20241225153114.png?ex=676dbe51&is=676c6cd1&hm=239e2ac02d2a78203e6f31c174e6080e1c3c534a15df18fce2a7581e3403dd82& 0a
+load https://media.discordapp.net/attachments/1124758334805909509/1321577348687990866/Untitled257_20241225153231.png?ex=676dbe51&is=676c6cd1&hm=a59fc9878918ef1e2d9f147523a3d4fc226277a1f9216f8e3da31f1bac551c23& 0b
+load https://media.discordapp.net/attachments/1124758334805909509/1321577348948164660/Untitled257_20241225153235.png?ex=676dbe51&is=676c6cd1&hm=e1b14caf5920a14f1d8531e1a4dbd87ed359c5c083fe082fcdf59df8845dcc66& 0c
+load https://media.discordapp.net/attachments/1124758334805909509/1321577349170597948/Untitled257_20241225153546.png?ex=676dbe51&is=676c6cd1&hm=686b8ae640fee0c6d702061eb33842247c890d6faea20821f812621a9a9b13a0& 0d
+load https://media.discordapp.net/attachments/1124758334805909509/1466992957407367258/snip.mp4?ex=697f6be8&is=697e1a68&hm=a16544b913dc1bb7aa0a7cf317a54f862c9b20545fdf5f2bbaa26ef8af8372ed& intro
+load {avatar:{get:user1}} u1
+load {avatar:{get:user2}} u2
+load {avatar:{get:user3}} u3
+load {avatar:{get:user4}} u4
+resize u1 150 150
+resize u2 150 150
+resize u3 150 150
+resize u4 150 150
+flop u1
+flop u2
+flop u3
+flop u4
+create 0e 640 360 127 127 127
+create 0f 580 300 0 0 0
+overlay 0e 0f (0ew-0fw)/2 (0eh-0fh)/2
+blur 0e 5
+tti 0g 100 0 white {jsonify:{get:votes}
+votes}
+overlay 0e 0g (0ew-0gw)/2 (0eh-0gh)/2
+tts line1 SAPI_ATT_EN_MALE_MOONMAN hello contestants, you users all lost last time, so its time for a cake at stake.
+tts line2 SAPI_ATT_EN_MALE_MOONMAN if you receive a slice of cake, you get to stay for another day, if you dont you are out of the battle.
+tts line3 SAPI_ATT_EN_MALE_MOONMAN Let's see how many votes we received
+tts line4 SAPI_SCANSOFT_EN_MALE_MLG_DANIEL I COUNTED AND FOUND OUT WE GOT A TOTAL OF {get:votes} VOTES.
+tts line5 SAPI_ATT_EN_MALE_MOONMAN Alright.
+tts line6 SAPI_ATT_EN_MALE_MOONMAN {nick:{get:user1}} you got a total of {get:vote1} votes. Your safe.
+tts line7 {choose:wow I like this!|yoyol cake!|yummy|looks delicious}
+tts line8 SAPI_ATT_EN_MALE_MOONMAN {nick:{get:user2}} you got a total of {get:vote2} votes. Your safe.
+tts line9 {choose:wow I like this!|yoyol cake!|yummy|looks delicious}
+tts line10 SAPI_ATT_EN_MALE_MOONMAN {nick:{get:user3}} you got a total of {get:vote3} votes. Your safe.
+tts line11 {choose:wow I like this!|yoyol cake!|yummy|looks delicious}
+tts line12 SAPI_ATT_EN_MALE_MOONMAN {nick:{get:user4}} you got a total of {get:vote4} votes. Your out.
+tts line13 {choose:Well I had a good run|goodbye viewers}
+copy 0a 1
+copy 0a 2
+copy 0b 3
+copy 0a 4
+copy 0b 5
+copy 0d 6
+overlay 6 u1 270 50
+copy 0b 7
+copy 0d 8
+overlay 8 u2 270 50
+copy 0b 9
+copy 0d 10
+overlay 10 u3 270 50
+copy 0b 11
+copy 0c 12
+overlay 12 u4 270 50
+audioputreplace 1 line1
+audioputreplace 2 line2
+audioputreplace 3 line3
+audioputreplace 4 line4
+audioputreplace 5 line5
+audioputreplace 6 line6
+audioputreplace 7 line7
+audioputreplace 8 line8
+audioputreplace 9 line9
+audioputreplace 10 line10
+audioputreplace 11 line11
+audioputreplace 12 line12
+concatmultiple intro 1 2 3 4 5 6 7 8 9 10 11 12
+render intro default cakeatstake}
+tts tts SAPI_ATT_EN_MALE_MOONMAN {args}
+audioequalizer tts -30 -15 3 0 15 12.5 7.5
