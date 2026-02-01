@@ -79,6 +79,7 @@ for i in $(seq 1 1 $(($powers-1))); do
   concat="${concat}|$((i+1)).ts"
 done
 ffmpeg -loglevel error -hide_banner -i "concat:$concat" -pix_fmt yuv420p ./output/ihtx.mp4
+echo $concat
 rm -f *.ts}|else:{if:{arg:{math:{get:offset}+1}}|=|multiplier|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|2}}{set:render|load {media}
 vidlen=$(ffprobe -i $FILE_1 -show_entries format=duration -v quiet -of csv="p=0")
 ffmpeg -i $FILE_1 {get:code} -t $vidlen 1.ts
