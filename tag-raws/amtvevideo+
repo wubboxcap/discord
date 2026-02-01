@@ -54,9 +54,19 @@ for i, v in enumerate(effects):
 pages.append({"embed":{"color":0x00dc64,"title":f"{if:{arg:1}|=||then:**AmtveVideo Effects**|else:**Showing effects matching '{arg:1}'**}","description":content,"footer":{"text":f"Page {pageidx} of {mcount} ({effnum} Total Effects)","icon_url":icon2}, "author": {"name":auth, "icon_url":icon}}})
 pages.pop(0)
 print(js.dumps({"pages": pages}))} }} }
-{if:{arg:0}|=|audio reverse|then:{set:code|-af areverse,atrim=0.02}}
-{if:{arg:0}|=|simulator v19|then:{set:code|-vf negate,huesaturation=-70:0.5:0:-100:100,format=yuv444p,scale=640:-1,"geq='p(X+sin(0/10+Y/28)*30,(Y+sin(0/10+X*1.9/100)*18))'","geq='p(X+sin(0/10+Y/28)*30,(Y+sin(0/10+X*1.9/100)*18))'",scale=iw:ih,format=yuv420p -filter_complex "[0:a]rubberband=formant=712923000:pitch=2^(-12/12)[a1];[0:a]rubberband=formant=712923000:pitch=2^(0/12)[a2];[0:a]rubberband=formant=712923000:pitch=2^(7/12)[a3];[a1][a2][a3]amix=3,volume=3,atrim=0.02[outa]" -map 0:v -map "[outa]"}}
-{if:{arg:0}|=|91-dxi|then:{set:code|-vf huesaturation=70:1:0:-100:100,negate,format=yuv444p,"geq='p(X\,Y+sin(T*120)*10)'",format=yuv420p -filter_complex "[0:a]rubberband=formant=712923000:pitch=2^(0/12)[a1];[0:a]rubberband=formant=712923000:pitch=2^(-3.5/12)[a2];[a1][a2]amix=2,volume=2,atrim=0.02[outa]" -map 0:v -map "[outa]"}}
+{sh:arg="{arg:0}"
+if [[ "$arg" == "audio reverse" ]]; then
+  echo '{set:code|-af areverse,atrim=0.02'}
+fi
+if [[ "$arg" == "simulator v19" ]]; then
+  echo '{set:code|-vf negate,huesaturation=-70:0.5:0:-100:100,format=yuv444p,scale=640:-1,"geq=\'p(X+sin(0/10+Y/28)*30,(Y+sin(0/10+X*1.9/100)*18))\'","geq='p(X+sin(0/10+Y/28)*30,(Y+sin(0/10+X*1.9/100)*18))\'",scale=iw:ih,format=yuv420p -filter_complex "[0:a]rubberband=formant=712923000:pitch=2^(-12/12)[a1];[0:a]rubberband=formant=712923000:pitch=2^(0/12)[a2];[0:a]rubberband=formant=712923000:pitch=2^(7/12)[a3];[a1][a2][a3]amix=3,volume=3,atrim=0.02[outa]" -map 0:v -map "[outa]"}'
+fi
+if [[ "$arg" == "91-dxi" ]]; then
+  echo '{set:code|-vf huesaturation=70:1:0:-100:100,negate,format=yuv444p,"geq=\'p(X\,Y+sin(T*120)*10)\'",format=yuv420p -filter_complex "[0:a]rubberband=formant=712923000:pitch=2^(0/12)[a1];[0:a]rubberband=formant=712923000:pitch=2^(-3.5/12)[a2];[a1][a2]amix=2,volume=2,atrim=0.02[outa]" -map 0:v -map "[outa]"}'
+fi
+if [[ "$arg" == "custom" ]]; then
+  echo '{set:code|-af areverse,atrim=0.02}'
+fi}
 {if:{arg:0}|=|custom|then:{set:code|{arg:1}}{set:offset|{math:{get:offset}+1}}}
 {if:{arg:0}|=|custom major 528|then:{set:code|-vf format=yuv444p,scale=iw:ih,"geq='p(X,floor(Y+sin(T*250/10+X*2.5/100)*4.5))'",huesaturation=90:0:0:-100:100,negate,vflip,scale=iw:ih,format=yuv420p -filter_complex "[0:a]rubberband=pitch=2^(5/12)[a1];[0:a]rubberband=pitch=2^(-2/12)[a2];[a1][a2]amix=2,volume=2[outa]" -map 0:v -map "[outa]" -pix_fmt yuv420p}}
 {if:{arg:0}|=|custom major 333|then:{set:code|-vf negate,rotate=-0.03,unsharp -filter_complex "[0:a]rubberband=pitch=2^(0/12)[a1];[0:a]rubberband=pitch=2^(-0.2/12)[a2];[a1][a2]amix=2,volume=2[outa]" -map 0:v -map "[outa]"}}
