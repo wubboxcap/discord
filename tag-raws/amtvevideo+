@@ -55,29 +55,44 @@ pages.append({"embed":{"color":0x00dc64,"title":f"{if:{arg:1}|=||then:**AmtveVid
 pages.pop(0)
 print(js.dumps({"pages": pages}))} }} }
 {sh:arg="{arg:0}"
-if [[ "$arg" == "audio reverse" ]]; then
-  echo '{set:code|-af areverse,atrim=0.02}'
-elif [[ "$arg" == "simulator v19" ]]; then
-  echo '{set:code|-vf negate,huesaturation=-70:0.5:0:-100:100,format=yuv444p,scale=640:-1,"geq=\'p(X+sin(0/10+Y/28)*30,(Y+sin(0/10+X*1.9/100)*18))\'","geq=\'p(X+sin(0/10+Y/28)*30,(Y+sin(0/10+X*1.9/100)*18))\'",scale=iw:ih,format=yuv420p -filter_complex "[0:a]rubberband=formant=712923000:pitch=2^(-12/12)[a1];[0:a]rubberband=formant=712923000:pitch=2^(0/12)[a2];[0:a]rubberband=formant=712923000:pitch=2^(7/12)[a3];[a1][a2][a3]amix=3,volume=3,atrim=0.02[outa]" -map 0:v -map "[outa]"}'
-elif [[ "$arg" == "91-dxi" ]]; then
-  echo '{set:code|-vf huesaturation=70:1:0:-100:100,negate,format=yuv444p,"geq=\'p(X\,Y+sin(T*120)*10)\'",format=yuv420p -filter_complex "[0:a]rubberband=formant=712923000:pitch=2^(0/12)[a1];[0:a]rubberband=formant=712923000:pitch=2^(-3.5/12)[a2];[a1][a2]amix=2,volume=2,atrim=0.02[outa]" -map 0:v -map "[outa]"}'
-elif [[ "$arg" == "custom" ]]; then
-  echo '{set:code|{arg:1}}{set:offset|{math:{get:offset}+1}}'
-elif [[ "$arg" == "custom major 528" ]]; then
-  echo '{set:code|-vf format=yuv444p,scale=iw:ih,"geq=\'p(X,floor(Y+sin(T*250/10+X*2.5/100)*4.5))\'",huesaturation=90:0:0:-100:100,negate,vflip,scale=iw:ih,format=yuv420p -filter_complex "[0:a]rubberband=pitch=2^(5/12)[a1];[0:a]rubberband=pitch=2^(-2/12)[a2];[a1][a2]amix=2,volume=2[outa]" -map 0:v -map "[outa]" -pix_fmt yuv420p}'
-elif [[ "$arg" == "custom major 333" ]]; then
-  echo '{set:code|-vf negate,rotate=-0.03,unsharp -filter_complex "[0:a]rubberband=pitch=2^(0/12)[a1];[0:a]rubberband=pitch=2^(-0.2/12)[a2];[a1][a2]amix=2,volume=2[outa]" -map 0:v -map "[outa]"}'
-elif [[ "$arg" == "x major 159" ]]; then
-  echo '{set:code|-vf negate,hue=s=0,colorchannelmixer=1:0:1:0:0:1:0:0:1:0:1:0:1:1:1:1,hue=s=3,format=yuv420p -filter_complex "[0:a]rubberband=formant=712923000:pitch=2^(-5/12)[a1];[0:a]rubberband=formant=712923000:pitch=2^(7/12)[a2];[a1][a2]amix=2,volume=2,atrim=0.02[outa]" -map 0:v -map "[outa]"}'
-elif [[ "$arg" == "g major" ]]; then
-  echo '{set:code|-vf negate -af "asplit=6[a0][a1][a2][a3][a4][a5];[a0]rubberband=pitch=2^(-12/12):formant=2.14748e+09/4.9:phase=712923000:pitchq=quality[a0a];[a1]rubberband=pitch=2^(-5/12):formant=2.14748e+09/4.9:phase=712923000:pitchq=quality[a1a];[a2]rubberband=pitch=2^(0/12):formant=2.14748e+09/4.9:phase=712923000:pitchq=quality[a2a];[a3]rubberband=pitch=2^(4/12):formant=2.14748e+09/4.9:phase=712923000:pitchq=quality[a3a];[a4]rubberband=pitch=2^(7/12):formant=2.14748e+09/4.9:phase=712923000:pitchq=quality[a4a];[a5]rubberband=pitch=2^(12/12):formant=2.14748e+09/4.9:phase=712923000:pitchq=quality[a5a];[a0a][a1a][a2a][a3a][a4a][a5a]amix=6,volume=6,atrim=0.02"}'
-elif [[ "$arg" == "g major 0" ]]; then
-  echo '{set:code|-vf movie=$(magick hald:6 -modulate 100,100,%[fx:0.5*200+100] hue.ppm; echo ./hue.ppm),"[in]haldclut","curves=all=0/0 0.5/1 1/0",format=yuv420p -af "asplit=3[a0][a1][a2];[a0]rubberband=pitch=2^(-10/12):formant=712923000[a0a];[a1]rubberband=pitch=2^(0/12):formant=712923000[a1a];[a2]rubberband=pitch=2^(10/12):formant=712923000[a2a];[a0a][a1a][a2a]amix=3,volume=3,atrim=0.02"}'
-elif [[ "$arg" == "g major 1" ]]; then
-  echo '{set:code|-vf movie=$(magick hald:6 -modulate 100,100,%[fx:0.5*200+100] hue.ppm; echo ./hue.ppm),"[in]haldclut",negate,format=yuv420p -af "rubberband=pitch=2^(8/12):formant=2.14748e+09/4.9:phase=712923000:pitchq=quality,atrim=0.02"}'
-elif [[ "$arg" == "g major 4" ]]; then
-  echo '{set:code|-vf "curves=all=0/0 0.5/1 1/0",format=yuv420p -af "asplit=2[a0][a1];[a0]rubberband=pitch=2^(0/12):formant=2.14748e+09/4.9:phase=712923000:pitchq=quality[a0a];[a1]rubberband=pitch=2^(5/12):formant=2.14748e+09/4.9:phase=712923000:pitchq=quality[a1a];[a0a][a1a]amix=2,volume=2,atrim=0.02"}'
-fi}
+case "$arg" in
+    "audio reverse")
+        echo '{set:code|-af areverse,atrim=0.02}'
+        ;;
+   "simulator v19")
+        echo '{set:code|-vf negate,huesaturation=-70:0.5:0:-100:100,format=yuv444p,scale=640:-1,"geq=\'p(X+sin(0/10+Y/28)*30,(Y+sin(0/10+X*1.9/100)*18))\'","geq=\'p(X+sin(0/10+Y/28)*30,(Y+sin(0/10+X*1.9/100)*18))\'",scale=iw:ih,format=yuv420p -filter_complex "[0:a]rubberband=formant=712923000:pitch=2^(-12/12)[a1];[0:a]rubberband=formant=712923000:pitch=2^(0/12)[a2];[0:a]rubberband=formant=712923000:pitch=2^(7/12)[a3];[a1][a2][a3]amix=3,volume=3,atrim=0.02[outa]" -map 0:v -map "[outa]"}'
+        ;;
+    "91-dxi")
+        echo '{set:code|-vf huesaturation=70:1:0:-100:100,negate,format=yuv444p,"geq=\'p(X\,Y+sin(T*120)*10)\'",format=yuv420p -filter_complex "[0:a]rubberband=formant=712923000:pitch=2^(0/12)[a1];[0:a]rubberband=formant=712923000:pitch=2^(-3.5/12)[a2];[a1][a2]amix=2,volume=2,atrim=0.02[outa]" -map 0:v -map "[outa]"}'
+        ;;
+   "custom")
+        echo '{set:code|{arg:1}}{set:offset|{math:{get:offset}+1}}'
+        ;;
+   "custom major 528")
+        echo '{set:code|-vf format=yuv444p,scale=iw:ih,"geq=\'p(X,floor(Y+sin(T*250/10+X*2.5/100)*4.5))\'",huesaturation=90:0:0:-100:100,negate,vflip,scale=iw:ih,format=yuv420p -filter_complex "[0:a]rubberband=pitch=2^(5/12)[a1];[0:a]rubberband=pitch=2^(-2/12)[a2];[a1][a2]amix=2,volume=2[outa]" -map 0:v -map "[outa]" -pix_fmt yuv420p}'
+        ;;
+   "custom major 333")
+        echo '{set:code|-vf negate,rotate=-0.03,unsharp -filter_complex "[0:a]rubberband=pitch=2^(0/12)[a1];[0:a]rubberband=pitch=2^(-0.2/12)[a2];[a1][a2]amix=2,volume=2[outa]" -map 0:v -map "[outa]"}'
+        ;;
+   "x major 159")
+        echo '{set:code|-vf negate,hue=s=0,colorchannelmixer=1:0:1:0:0:1:0:0:1:0:1:0:1:1:1:1,hue=s=3,format=yuv420p -filter_complex "[0:a]rubberband=formant=712923000:pitch=2^(-5/12)[a1];[0:a]rubberband=formant=712923000:pitch=2^(7/12)[a2];[a1][a2]amix=2,volume=2,atrim=0.02[outa]" -map 0:v -map "[outa]"}'
+        ;;
+   "g major")
+        echo '{set:code|-vf negate -af "asplit=6[a0][a1][a2][a3][a4][a5];[a0]rubberband=pitch=2^(-12/12):formant=2.14748e+09/4.9:phase=712923000:pitchq=quality[a0a];[a1]rubberband=pitch=2^(-5/12):formant=2.14748e+09/4.9:phase=712923000:pitchq=quality[a1a];[a2]rubberband=pitch=2^(0/12):formant=2.14748e+09/4.9:phase=712923000:pitchq=quality[a2a];[a3]rubberband=pitch=2^(4/12):formant=2.14748e+09/4.9:phase=712923000:pitchq=quality[a3a];[a4]rubberband=pitch=2^(7/12):formant=2.14748e+09/4.9:phase=712923000:pitchq=quality[a4a];[a5]rubberband=pitch=2^(12/12):formant=2.14748e+09/4.9:phase=712923000:pitchq=quality[a5a];[a0a][a1a][a2a][a3a][a4a][a5a]amix=6,volume=6,atrim=0.02"}'
+        ;;
+   "g major 0")
+        echo '{set:code|-vf movie=$(magick hald:6 -modulate 100,100,%[fx:0.5*200+100] hue.ppm; echo ./hue.ppm),"[in]haldclut","curves=all=0/0 0.5/1 1/0",format=yuv420p -af "asplit=3[a0][a1][a2];[a0]rubberband=pitch=2^(-10/12):formant=712923000[a0a];[a1]rubberband=pitch=2^(0/12):formant=712923000[a1a];[a2]rubberband=pitch=2^(10/12):formant=712923000[a2a];[a0a][a1a][a2a]amix=3,volume=3,atrim=0.02"}'
+        ;;
+   "g major 1")
+        echo '{set:code|-vf movie=$(magick hald:6 -modulate 100,100,%[fx:0.5*200+100] hue.ppm; echo ./hue.ppm),"[in]haldclut",negate,format=yuv420p -af "rubberband=pitch=2^(8/12):formant=2.14748e+09/4.9:phase=712923000:pitchq=quality,atrim=0.02"}'
+        ;;
+   "g major 4")
+        echo '{set:code|-vf "curves=all=0/0 0.5/1 1/0",format=yuv420p -af "asplit=2[a0][a1];[a0]rubberband=pitch=2^(0/12):formant=2.14748e+09/4.9:phase=712923000:pitchq=quality[a0a];[a1]rubberband=pitch=2^(5/12):formant=2.14748e+09/4.9:phase=712923000:pitchq=quality[a1a];[a0a][a1a]amix=2,volume=2,atrim=0.02"}'
+        ;;
+    *)
+        :
+        ;;
+esac}
 {if:{arg:{math:{get:offset}+1}}|=|raw|then:{py:import json as js
 icon = "{avatar}"
 auth = "{user}#{discrim}"
