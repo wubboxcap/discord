@@ -55,6 +55,7 @@ pages.append({"embed":{"color":0x00dc64,"title":f"{if:{arg:1}|=||then:**AmtveVid
 pages.pop(0)
 print(js.dumps({"pages": pages}))} }} }
 {sh:arg="{arg:0}"
+declare -p arg
 case "$arg" in
     "audio reverse")
         echo '{set:code|-af areverse,atrim=0.02}'
