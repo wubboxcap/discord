@@ -68,14 +68,18 @@ icon = "{avatar}"
 auth = "{user}#{discrim}"
 content = '''```{get:code}```'''
 json = {"embed":{"title":"Code","description":content,"color":0x00dc64,"author":{"name":auth,"icon_url":icon}}}
-print(js.dumps(json))}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtx|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}{set:time|{or:{if:{arg:{math:{get:offset}+3}}|=|true|then:$vidlen|else:{arg:{math:{get:offset}+3}}}|0.5}}{set:render|load {media}
+print(js.dumps(json))}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtx|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}{set:time|{or:{if:{arg:{math:{get:offset}+3}}|=|true|then:$vidlen|else:{arg:{math:{get:offset}+3}}}|0.5}}{sh:load {media}
 vidlen=$(ffprobe -i $FILE_1 -show_entries format=duration -v quiet -of csv="p=0")
-ffmpeg -i $FILE_1 {get:code} -t {get:time} 1.ts
-{replace:code|{get:code}|{replace:time|{get:time}|{js:for (let i = 0; i < {get:powers}-1; i++) {
-console.log(`ffmpeg -i "${i+1}.ts" code -t time ${i+2}.ts`);
-}}}}
-{set:#|0}
-ffmpeg -i "concat:{foreach:{math:{get:powers}-1}|{set:#|{math:{get:#}+1}}{get:#}.ts\u007c}{get:powers}.ts" ./output/ihtx.mp4}{sh:{js:console.log(`{get:render}`);}}|else:{if:{arg:{math:{get:offset}+1}}|=|multiplier|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|2}}{set:render|load {media}
+powers={get:powers}
+time={get:time}
+ffmpeg -y -i $FILE_1 {get:code} -t $time 1.ts
+concat="1.ts"
+for i in $(seq 1 1 $(($powers-1))); do
+  ffmpeg -y -i "$i.ts" {get:string} -t $time $((i+1)).ts
+  concat="${concat}|$((i+1)).ts"
+done
+ffmpeg -loglevel error -hide_banner -i "concat:$concat" -pix_fmt yuv420p ./output/ihtx.mp4
+rm -f *.ts}|else:{if:{arg:{math:{get:offset}+1}}|=|multiplier|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|2}}{set:render|load {media}
 vidlen=$(ffprobe -i $FILE_1 -show_entries format=duration -v quiet -of csv="p=0")
 ffmpeg -i $FILE_1 {get:code} -t $vidlen 1.ts
 {replace:code|{get:code}|{js:for (let i = 0; i < {get:powers}-1; i++) {
