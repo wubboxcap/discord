@@ -1,4 +1,5 @@
 {iferror:-# :warning: Warning: Use shorter or lower resolution sources so the code does not timeout.
+{choose: | |# PLEASE USE AMTVE'S [FLUXEDIT](<https://discord.com/oauth2/authorize?client_id=1529508817061285940>) BOT FOR P2FX_FFMPEG THIS IS EXTREMELY OUTDATED BTW|# PLEASE USE AMTVE'S [FLUXEDIT](<https://discord.com/oauth2/authorize?client_id=1529508817061285940>) BOT FOR P2FX_FFMPEG THIS IS EXTREMELY OUTDATED BTW}
 {sh:load {video}
 load https://cdn.discordapp.com/attachments/1306660169488404502/1418247629107892418/Chord.wav?ex=68e28588&is=68e13408&hm=ec2642a60b84cfebf95e7852545fcf31035c4287ed82864d77db027452679278&
 mkdir ./displacemaps
