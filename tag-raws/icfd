@@ -11,11 +11,11 @@ d=$vidlen
 w=$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of default=nw=1:nk=1 $FILE_1)
 h=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of default=nw=1:nk=1 $FILE_1)
 fc=$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of default=nokey=1:noprint_wrappers=1 $FILE_1)
-eval "ffmpeg -y -hide_banner -loglevel error -stream_loop -1 -i $FILE_1 {get:string} -t $time -c:v libx264 -tune fastdecode -preset ultrafast -g 120 -qp 1 -c:a aac -aac_coder 1 -aac_ms 1 -threads 0 -movflags +faststart 1.mp4"
+ffmpeg -y -hide_banner -loglevel error -stream_loop -1 -i $FILE_1 {get:string} -t $time -c:v libx264 -tune fastdecode -preset ultrafast -g 120 -qp 1 -c:a aac -aac_coder 1 -aac_ms 1 -threads 0 -movflags +faststart 1.mp4
 echo "file '1.mp4'" >> concat.txt
 if [ "${powers:-0}" -gt 1 ]; then
   for i in $(seq 1 1 $(($powers-1))); do
-    eval "ffmpeg -loglevel error -hide_banner -stream_loop -1 -y -i $i.mp4 {get:string} -t $time -movflags +faststart $((i+1)).mp4"
+    ffmpeg -loglevel error -hide_banner -stream_loop -1 -y -i $i.mp4 {get:string} -t $time -movflags +faststart $((i+1)).mp4
     echo "file '$((i+1)).mp4'" >> concat.txt
   done
 fi
