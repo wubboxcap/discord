@@ -1,21 +1,25 @@
-{sh:load {media}
+{set:string|{substring:{args}|{indexof:{arg:2}|{args}}}}{sh:load {media}
 start=$(date +%s%3N)
 powers={arg:0}
 string='{replace:'|\'|{args}}'
-substring="{arg:2}"
-before_substring="${string%%"$substring"*}"
-index=${#before_substring}
-code="${string:${index}}"
 out="./output/ihtx.$(openssl rand -hex 4).mp4"
 vidlen=$(ffprobe -i $FILE_1 -show_entries format=duration -v quiet -of csv="p=0")
 time=$(awk -v vidlen="$vidlen" 'BEGIN{bracketleft} printf {arg:1} {bracketright}')
-eval "ffmpeg -y -hide_banner -loglevel error -stream_loop -1 -i $FILE_1 $code -t $time -c:v libx264 -tune fastdecode -preset ultrafast -g 120 -qp 1 -c:a aac -aac_coder 1 -aac_ms 1 -threads 0 -movflags +faststart 1.mp4"
+sr=$(ffprobe -v error -select_streams a:0 -show_entries stream=sample_rate -of default=nokey=1:noprint_wrappers=1 $FILE_1)
+fr=$(ffprobe -v error -select_streams v:0 -show_entries stream=r_frame_rate -of default=nokey=1:noprint_wrappers=1 $FILE_1)
+d=$vidlen
+w=$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of default=nw=1:nk=1 $FILE_1)
+h=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of default=nw=1:nk=1 $FILE_1)
+fc=$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of default=nokey=1:noprint_wrappers=1 $FILE_1)
+eval "ffmpeg -y -hide_banner -loglevel error -stream_loop -1 -i $FILE_1 {get:string} -t $time -c:v libx264 -tune fastdecode -preset ultrafast -g 120 -qp 1 -c:a aac -aac_coder 1 -aac_ms 1 -threads 0 -movflags +faststart 1.mp4"
 echo "file '1.mp4'" >> concat.txt
-for i in $(seq 1 1 $(($powers-1))); do
-  eval "ffmpeg -loglevel error -hide_banner -stream_loop -1 -y -i $i.mp4 $code -t $time -movflags +faststart $((i+1)).mp4"
-  echo "file '$((i+1)).mp4'" >> concat.txt
-done
-ffmpeg -y -loglevel error -hide_banner -f concat -safe 0 -i "concat.txt" -c:v libx264 -profile:v high -level:v 5 -tune film -q:v 1 -crf 30 -g 9 -bf 8 -preset superfast -c:a aac -b:a 320K -aac_coder fast -pix_fmt yuv420p -bufsize 16M -movflags +faststart -threads 0 ./output/ihtx.$(openssl rand -hex 4).mp4
+if [ "${powers:-0}" -gt 1 ]; then
+  for i in $(seq 1 1 $(($powers-1))); do
+    eval "ffmpeg -loglevel error -hide_banner -stream_loop -1 -y -i $i.mp4 {get:string} -t $time -movflags +faststart $((i+1)).mp4"
+    echo "file '$((i+1)).mp4'" >> concat.txt
+  done
+fi
+ffmpeg -y -loglevel error -hide_banner -f concat -safe 0 -i "concat.txt" -c:v libx264 -profile:v high -level:v 5 -tune film -q:v 1 -crf 30 -g 9 -bf 8 -preset superfast -c:a aac -b:a 320K -aac_coder fast -pix_fmt yuv420p -bufsize 16M -movflags +faststart -threads 0 "$out"
 if [ -f "$out" ]; then
    echo "{\"embeds\":[{\"color\":$(( (RANDOM << 15 | RANDOM) % 16777216 )),\"fields\":[{\"name\":\"Reminder:\",\"value\":\"Make sure you use \\\`.t sync+\\\` or \\\`.t sync+ alt\\\` afterwards to make sure the video is synced to the audio\"},{\"name\":\"Exec. Time:\",\"value\":\"took $(awk -v start="$start" -v current="$(date +%s%3N)" 'BEGIN{ printf "%.2f", (current-start)/1000 }') seconds\"}],\"type\":\"rich\"}]}"
 fi
