@@ -17,6 +17,6 @@ for i in $(seq 1 1 $(($powers-1))); do
 done
 ffmpeg -y -loglevel error -hide_banner -f concat -safe 0 -i "concat.txt" -c:v libx264 -profile:v high -level:v 5 -tune film -q:v 1 -crf 30 -g 9 -bf 8 -preset superfast -c:a aac -b:a 320K -aac_coder fast -pix_fmt yuv420p -bufsize 16M -movflags +faststart -threads 0 ./output/ihtx.$(openssl rand -hex 4).mp4
 if [ -f "$out" ]; then
-   echo '{"embeds":[{"color":$(( (RANDOM << 15 | RANDOM) % 16777216 )),"fields":[{"name":"Reminder:","value":"Make sure you use \`.t sync+\` or \`.t sync+ alt\` afterwards to make sure the video is synced to the audio"},{"name":"Exec. Time:","value":"took $(awk -v start="$start" -v current="$(date +%s%3N)" 'BEGIN{ printf "%.2f", (current-start)/1000 }') seconds"}],"type":"rich"}]}'
+   echo "{\"embeds\":[{\"color\":$(( (RANDOM << 15 | RANDOM) % 16777216 )),\"fields\":[{\"name":"Reminder:\",\"value\":"Make sure you use \`.t sync+\` or \`.t sync+ alt\` afterwards to make sure the video is synced to the audio\"},{\"name\":\"Exec. Time:\",\"value\":\"took $(awk -v start="$start" -v current="$(date +%s%3N)" 'BEGIN{ printf "%.2f", (current-start)/1000 }') seconds\"}],\"type\":\"rich\"}]}'
 fi
 rm -f *.mp4 concat.txt}
