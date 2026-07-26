@@ -19,4 +19,4 @@ ffmpeg -y -loglevel error -hide_banner -f concat -safe 0 -i "concat.txt" -c:v li
 if [ -f "$out" ]; then
    echo '{"embeds":[{"color":$(( (RANDOM << 15 | RANDOM) % 16777216 )),"fields":[{"name":"Reminder:","value":"Make sure you use \`.t sync+\` or \`.t sync+ alt\` afterwards to make sure the video is synced to the audio"},{"name":"Exec. Time:","value":"took $(awk -v start="$start" -v current="$(date +%s%3N)" 'BEGIN{ printf "%.2f", (current-start)/1000 }') seconds"}],"type":"rich"}]}'
 fi
-rm -f *.mp4 concat.text}
+rm -f *.mp4 concat.txt}
