@@ -1,1 +1,250 @@
-{exit:This tag is canceled due to amtve being banned.}
+{set:code|}
+{set:offset|0}
+{set:banlist|[]}
+{set:effects|["audio reverse","audio reverse ffmpeg","confusion","confusion hsv","confusion reversed","confusion hsv reversed"]}
+{set:banned|{py:victims = {get:banlist}
+user = "{user}"
+if user in victims:
+  print(True)
+else:
+  print(False)
+}}
+{if:{get:banned}|=|True|then:{js:console.log("You are banned from AMTVEVideo and all of its tag aliases.");}|else:
+{if:{argslen}|<|1|then:.t {tagname} <effect> <args...> <subcommand> <subcommand args>|else:-# Note: AMTVEVideo is in BETA!
+{if:{arg:1}|!=|list|then:{choose:hey i feel so sprunki|《SPRUNKI》|☆TAT☆ FOUND AFTER 10 YEARS NO WAY|{repeat:30|{mention:{user}}}|have a bowl mr squidward|https://media.discordapp.net/attachments/1124758334805909509/1334274228219940877/now.gif?ex=679bef35&is=679a9db5&hm=50d94b4217555d74e7059e03ab50d29972e827410a99d1117f471095181209ff&|New punjabi movies 2014 full movie free download hd 1080p|apt apt|guh huck|baaren chromed|if I had two donuts ate one and squashed and revived one, how much donuts I have now?|whar|you are making me angry|i have anger issues|W|L|have this, yuh big hoe|guh|I edge to your videos.|https://tenor.com/view/cat-brick-throw-explosion-gif-12081125062559658884|i eat videos. **NOM**|om nom stories|GET OUT!|https://tenor.com/view/eating-meme-spookyspook-bfdi-face-gif-27440393}
+}
+{set:res|{py:args = {jsonify:{arg:0}}
+effects = {get:effects}
+if not args in effects:
+    if args == "list" or args == "archive":
+        print("n")
+    else:
+        print("y")
+else:
+    print("n")}}
+{if:{get:res}|=|y|then:{js:console.error("Effect Does not exist.\nContact <@1056191069206876161> to add an effect.")}}{if:{arg:0}|=|archive|then:{attachtext:{text:https://wubboxcap.github.io/discord/tag-raws/amtvevideo.txt}}}{if:{arg:0}|=|list|then:{eval:{iferror:{py:import json as js
+import fnmatch
+searcher = {jsonify:*{arg:1}*}
+pages = []
+effects = fnmatch.filter({get:effects},searcher)
+icon = "{avatar}"
+auth = "{usertag}"
+icon2 = "https://cdn.discordapp.com/attachments/1124758334805909509/1373031118659391689/Untitled321_20250516144254.png?ex=6828ee60&is=68279ce0&hm=060abd6b5d8132e0d875179e33bbdc7ee3a2921e1f72a0f725d543291509d456&"
+effnum = len(effects)
+content = ""
+modulocount = []
+for i, v in enumerate(effects):
+    if i % 20 == 0:
+        modulocount.append(True)
+
+modulocount.pop(0)
+modulocount.append(True)
+mcount = len(modulocount)
+pageidx = 0
+
+for i, v in enumerate(effects):
+    if i % 20 == 0:
+        pages.append({"embed":{"color":0x00dc64,"title":f"{if:{arg:1}|=||then:**AmtveVideo Effects**|else:**Showing effects matching '{arg:1}'**}","description":content,"footer":{"text":f"Page {pageidx} of {mcount} ({effnum} Total Effects)","icon_url":icon2}, "author": {"name":auth, "icon_url":icon}}})
+        pageidx += 1
+        content = ""
+        content += f"- {v} \n"
+    else:
+        content += f"- {v} \n"
+
+pages.append({"embed":{"color":0x00dc64,"title":f"{if:{arg:1}|=||then:**AmtveVideo Effects**|else:**Showing effects matching '{arg:1}'**}","description":content,"footer":{"text":f"Page {pageidx} of {mcount} ({effnum} Total Effects)","icon_url":icon2}, "author": {"name":auth, "icon_url":icon}}})
+pages.pop(0)
+print(js.dumps({"pages": pages}))} }} }{set:code|{js:const arg0 = {jsonify:{lower:{arg:0}}};
+switch (arg0) {
+  case "audio reverse":
+    console.log(`audioreverse #`);
+    break;
+  case "audio reverse ffmpeg":
+    console.log(`-af areverse`);
+    break;
+  case "confusion":
+    console.log(`contrast # -1
+haah #
+audioreverse #`);
+    break;
+  case "confusion hsv":
+    console.log(`hueshifthsv # 180
+invert #
+haah #
+audioreverse #`);
+    break;
+  case "confusion reversed":
+    console.log(`contrast # -1
+haah #
+reverse # false`);
+    break;
+  case "confusion hsv reversed":
+    console.log(`hueshifthsv # 180
+invert #
+haah #
+reverse # false`);
+    break;
+  case "confusion reversed":
+    console.log(`contrast # -1
+haah #
+reverse # false`);
+    break;
+  case "confusion reversed":
+    console.log(`contrast # -1
+haah #
+reverse # false`);
+    break;
+}}}
+{if:{indexof:ffmpeg|{arg:0}}|!=|-1|then:{if:{arg:{math:{get:offset}+1}}|=|raw|then:{py:import json as js
+icon = "{avatar}"
+auth = "{user}#{discrim}"
+content = '''```{get:code}```'''
+json = {"embed":{"title":"Code","description":content,"color":0x00dc64,"author":{"name":auth,"icon_url":icon}}}
+print(js.dumps(json))}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtx|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}{set:time|{or:{if:{arg:{math:{get:offset}+3}}|=|true|then:$vidlen|else:{arg:{math:{get:offset}+3}}}|0.5}}{set:render|load {media}
+vidlen=$(ffprobe -i $FILE_1 -show_entries format=duration -v quiet -of csv="p=0")
+ffmpeg -i $FILE_1 {get:code} -t {get:time} 1.ts
+{replace:code|{get:code}|{replace:time|{get:time}|{js:for (let i = 0; i < {get:powers}-1; i++) {
+console.log(`ffmpeg -i "${i+1}.ts" code -t time ${i+2}.ts`);
+}}}}
+{set:#|0}
+ffmpeg -i "concat:{foreach:{math:{get:powers}-1}|{set:#|{math:{get:#}+1}}{get:#}.ts\u007c}{get:powers}.ts" ./output/ihtx.mp4}{sh:{js:console.log(`{get:render}`);}}|else:{if:{arg:{math:{get:offset}+1}}|=|multiplier|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|2}}{set:render|load {media}
+vidlen=$(ffprobe -i $FILE_1 -show_entries format=duration -v quiet -of csv="p=0")
+ffmpeg -i $FILE_1 {get:code} -t $vidlen 1.ts
+{replace:code|{get:code}|{js:for (let i = 0; i < {get:powers}-1; i++) {
+console.log(`ffmpeg -i "${i+1}.ts" code -t $vidlen ${i+2}.ts`);
+}}}
+{set:#|0}
+ffmpeg -i "{get:powers}.ts" ./output/multiplier.mp4}{sh:{js:console.log(`{get:render}`);}}|else:{sh:load {media}
+ffmpeg -i $FILE_1 {get:code} ./output/amtvevideo.mp4}}}}|else:{if:{arg:{math:{get:offset}+1}}|=|raw|then:{py:import json as js
+icon = "{avatar}"
+auth = "{user}#{discrim}"
+content = '''```{replace:#|{or:{arg:{math:{get:offset}+2}}|#}|{get:code}}```'''
+json = {"embed":{"title":"Code","description":content,"color":0x00dc64,"author":{"name":auth,"icon_url":icon}}}
+print(js.dumps(json))}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtx|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
+{iscript:load {video} 0
+{if:{arg:{math:{get:offset}+3}}|!=|true|then:snip 0 0 {or:{arg:{math:{get:offset}+3}}|0.5}}
+{js:let ihtx = {get:powers};
+let loop = {or:{arg:{math:{get:offset}+4}}|true}
+const action = {jsonify:{get:code}}
+console.log("copy 0 1")
+for (let i = 1; i <= ihtx; i++) {
+  console.log(action.replaceAll("#",i));
+  if (loop == true) {
+    console.log(`repeatduration ${i} 0d`)
+  }
+  console.log(`copy ${i} ${i+1}`);
+}}
+concatmultiple {replace:\n| |{js:let ihtx = {get:powers};
+for (let i = 1; i <= ihtx; i++) {
+  console.log(i);
+}}}
+render 1 default amtvevideo}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtxreverse|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
+{iscript:load {video} 0
+{if:{arg:{math:{get:offset}+3}}|!=|true|then:snip 0 0 {or:{arg:{math:{get:offset}+3}}|0.5}}
+{js:let ihtx = {get:powers};
+let loop = {or:{arg:{math:{get:offset}+4}}|true}
+const action = {jsonify:{get:code}}
+console.log("copy 0 1")
+for (let i = 1; i <= ihtx; i++) {
+  console.log(action.replaceAll("#",i));
+  if (loop == true) {
+    console.log(`repeatduration ${i} 0d`)
+  }
+  console.log(`copy ${i} ${i+1}`);
+}}
+concatmultiple {replace:\n| |{js:let ihtx = {get:powers};
+for (let i = ihtx; i >= 1; i--) {
+  console.log(i)
+}}}
+render {get:powers} default amtvevideo}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtxkine|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
+{iscript:load {video} 0
+{if:{arg:{math:{get:offset}+3}}|!=|true|then:snip 0 0 {or:{arg:{math:{get:offset}+3}}|0.5}}
+{js:let ihtx = {get:powers};
+let loop = {or:{arg:{math:{get:offset}+4}}|true}
+const action = {jsonify:{get:code}}
+console.log("copy 0 1")
+for (let i = 1; i <= ihtx; i++) {
+  console.log(action.replaceAll("#",i));
+  if (loop == true) {
+    console.log(`repeatduration ${i} 0d`)
+  }
+  console.log(`copy ${i} !a`);
+  console.log(`fadein !a 0.125`);
+  console.log(`fadeout !a 0.125`);
+  console.log(`audioputreplace ${i} !a`);
+  console.log(`copy ${i} ${i+1}`);
+}}
+concatmultiple {replace:\n| |{js:let ihtx = {get:powers};
+for (let i = 1; i <= ihtx; i++) {
+  console.log(i);
+}}}
+render 1 default amtvevideo}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtxrandom|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
+{iscript:load {video} 0
+{if:{arg:{math:{get:offset}+3}}|!=|true|then:snip 0 0 {or:{arg:{math:{get:offset}+3}}|0.5}}
+{js:let ihtx = {get:powers};
+let loop = {or:{arg:{math:{get:offset}+4}}|true}
+const action = {jsonify:{get:code}}
+console.log("copy 0 1")
+for (let i = 1; i <= ihtx; i++) {
+  console.log(action.replaceAll("#",i));
+  if (loop == true) {
+    console.log(`repeatduration ${i} 0d`)
+  }
+  console.log(`copy ${i} ${i+1}`);
+}}
+concatmultiple {replace:\n| |{js:let ihtx = {get:powers};
+for (let i = 1; i <= ihtx; i++) {
+  console.log(i);
+}}}
+shuffle 1 {if:{arg:{math:{get:offset}+3}}|!=|true|then:{or:{arg:{math:{get:offset}+3}}|0.5}|else:0d}
+render 1 default amtvevideo}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtxbuggy|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
+{iscript:load {video} 0
+{if:{arg:{math:{get:offset}+3}}|!=|true|then:snip 0 0 {or:{arg:{math:{get:offset}+3}}|0.5}}
+{js:let ihtx = {get:powers};
+let loop = {or:{arg:{math:{get:offset}+4}}|true}
+const action = {jsonify:{get:code}}
+console.log("copy 0 1")
+for (let i = 1; i <= ihtx; i++) {
+  console.log(action.replaceAll("#",i));
+  if (loop == true) {
+    console.log(`repeatduration ${i} 0d`)
+  }
+  console.log(`shuffle ${i} 0.16`);
+  console.log(`copy ${i} ${i+1}`);
+}}
+concatmultiple {replace:\n| |{js:let ihtx = {get:powers};
+for (let i = 1; i <= ihtx; i++) {
+  console.log(i);
+}}}
+render 1 default amtvevideo}|else:{if:{arg:{math:{get:offset}+1}}|=|multiplier|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
+{iscript:load {video} 0
+{js:let ihtx = {get:powers};
+let loop = {or:{arg:{math:{get:offset}+4}}|true}
+const action = {jsonify:{get:code}}
+console.log("copy 0 1")
+for (let i = 1; i <= ihtx; i++) {
+  console.log(action.replaceAll("#",i));
+  if (loop == true) {
+    console.log(`repeatduration ${i} 0d`)
+  }
+  console.log(`copy ${i} ${i+1}`);
+}}
+render {get:powers} default amtvevideo}|else:{set:result|{py:args = {jsonify:{arg:0}}
+effects = {get:effects}
+if args == "list" or args == "archive" or not args in effects:
+    print("y")
+else:
+    print("n")}}{if:{get:result}|=|n|then:{iscript:load {if:{arg:0}|=|add source|then:{media:{args}}|else:{media}} 0
+copy 0 1
+{replace:#|1|{get:code}}
+render 1 default amtvevideo}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
