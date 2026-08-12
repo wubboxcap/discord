@@ -1,16 +1,92 @@
-{set:code|}{set:banned|false}{set:offset|0}{set:banlist|["847583474684526592"]}{set:effects|["audio reverse","audio reverse ffmpeg","confusion","confusion hsv","confusion reversed","confusion hsv reversed"]}{foreach:{get:banlist}|{if:{get:valuex}|=|{id}|then:{embedjson:{"title": ":warning: Command Error","description": "You have been banned from AMTVEVideo and all of it's aliases.","color": 15746887,"author":{"icon_url":"{avatar}","name":"{usertag}"},"type":"rich"}}{set:banned|true}}}{if:{get:banned}|!=|true|then:{if:{argslen}|<|1|then:.t {tagname} <effect> <args...> <subcommand> <subcommand args>|else:-# Note: AMTVEVideo is in BETA!
+{set:code|}{set:offset|0}{set:effects|["audio reverse","audio reverse ffmpeg","confusion","confusion hsv","confusion reversed","confusion hsv reversed"]}{if:{argslen}|<|1|then:.t {tagname} <effect> <args...> <subcommand> <subcommand args>|else:-# Note: AMTVEVideo is in BETA!
 {if:{arg:1}|!=|list|then:{choose:hey i feel so sprunki|《SPRUNKI》|☆TAT☆ FOUND AFTER 10 YEARS NO WAY|{repeat:30|{mention:{user}}}|have a bowl mr squidward|https://media.discordapp.net/attachments/1124758334805909509/1334274228219940877/now.gif?ex=679bef35&is=679a9db5&hm=50d94b4217555d74e7059e03ab50d29972e827410a99d1117f471095181209ff&|New punjabi movies 2014 full movie free download hd 1080p|apt apt|guh huck|baaren chromed|if I had two donuts ate one and squashed and revived one, how much donuts I have now?|whar|you are making me angry|i have anger issues|W|L|have this, yuh big hoe|guh|I edge to your videos.|https://tenor.com/view/cat-brick-throw-explosion-gif-12081125062559658884|i eat videos. **NOM**|om nom stories|GET OUT!|https://tenor.com/view/eating-meme-spookyspook-bfdi-face-gif-27440393}
 }
-{set:res|{py:args = {jsonify:{arg:0}}
-effects = {get:effects}
-if not args in effects:
-    if args == "list" or args == "archive":
-        print("n")
-    else:
-        print("y")
-else:
-    print("n")}}
-{if:{get:res}|=|y|then:{js:console.error("Effect Does not exist.\nContact <@1056191069206876161> to add an effect.")}}{if:{arg:0}|=|archive|then:{attachtext:{text:https://wubboxcap.github.io/discord/tag-raws/amtvevideo.txt}}}{if:{arg:0}|=|list|then:{eval:{iferror:{py:import json as js
+{set:res|{js:const arg = {jsonify:{arg:0}};
+const effects = {get:effects};
+if (!effects.includes(arg)) {
+  if (arg === "list" || args === "archive") {
+    console.log("n");
+  } else {
+        console.log("y");
+  }
+} else {
+  console.log("n");
+}}}
+{if:{get:res}|=|y|then:{js:const ESC = '\x1b[';
+const RESET = `${ESC}0m`;
+
+// Helper functions for styles
+const bold = (text) => `${ESC}1m${text}${RESET}`;
+
+// Helper functions for foreground colors
+const red = (text) => `${ESC}31m${text}${RESET}`;
+const green = (text) => `${ESC}32m${text}${RESET}`;
+const yellow = (text) => `${ESC}33m${text}${RESET}`;
+function getStringSimilarity(str1, str2) {
+  const s1 = str1.toLowerCase();
+  const s2 = str2.toLowerCase();
+  if (s1 === s2) return 1.0;
+  
+  let matches = 0;
+  for (const char of s1) {
+    if (s2.includes(char)) matches++;
+  }
+  return matches / Math.max(s1.length, s2.length);
+}
+function guessByString(searchStr, arr, totalAmount = 3) {
+  if (!searchStr || !Array.isArray(arr) || arr.length === 0) return [];
+
+  return arr
+    .map(item => {
+      const score = getStringSimilarity(searchStr, item);
+  
+      let confidence = "Low Confidence";
+      if (score >= 0.75) confidence = "High Confidence";
+      else if (score >= 0.40) confidence = "Medium Confidence";
+
+      return {
+        guess: item,
+        confidence: confidence,
+        matchPercentage: score * 100
+      };
+    })
+
+    .sort((a, b) => parseFloat(b.matchPercentage) - parseFloat(a.matchPercentage))
+
+    .slice(0, totalAmount);
+}
+
+// --- Example Usage ---
+
+const dataset = {get:effects};
+const string = {jsonify:{arg:0}};
+
+const howManyResults = 3;
+
+const results = guessByString(string, dataset, howManyResults);
+
+const formatPercentMetric = (percent, greenMin = 80, yellowMin = 50) => {
+  const formatted = `${percent.toFixed(1)}%`;
+  let color;
+
+  if (percent >= greenMin) {
+    color = '32m'; // Green
+  } else if (percent >= yellowMin) {
+    color = '33m'; // Yellow
+  } else {
+    color = '31m'; // Red
+  }
+
+  return `${ESC}${color}${formatted}%${RESET}`;
+};
+
+const formatted = results.map(item => `* ${bold(item.guess)} ( ${formatPercentMetric(item.matchPercentage)} | ${item.confidence} )`).join("\n");
+
+console.log(`\`\`\`ansi
+${formatted}
+\`\`\`);
+}}
+}{if:{arg:0}|=|archive|then:{attachtext:{text:https://wubboxcap.github.io/discord/tag-raws/amtvevideo.txt}}}{if:{arg:0}|=|list|then:{eval:{iferror:{py:import json as js
 import fnmatch
 searcher = {jsonify:*{arg:1}*}
 pages = []
@@ -82,7 +158,8 @@ haah #
 reverse # false`);
     break;
 }}}
-{if:{indexof:ffmpeg|{arg:0}}|!=|-1|then:{if:{arg:{math:{get:offset}+1}}|=|raw|then:{py:import json as js
+{if:{indexof:ffmpeg|{arg:0}}|!=|-1|then:{if:{arg:{math:{get:offset}+1}}|=|raw|then:
+{py:import json as js
 icon = "{avatar}"
 auth = "{user}#{discrim}"
 content = '''```{get:code}```'''
@@ -225,7 +302,6 @@ else:
 copy 0 1
 {replace:#|1|{get:code}}
 render 1 default amtvevideo}
-}
 }
 }
 }
