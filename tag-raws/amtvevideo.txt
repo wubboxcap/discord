@@ -4,7 +4,7 @@
 {set:res|{js:const arg = {jsonify:{arg:0}};
 const effects = {get:effects};
 if (!effects.includes(arg)) {
-  if (arg === "list" || args === "archive") {
+  if (arg === "list" || arg === "archive") {
     console.log("n");
   } else {
         console.log("y");
