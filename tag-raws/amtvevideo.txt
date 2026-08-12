@@ -84,9 +84,8 @@ const formatted = results.map(item => `* ${bold(item.guess)} ( ${formatPercentMe
 
 console.log(`\`\`\`ansi
 ${formatted}
-\`\`\`);
-}}
-}{if:{arg:0}|=|archive|then:{attachtext:{text:https://wubboxcap.github.io/discord/tag-raws/amtvevideo.txt}}}{if:{arg:0}|=|list|then:{eval:{iferror:{py:import json as js
+\`\`\``);
+}}}{if:{arg:0}|=|archive|then:{attachtext:{text:https://wubboxcap.github.io/discord/tag-raws/amtvevideo.txt}}}{if:{arg:0}|=|list|then:{eval:{iferror:{py:import json as js
 import fnmatch
 searcher = {jsonify:*{arg:1}*}
 pages = []
