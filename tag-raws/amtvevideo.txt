@@ -1,313 +1,495 @@
-{set:code|}{set:offset|0}{set:effects|["audio reverse","audio reverse ffmpeg","confusion","confusion hsv","confusion reversed","confusion hsv reversed"]}{if:{argslen}|<|1|then:.t {tagname} <effect> <args...> <subcommand> <subcommand args>|else:-# Note: AMTVEVideo is in BETA!
-{if:{arg:1}|!=|list|then:{choose:hey i feel so sprunki|《SPRUNKI》|☆TAT☆ FOUND AFTER 10 YEARS NO WAY|{repeat:30|{mention:{user}}}|have a bowl mr squidward|https://media.discordapp.net/attachments/1124758334805909509/1334274228219940877/now.gif?ex=679bef35&is=679a9db5&hm=50d94b4217555d74e7059e03ab50d29972e827410a99d1117f471095181209ff&|New punjabi movies 2014 full movie free download hd 1080p|apt apt|guh huck|baaren chromed|if I had two donuts ate one and squashed and revived one, how much donuts I have now?|whar|you are making me angry|i have anger issues|W|L|have this, yuh big hoe|guh|I edge to your videos.|https://tenor.com/view/cat-brick-throw-explosion-gif-12081125062559658884|i eat videos. **NOM**|om nom stories|GET OUT!|https://tenor.com/view/eating-meme-spookyspook-bfdi-face-gif-27440393}
-}
-{set:res|{js:const arg = {jsonify:{arg:0}};
-const effects = {get:effects};
-if (!effects.includes(arg)) {
-  if (arg === "list" || arg === "archive") {
-    console.log("n");
-  } else {
-        console.log("y");
-  }
+{set:totalStart|{unix}}{set:offset|1}{set:accent|{math:0x00dc64}}{set:name|AMTVEVideo}{set:icon|https://file.garden/ad2KFWtA7TvFX6Q_/AMTVEVideoIcon}{set:effects|["normal","invert","rgb to bgr","green lowers","blue highers","freshing equalizer","audio reverse","audio reverse ffmpeg","confusion","confusion hsv","confusion reversed","confusion hsv reversed","b major 3","g major","g major 0","g major 1","g major 2","g major 3","g major 4","real g major 4","g major 5","g major 6","g major 7","g major 8","g major 9","g major 10","g major 11","g major 12","g major 13","g major 14","g major 15","g major 16","g major 17","g major 18","g major 19","g major 20","g major 21","g major 22","g major 23","g major 24","g major 25","luig group","mari group","not scary","not scary vegas","custom","split 2 pitches","split 3 pitches","y major","wanda rabbit major","upside down effect ffmpeg", "kirby major"]}{if:{argslen}|<|1|then:.t {tagname} <effect> <args...> <subcommand> <subcommand args>|else:-# Note: {get:name} is in BETA!
+{if:{arg:1}|!=|list|then:{choose:hey i feel so sprunki|《SPRUNKI》|☆TAT☆ FOUND AFTER 10 YEARS NO WAY|they not like us us|have a bowl mr squidward|HAVE A BOWL MS CHEEKS|https://media.discordapp.net/attachments/1124758334805909509/1334274228219940877/now.gif?ex=679bef35&is=679a9db5&hm=50d94b4217555d74e7059e03ab50d29972e827410a99d1117f471095181209ff&|TRIPLE T WSP GNG|New punjabi movies 2014 full movie free download hd 1080p|apt apt|guh huck|baaren chromed|if I had two donuts ate one and squashed and revived one, how much donuts I have now?|whar|you are making me angry|i have anger issues|W|L|have this, yuh big hoe|guh|I edge to your videos.|https://tenor.com/view/cat-brick-throw-explosion-gif-12081125062559658884|i eat videos. **NOM**|om nom stories|GET OUT!|https://tenor.com/view/eating-meme-spookyspook-bfdi-face-gif-27440393}}{set:res|{js:const arg = discord.variables.__args[0].toLowerCase();
+const effects = JSON.parse(discord.variables.effects);
+if (!effects.includes(arg) && !["list", "archive"].includes(arg)) {
+  console.error("We could not execute this subcommand or effect because it does not exist, try fixing your spelling or contact <@!1056191069206876161> to add it.");
+} else if (effects.includes(arg)) {
+  console.log(true);
 } else {
-  console.log("n");
-}}}
-{if:{get:res}|=|y|then:{js:const ESC = '\x1b[';
-const RESET = `${ESC}0m`;
+  console.log(false);
+}}}{if:{arg:0}|=|archive|then:{attachtext:{text:https://pastebin.com/raw/LgaV2FDw}}}{if:{arg:0}|=|list|then:{js:let effects = JSON.parse(discord.variables.effects);
+searchval = '{arg:1}';
+let e = searchval !== '' ? effects.filter(effect => eval(`/${searchval}+/`).test(effect)) : effects;
+let mcount = 20;
+let pagecount = Math.ceil(e.length/mcount);
+let pages = [];
+const theme = Number(discord.variables.accent);
+const icon = discord.variables.icon;
 
-// Helper functions for styles
-const bold = (text) => `${ESC}1m${text}${RESET}`;
-
-// Helper functions for foreground colors
-const red = (text) => `${ESC}31m${text}${RESET}`;
-const green = (text) => `${ESC}32m${text}${RESET}`;
-const yellow = (text) => `${ESC}33m${text}${RESET}`;
-function getStringSimilarity(str1, str2) {
-  const s1 = str1.toLowerCase();
-  const s2 = str2.toLowerCase();
-  if (s1 === s2) return 1.0;
-  
-  let matches = 0;
-  for (const char of s1) {
-    if (s2.includes(char)) matches++;
-  }
-  return matches / Math.max(s1.length, s2.length);
-}
-function guessByString(searchStr, arr, totalAmount = 3) {
-  if (!searchStr || !Array.isArray(arr) || arr.length === 0) return [];
-
-  return arr
-    .map(item => {
-      const score = getStringSimilarity(searchStr, item);
-  
-      let confidence = "Low Confidence";
-      if (score >= 0.75) confidence = "High Confidence";
-      else if (score >= 0.40) confidence = "Medium Confidence";
-
-      return {
-        guess: item,
-        confidence: confidence,
-        matchPercentage: score * 100
-      };
-    })
-
-    .sort((a, b) => parseFloat(b.matchPercentage) - parseFloat(a.matchPercentage))
-
-    .slice(0, totalAmount);
+if ( e.length !== 0 ) {
+   for ( i=0; i<pagecount; i++ ) {
+      pages.push({'embed':{'color':theme,'title':searchval == '' ? `**The Effects List**` : `**Showing effects matching '${searchval}'**`,'description':e.slice(i*mcount,i*mcount+mcount).map(x => `- ${x}`).join(`\n`),'footer':{'text':`Page ${i+1} of ${pagecount} (${effects.length} Total Effects)`,'icon_url':icon},'author':{'name':'{usertag}','icon_url':'{avatar}'}}})
+   }
+} else {
+   pages.push({'embed':{'color':theme,'title':`**No effects matching '${searchval}'**`,'footer':{'text':discord.variables.name,'icon_url':icon},'author':{'name':'{usertag}','icon_url':'{avatar}'}}})
 }
 
-// --- Example Usage ---
-
-const dataset = {get:effects};
-const string = {jsonify:{arg:0}};
-
-const howManyResults = 3;
-
-const results = guessByString(string, dataset, howManyResults);
-
-const formatPercentMetric = (percent, greenMin = 80, yellowMin = 50) => {
-  const formatted = `${percent.toFixed(1)}%`;
-  let color;
-
-  if (percent >= greenMin) {
-    color = '32m'; // Green
-  } else if (percent >= yellowMin) {
-    color = '33m'; // Yellow
-  } else {
-    color = '31m'; // Red
-  }
-
-  return `${ESC}${color}${formatted}%${RESET}`;
-};
-
-const formatted = results.map(item => `* ${bold(item.guess)} ( ${formatPercentMetric(item.matchPercentage)} | ${item.confidence} )`).join("\n");
-
-console.log(`\`\`\`ansi
-${formatted}
-\`\`\``);
-}}}{if:{arg:0}|=|archive|then:{attachtext:{text:https://wubboxcap.github.io/discord/tag-raws/amtvevideo.txt}}}{if:{arg:0}|=|list|then:{eval:{iferror:{py:import json as js
-import fnmatch
-searcher = {jsonify:*{arg:1}*}
-pages = []
-effects = fnmatch.filter({get:effects},searcher)
-icon = "{avatar}"
-auth = "{usertag}"
-icon2 = "https://cdn.discordapp.com/attachments/1124758334805909509/1373031118659391689/Untitled321_20250516144254.png?ex=6828ee60&is=68279ce0&hm=060abd6b5d8132e0d875179e33bbdc7ee3a2921e1f72a0f725d543291509d456&"
-effnum = len(effects)
-content = ""
-modulocount = []
-for i, v in enumerate(effects):
-    if i % 20 == 0:
-        modulocount.append(True)
-
-modulocount.pop(0)
-modulocount.append(True)
-mcount = len(modulocount)
-pageidx = 0
-
-for i, v in enumerate(effects):
-    if i % 20 == 0:
-        pages.append({"embed":{"color":0x00dc64,"title":f"{if:{arg:1}|=||then:**AmtveVideo Effects**|else:**Showing effects matching '{arg:1}'**}","description":content,"footer":{"text":f"Page {pageidx} of {mcount} ({effnum} Total Effects)","icon_url":icon2}, "author": {"name":auth, "icon_url":icon}}})
-        pageidx += 1
-        content = ""
-        content += f"- {v} \n"
-    else:
-        content += f"- {v} \n"
-
-pages.append({"embed":{"color":0x00dc64,"title":f"{if:{arg:1}|=||then:**AmtveVideo Effects**|else:**Showing effects matching '{arg:1}'**}","description":content,"footer":{"text":f"Page {pageidx} of {mcount} ({effnum} Total Effects)","icon_url":icon2}, "author": {"name":auth, "icon_url":icon}}})
-pages.pop(0)
-print(js.dumps({"pages": pages}))} }} }{set:code|{js:const arg0 = {jsonify:{lower:{arg:0}}};
-switch (arg0) {
+console.log(JSON.stringify({pages:pages}))}}{js:const arg = discord.variables.__args[0].toLowerCase();
+switch (arg) {
+  case "normal":
+    discord.variables.code = `speed # 1`;
+    break;
+  case "invert":
+    discord.variables.code = `invert #`;
+    break;
+  case "rgb to bgr":
+    discord.variables.code = `swaprgba # bgr`;
+    break;
+  case "custom":
+    discord.variables.code = discord.variables.__args[1];
+    discord.variables.offset = 2;
+    break;
   case "audio reverse":
-    console.log(`audioreverse #`);
+    discord.variables.code = `audioreverse #`;
     break;
   case "audio reverse ffmpeg":
-    console.log(`-af areverse`);
+    discord.variables.code = `-af areverse`;
     break;
   case "confusion":
-    console.log(`contrast # -1
+    discord.variables.code = `contrast # -1
 haah #
-audioreverse #`);
+audioreverse #`;
     break;
   case "confusion hsv":
-    console.log(`hueshifthsv # 180
+    discord.variables.code = `hueshifthsv # 180
 invert #
 haah #
-audioreverse #`);
+audioreverse #`;
     break;
   case "confusion reversed":
-    console.log(`contrast # -1
+    discord.variables.code = `contrast # -1
 haah #
-reverse # false`);
+reverse # false`;
     break;
   case "confusion hsv reversed":
-    console.log(`hueshifthsv # 180
+    discord.variables.code = `hueshifthsv # 180
 invert #
 haah #
-reverse # false`);
+reverse # false`;
     break;
   case "confusion reversed":
-    console.log(`contrast # -1
+    discord.variables.code = `contrast # -1
 haah #
-reverse # false`);
+reverse # false`;
     break;
   case "confusion reversed":
-    console.log(`contrast # -1
+    discord.variables.code = `contrast # -1
 haah #
-reverse # false`);
+reverse # false`;
     break;
-}}}
-{if:{indexof:ffmpeg|{arg:0}}|!=|-1|then:{if:{arg:{math:{get:offset}+1}}|=|raw|then:
-{py:import json as js
-icon = "{avatar}"
-auth = "{user}#{discrim}"
-content = '''```{get:code}```'''
-json = {"embed":{"title":"Code","description":content,"color":0x00dc64,"author":{"name":auth,"icon_url":icon}}}
-print(js.dumps(json))}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtx|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}{set:time|{or:{if:{arg:{math:{get:offset}+3}}|=|true|then:$vidlen|else:{arg:{math:{get:offset}+3}}}|0.5}}{set:render|load {media}
+  case "b major 3":
+    discord.variables.code = `rotate # -90
+waves # 0w/60 0w/4 7
+waves # 0w/70 -0w/6 4
+waves # 0w/120 0w/12 5
+waves # 0w/100 -0w/4 7
+waves # 0w/175 0w/20 2
+waves # 0w/250 -0w/1 4
+waves # 0w/300 0w/2 10
+rotate # 90
+cover # 0w 0h
+hueshifthsv # -110
+copy # #$
+convert #$ audio/wav
+copy #$ #$a
+audiopitch #$a 2**(2/12)
+audioputmix #$ #$a
+volume #$
+repeatduration #$ #d
+audioputreplace # #$`;
+    break;
+  case "freshing equalizer":
+    discord.variables.code = `hueshifthsv # 180
+invert #
+copy # #$
+convert #$ audio/wav
+audiopitch #$ 2**(-4/12)
+repeatduration #$ #d
+audioputreplace # #$`;
+    break;
+  case "g major 1":
+    discord.variables.code = `hueshifthsv # 180
+invert #
+copy # #$
+convert #$ audio/wav
+audiopitch #$ 2**(8/12)
+repeatduration #$ #d
+audioputreplace # #$`;
+    break;
+  case "g major 2":
+    discord.variables.code = `invertrgba # 1 1 0
+copy # #$
+convert #$ audio/wav
+copy #$ #$2
+copy #$ #$3
+audiopitch #$ 2**(-5/12)
+audiopitch #$3 2**(4/12)
+audioputmix #$ #$2
+volume #$
+audioputmix #$ #$3
+volume #$
+repeatduration #$ #d
+audioputreplace # #$`;
+    break;
+  case "g major 4":
+    discord.variables.code = `copy # #a
+convert #a audio/wav
+copy #a #b
+audiopitch #b 2**(5/12)
+audioputmix #a #b
+volume #a
+repeatduration #a #d
+chromakey # white 0.1 0.5
+audioputreplace # #a`;
+    break;
+  case "real g major 4":
+    discord.variables.code = `huecurvergba # all 0 1 0
+copy # #$
+convert #$ audio/wav
+copy #$ #$2
+audiopitch #$ 2**(0/12)
+audiopitch #$2 2**(5/12)
+audioputmix #$ #$2
+volume #$
+repeatduration #$ #d
+audioputreplace # #$`;
+    break;
+  case "g major 7":
+    discord.variables.code = `invert #
+copy # #$
+convert #$ audio/wav
+copy #$ #$a
+audiopitch #$a 2**(3/12)
+audioputmix #$ #$a
+volume #$
+repeatduration #$ #d
+audioputreplace # #$`;
+    break;
+  case "luig group":
+    discord.variables.code = `hueshifthsv # -63
+copy # #$
+convert #$ audio/wav
+audiopitch #$ 2**(-1/12)
+repeatduration #$ #d
+audioputreplace # #$`;
+    break;
+  case "mari group":
+    discord.variables.code = `hueshifthsv # 63
+copy # #$
+convert #$ audio/wav
+audiopitch #$ 2**(1/12)
+repeatduration #$ #d
+audioputreplace # #$`;
+    break;
+  case "not scary":
+    discord.variables.code = `hueshifthsv # 180 25
+waaw #
+rotate # -90
+waves # 0w/40 0h/4 5
+rotate # 90
+cover # 0w 0h
+copy # #$
+convert #$ audio/wav
+audiopitch #$ 2**(-2.5/12)
+repeatduration #$ #d
+audioputreplace # #$`;
+    break;
+  case "blue highers":
+    discord.variables.code = `swaprgba # bgr
+copy # #$
+convert #$ audio/wav
+audiopitch #$ 2
+repeatduration #$ #d
+audioputreplace # #$`;
+    break;
+  case "green lowers":
+    discord.variables.code = `swaprgba # bgr
+hueshifthsv # 275.4
+copy # #$
+convert #$ audio/wav
+audiopitch #$ 0.5
+repeatduration #$ #d
+audioputreplace # #$`;
+    break;
+  case "wanda rabbit major":
+    discord.variables.code = `gray #
+huecurvergba # red 1 1 0 
+huecurvergba # green 0.36 1 0.05 
+huecurvergba # blue 0 1 0.82
+copy # #$
+convert #$ audio/wav
+audiopitch #$ 2**(5/12)
+repeatduration #$ #d
+audioputreplace # #$`;
+    break;
+  case "upside down effect ffmpeg":
+    discord.variables.code = `-vf vflip -af aresample=44100,rubberband=tempo=0.05:smoothing=712923000:window=long,"afftfilt=real='real((1216000/b),ch)':imag='imag((1216000/b),ch)':overlap=1:win_size=65536:win_func=bharris",rubberband=tempo=20:smoothing=712923000:window=long,volume=2 -ac 1`;
+    break;
+  case "split 2 pitches":
+    discord.variables.code = `copy # #$
+convert #$ audio/wav
+copy #$ #$a
+audiopitch #$ 2**(${discord.variables.__args[1]}/12)
+audiopitch #$a 2**(${discord.variables.__args[2]}/12)
+audioputmix #$ #$a
+volume #$
+repeatduration #$ #d
+audioputreplace # #$`;
+    discord.variables.offset = 3;
+    break;
+  case "split 3 pitches":
+    discord.variables.code = `copy # #$
+convert #$ audio/wav
+copy #$ #$a
+copy #$ #$b
+audiopitch #$ 2**(${discord.variables.__args[1]}/12)
+audiopitch #$a 2**(${discord.variables.__args[2]}/12)
+audiopitch #$b 2**(${discord.variables.__args[2]}/12)
+audioputmix #$ #$a
+volume #$
+audioputmix #$ #$b
+volume #$
+repeatduration #$ #d
+audioputreplace # #$`;
+    discord.variables.offset = 4;
+    break;
+  case "kirby major":
+    discord.variables.code = `gray #
+huecurvergba # red 1 0 
+huecurvergba # green 0 0 
+huecurvergba # blue 0.28 0
+explode # 0.4
+copy # #$
+convert #$ audio/wav
+copy #$ #$2
+copy #$ #$3
+audiopitch #$ 2**(6/12)
+audiopitch #$2 2
+audiopitch #$2 2**(1/12)
+audiopitch #$3 2
+audiopitch #$3 2**(4/12)
+audioputmix #$ #$2
+volume #$
+audioputmix #$ #$3
+volume #$
+repeatduration #$ #d
+audioputreplace # #$`;
+  break;
+  case "y major":
+    discord.variables.code = `rotate # -90
+waves # 0w/60 0w/4 7
+waves # 0w/70 -0w/6 4
+waves # 0w/120 0w/12 5
+waves # 0w/100 -0w/4 7
+waves # 0w/175 0w/20 2
+waves # 0w/250 -0w/1 4
+waves # 0w/300 0w/2 10
+rotate # 90
+cover # 0w 0h
+invert #
+hueshifthsv # 270
+haah #
+copy # #$
+convert #$ audio/wav
+copy #$ #$2
+copy #$ #$3
+audiopitch #$ 2**(-10/12)
+audiopitch #$2 2**(-9/12)
+audiopitch #$3 2**(-8/12)
+audioputmix #$ #$2
+volume #$
+audioputmix #$ #$3
+volume #$
+repeatduration #$ #d
+audioputreplace # #$`;
+  break;
+}}{if:{indexof:ffmpeg|{arg:0}}|!=|-1|then:{if:{arg:{get:offset}}|=|raw|then:
+{embedjson:{"title":"Code","color":{get:accent},"description":{jsonify:{code:{get:code}}},"author":{"name":"{usertag}","icon_url":"{avatar}"}}}|else:{if:{arg:{get:offset}}|=|ihtx|then:{set:powers|{or:{arg:{math:{get:offset}+1}}|10}}{set:time|{or:{if:{arg:{math:{get:offset}+2}}|=|true|then:$vidlen|else:{arg:{math:{get:offset}+2}}}|0.5}}{set:render|load {media}
 vidlen=$(ffprobe -i $FILE_1 -show_entries format=duration -v quiet -of csv="p=0")
 ffmpeg -i $FILE_1 {get:code} -t {get:time} 1.ts
 {replace:code|{get:code}|{replace:time|{get:time}|{js:for (let i = 0; i < {get:powers}-1; i++) {
 console.log(`ffmpeg -i "${i+1}.ts" code -t time ${i+2}.ts`);
 }}}}
 {set:#|0}
-ffmpeg -i "concat:{foreach:{math:{get:powers}-1}|{set:#|{math:{get:#}+1}}{get:#}.ts\u007c}{get:powers}.ts" ./output/ihtx.mp4}{sh:{js:console.log(`{get:render}`);}}|else:{if:{arg:{math:{get:offset}+1}}|=|multiplier|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|2}}{set:render|load {media}
+ffmpeg -i "concat:{foreach:{math:{get:powers}-1}|{set:#|{math:{get:#}+1}}{get:#}.ts\u007c}{get:powers}.ts" ./output/ihtx.mp4}{sh:load {media}
 vidlen=$(ffprobe -i $FILE_1 -show_entries format=duration -v quiet -of csv="p=0")
-ffmpeg -i $FILE_1 {get:code} -t $vidlen 1.ts
-{replace:code|{get:code}|{js:for (let i = 0; i < {get:powers}-1; i++) {
-console.log(`ffmpeg -i "${i+1}.ts" code -t $vidlen ${i+2}.ts`);
-}}}
-{set:#|0}
-ffmpeg -i "{get:powers}.ts" ./output/multiplier.mp4}{sh:{js:console.log(`{get:render}`);}}|else:{sh:load {media}
-ffmpeg -i $FILE_1 {get:code} ./output/amtvevideo.mp4}}}}|else:{if:{arg:{math:{get:offset}+1}}|=|raw|then:{py:import json as js
-icon = "{avatar}"
-auth = "{user}#{discrim}"
-content = '''```{replace:#|{or:{arg:{math:{get:offset}+2}}|#}|{get:code}}```'''
-json = {"embed":{"title":"Code","description":content,"color":0x00dc64,"author":{"name":auth,"icon_url":icon}}}
-print(js.dumps(json))}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtx|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
-{iscript:load {video} 0
-{if:{arg:{math:{get:offset}+3}}|!=|true|then:snip 0 0 {or:{arg:{math:{get:offset}+3}}|0.5}}
-{js:let ihtx = {get:powers};
-let loop = {or:{arg:{math:{get:offset}+4}}|true}
-const action = {jsonify:{get:code}}
-console.log("copy 0 1")
-for (let i = 1; i <= ihtx; i++) {
-  console.log(action.replaceAll("#",i));
-  if (loop == true) {
-    console.log(`repeatduration ${i} 0d`)
-  }
-  console.log(`copy ${i} ${i+1}`);
+powers={or:{arg:{math:{get:offset}+1}}|10}
+dur=$(awk -v vidlen="$vidlen" 'BEGIN{bracketleft} printf {or:{arg:{math:{get:offset}+2}}|0.5} {bracketright}')
+ffmpeg -loglevel error -hide_banner -y -stream_loop -1 -i $FILE_1 -c:v utvideo -c:a alac -t $dur -threads 0 -movflags +faststart 0.mov
+for i in $(seq 1 $powers); do
+  ffmpeg -loglevel error -hide_banner -y -stream_loop 1 -i "0.mov" -f nut {get:code} -c:v utvideo -c:a alac -t $dur -movflags +faststart "$i.mov"
+  echo "$i.mov" >> concat.txt
+done
+ffmpeg -loglevel error -hide_banner -y -f concat -safe 0 -i "concat.txt" -c:v libx264 -profile:v high -level:v 5 -tune film -q:v 1 -crf 30 -g 9 -bf 0 -preset superfast -c:a aac -b:a 224K -aac_coder fast -pix_fmt yuv420p -bufsize 16M -movflags +faststart -threads 0 ./output/ihtx.mp4
+rm *.mov concat.txt}|else:{if:{arg:{get:offset}}|=|multiplier|then:{sh:load {media}
+vidlen=$(ffprobe -i $FILE_1 -show_entries format=duration -v quiet -of csv="p=0")
+powers={or:{arg:{math:{get:offset}+1}}|10}
+ffmpeg -loglevel error -hide_banner -y -stream_loop -1 -i $FILE_1 -c:v utvideo -c:a alac -t $dur -threads 0 -movflags +faststart 0.mov
+for i in $(seq 1 $powers); do
+  ffmpeg -loglevel error -hide_banner -y -stream_loop 1 -i "0.mov" -f nut {get:code} -c:v utvideo -c:a alac -t $vidlen -movflags +faststart "$i.mov"
+done
+ffmpeg -loglevel error -hide_banner -y -stream_loop 1 -i "$powers.mov" -c:v libx264 -c:a aac -aac_coder 1 -aac_ms 1 -aac_tns 0 -aac_pns 1 -tune fastdecode -movflags +faststart "./output/multiplier.mp4"
+rm *.mov}|else:{sh:load {media}
+ffmpeg -i $FILE_1 {get:code} ./output/amtvevideo.mp4}}}}|else:{if:{arg:{get:offset}}|=|raw|then:{embedjson:{"title":"Code","color":{get:accent},"description":{jsonify:{code:{replace:#|{or:{arg:{math:{get:offset}+1}}|#}|{get:code}}}},"author":{"name":"{usertag}","icon_url":"{avatar}"}}}|else:{set:s|{unix}}{iscript:load {video} 0
+{js:const offset = Number(discord.variables.offset);
+const subcommand = discord.variables.__args[offset];
+const exportName = discord.variables.name.toLowerCase();
+const code = discord.variables.code;
+switch (subcommand) {
+  case "ihtx": {
+    let powers = Number(discord.variables.__args[offset+1]);
+    powers ||= 10;
+    let snip = discord.variables.__args[offset+2];
+    snip ||= 0.5;
+    let loop = discord.variables.__args[offset+3];
+    loop ||= true;
+    if (snip != "true") {
+      console.log(`snip 0 0 ${snip}`);
+    }
+    console.log("copy 0 1");
+    for (let i = 1; i <= powers; i++) {
+      console.log(code.replaceAll("#",i));
+      if (loop == "true") {
+        console.log(`repeatduration ${i} 0d`)
+      }
+      console.log(`copy ${i} ${i+1}`);
+    }
+    const sequence = Array.from({ length: powers }, (_, i) => i + 1).join(' ');
+    console.log(`concatmultiple ${sequence}`);
+    console.log(`render 1 default ${exportName}`);
+    break; }
+  case "ihtxreverse": {
+    let powers = Number(discord.variables.__args[offset+1]);
+    powers ||= 10;
+    let snip = discord.variables.__args[offset+2];
+    snip ||= 0.5;
+    let loop = discord.variables.__args[offset+3];
+    loop ||= true;
+    if (snip != "true") {
+      console.log(`snip 0 0 ${snip}`);
+    }
+    console.log("copy 0 1");
+    for (let i = 1; i <= powers; i++) {
+      console.log(code.replaceAll("#",i));
+      if (loop == "true") {
+        console.log(`repeatduration ${i} 0d`)
+      }
+      console.log(`copy ${i} ${i+1}`);
+    }
+    const sequence = Array.from({ length: powers }, (_, i) => powers - i).join(' ');
+    console.log(`concatmultiple ${sequence}`);
+    console.log(`render ${powers} default ${exportName}`);
+    break; }
+  case "ihtxkine": {
+    let powers = Number(discord.variables.__args[offset+1]);
+    powers ||= 10;
+    let snip = discord.variables.__args[offset+2];
+    snip ||= 0.5;
+    let loop = discord.variables.__args[offset+3];
+    loop ||= true;
+    if (snip != "true") {
+      console.log(`snip 0 0 ${snip}`);
+    }
+    console.log("copy 0 1");
+    for (let i = 1; i <= powers; i++) {
+      console.log(code.replaceAll("#",i));
+      if (loop == "true") {
+        console.log(`repeatduration ${i} 0d`)
+      }
+      console.log(`copy ${i} ${i}!a`);
+      console.log(`fadein ${i}!a 0.125`);
+      console.log(`fadeout ${i}!a 0.125`);
+      console.log(`audioputreplace ${i} ${i}!a`);
+      console.log(`copy ${i} ${i+1}`);
+    }
+    const sequence = Array.from({ length: powers }, (_, i) => i + 1).join(' ');
+    console.log(`concatmultiple ${sequence}`);
+    console.log(`render 1 default ${exportName}`);
+    break; }
+  case "ihtxrandom": {
+    let powers = Number(discord.variables.__args[offset+1]);
+    powers ||= 10;
+    let snip = discord.variables.__args[offset+2];
+    snip ||= 0.5;
+    let loop = discord.variables.__args[offset+3];
+    loop ||= true;
+    if (snip != "true") {
+      console.log(`snip 0 0 ${snip}`);
+    }
+    console.log("copy 0 1");
+    for (let i = 1; i <= powers; i++) {
+      console.log(code.replaceAll("#",i));
+      if (loop == "true") {
+        console.log(`repeatduration ${i} 0d`)
+      }
+      console.log(`copy ${i} ${i+1}`);
+    }
+    const sequence = Array.from({ length: powers }, (_, i) => i + 1).join(' ');
+    console.log(`concatmultiple ${sequence}`);
+    console.log(`shuffle 1 ${snip == "true" ? "0d" : snip}`);
+    console.log(`render 1 default ${exportName}`);
+    break; }
+  case "ihtxbuggy": {
+    let powers = Number(discord.variables.__args[offset+1]);
+    powers ||= 10;
+    let snip = discord.variables.__args[offset+2];
+    snip ||= 0.5;
+    let loop = discord.variables.__args[offset+3];
+    loop ||= true;
+    if (snip != "true") {
+      console.log(`snip 0 0 ${snip}`);
+    }
+    console.log("copy 0 1");
+    for (let i = 1; i <= powers; i++) {
+      console.log(code.replaceAll("#",i));
+      if (loop == "true") {
+        console.log(`repeatduration ${i} 0d`)
+      }
+      console.log(`shuffle ${i} 0.16`);
+      console.log(`copy ${i} ${i+1}`);
+    }
+    const sequence = Array.from({ length: powers }, (_, i) => i + 1).join(' ');
+    console.log(`concatmultiple ${sequence}`);
+    console.log(`render 1 default ${exportName}`);
+    break; }
+  case "multiplier": {
+    let powers = Number(discord.variables.__args[offset+1]);
+    powers ||= 10;
+    console.log("copy 0 1");
+    for (let i = 1; i <= powers; i++) {
+      console.log(code.replaceAll("#",i));
+      console.log(`copy ${i} ${i+1}`);
+    }
+    console.log(`render ${powers} default ${exportName}`);
+    break; }
+  default:
+    console.log("copy 0 1");
+    console.log(discord.variables.code.replaceAll("#",1));
+    console.log(`render 1 default ${exportName}`);
 }}
-concatmultiple {replace:\n| |{js:let ihtx = {get:powers};
-for (let i = 1; i <= ihtx; i++) {
-  console.log(i);
-}}}
-render 1 default amtvevideo}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtxreverse|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
-{iscript:load {video} 0
-{if:{arg:{math:{get:offset}+3}}|!=|true|then:snip 0 0 {or:{arg:{math:{get:offset}+3}}|0.5}}
-{js:let ihtx = {get:powers};
-let loop = {or:{arg:{math:{get:offset}+4}}|true}
-const action = {jsonify:{get:code}}
-console.log("copy 0 1")
-for (let i = 1; i <= ihtx; i++) {
-  console.log(action.replaceAll("#",i));
-  if (loop == true) {
-    console.log(`repeatduration ${i} 0d`)
-  }
-  console.log(`copy ${i} ${i+1}`);
+}
+}{embedjson:{
+      "color": {get:accent},
+      "fields": [
+        {
+          "name": "Reminder:",
+          "value": "Make sure you use `.t sync+` or `.t sync+ alt` afterwards to make sure the video is synced to the audio.",
+          "inline": false
+        },
+        {
+          "name": "Debug:",
+          "value": "Took {math:({unix}-{get:s})/1000}s to execute. ({math:({unix}-{get:totalStart})/1000}s in total.) ({get:__iterationsRemaining} tagscript operations left.)",
+          "inline": true
+        }
+      ],
+      "author": {
+        "name": "{usertag}",
+        "icon_url": "{avatar}"
+      },
+      "footer": {
+        "text": "{get:name}",
+        "icon_url": "{get:icon}"
+      },
+      "timestamp": "{sh:date -u +"%Y-%m-%dT%H:%M:%SZ"}"
 }}
-concatmultiple {replace:\n| |{js:let ihtx = {get:powers};
-for (let i = ihtx; i >= 1; i--) {
-  console.log(i)
-}}}
-render {get:powers} default amtvevideo}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtxkine|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
-{iscript:load {video} 0
-{if:{arg:{math:{get:offset}+3}}|!=|true|then:snip 0 0 {or:{arg:{math:{get:offset}+3}}|0.5}}
-{js:let ihtx = {get:powers};
-let loop = {or:{arg:{math:{get:offset}+4}}|true}
-const action = {jsonify:{get:code}}
-console.log("copy 0 1")
-for (let i = 1; i <= ihtx; i++) {
-  console.log(action.replaceAll("#",i));
-  if (loop == true) {
-    console.log(`repeatduration ${i} 0d`)
-  }
-  console.log(`copy ${i} !a`);
-  console.log(`fadein !a 0.125`);
-  console.log(`fadeout !a 0.125`);
-  console.log(`audioputreplace ${i} !a`);
-  console.log(`copy ${i} ${i+1}`);
-}}
-concatmultiple {replace:\n| |{js:let ihtx = {get:powers};
-for (let i = 1; i <= ihtx; i++) {
-  console.log(i);
-}}}
-render 1 default amtvevideo}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtxrandom|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
-{iscript:load {video} 0
-{if:{arg:{math:{get:offset}+3}}|!=|true|then:snip 0 0 {or:{arg:{math:{get:offset}+3}}|0.5}}
-{js:let ihtx = {get:powers};
-let loop = {or:{arg:{math:{get:offset}+4}}|true}
-const action = {jsonify:{get:code}}
-console.log("copy 0 1")
-for (let i = 1; i <= ihtx; i++) {
-  console.log(action.replaceAll("#",i));
-  if (loop == true) {
-    console.log(`repeatduration ${i} 0d`)
-  }
-  console.log(`copy ${i} ${i+1}`);
-}}
-concatmultiple {replace:\n| |{js:let ihtx = {get:powers};
-for (let i = 1; i <= ihtx; i++) {
-  console.log(i);
-}}}
-shuffle 1 {if:{arg:{math:{get:offset}+3}}|!=|true|then:{or:{arg:{math:{get:offset}+3}}|0.5}|else:0d}
-render 1 default amtvevideo}|else:{if:{arg:{math:{get:offset}+1}}|=|ihtxbuggy|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
-{iscript:load {video} 0
-{if:{arg:{math:{get:offset}+3}}|!=|true|then:snip 0 0 {or:{arg:{math:{get:offset}+3}}|0.5}}
-{js:let ihtx = {get:powers};
-let loop = {or:{arg:{math:{get:offset}+4}}|true}
-const action = {jsonify:{get:code}}
-console.log("copy 0 1")
-for (let i = 1; i <= ihtx; i++) {
-  console.log(action.replaceAll("#",i));
-  if (loop == true) {
-    console.log(`repeatduration ${i} 0d`)
-  }
-  console.log(`shuffle ${i} 0.16`);
-  console.log(`copy ${i} ${i+1}`);
-}}
-concatmultiple {replace:\n| |{js:let ihtx = {get:powers};
-for (let i = 1; i <= ihtx; i++) {
-  console.log(i);
-}}}
-render 1 default amtvevideo}|else:{if:{arg:{math:{get:offset}+1}}|=|multiplier|then:{set:powers|{or:{arg:{math:{get:offset}+2}}|10}}
-{iscript:load {video} 0
-{js:let ihtx = {get:powers};
-let loop = {or:{arg:{math:{get:offset}+4}}|true}
-const action = {jsonify:{get:code}}
-console.log("copy 0 1")
-for (let i = 1; i <= ihtx; i++) {
-  console.log(action.replaceAll("#",i));
-  if (loop == true) {
-    console.log(`repeatduration ${i} 0d`)
-  }
-  console.log(`copy ${i} ${i+1}`);
-}}
-render {get:powers} default amtvevideo}|else:{set:result|{py:args = {jsonify:{arg:0}}
-effects = {get:effects}
-if args == "list" or args == "archive" or not args in effects:
-    print("y")
-else:
-    print("n")}}{if:{get:result}|=|n|then:{iscript:load {if:{arg:0}|=|add source|then:{media:{args}}|else:{media}} 0
-copy 0 1
-{replace:#|1|{get:code}}
-render 1 default amtvevideo}
-}
-}
-}
-}
-}
-}
-}
-}
-}
 }
